@@ -3,10 +3,10 @@
 	Use: Class index page backed by the central class content pack.
 -->
 <script lang="ts">
-	import { classList } from '$lib/typescript/data/internals/classes/_index_';
+	import { classList } from '#lib/typescript/data/internals/classes/_index_.js';
 
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 </script>
 
 <article class="wiki-article">

@@ -1,4 +1,4 @@
-import { companionItems, getCompanionBySlug } from '$lib/typescript/data/internals/companions';
+import { companionItems, getCompanionBySlug } from '#lib/typescript/data/internals/companions.js';
 export function entries() { return companionItems.map((companion) => ({ companion: companion.slug })); }
 export function load({ params }) {
 	const companion = getCompanionBySlug(params.companion);

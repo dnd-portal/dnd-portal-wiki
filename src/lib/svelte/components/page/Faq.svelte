@@ -3,9 +3,9 @@
 	Use: Accessible FAQ disclosure list for page-level questions.
 -->
 <script lang="ts">
-	import type { LinkPath } from '$lib/typescript/data/_index_';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	type FaqItem = {
 		readonly question: string;

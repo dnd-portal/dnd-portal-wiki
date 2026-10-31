@@ -1,4 +1,4 @@
-import type { LinkPath, PagePath } from '$lib/typescript/data/_index_';
+import type { LinkPath, PagePath } from '#lib/typescript/data/_index_.js';
 import { getPageLabel } from './currentPage';
 
 export type FaqItem = {

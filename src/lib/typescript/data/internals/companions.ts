@@ -1,6 +1,6 @@
 import * as core from '../core/_index_';
 import { createInternalPage } from './_helpers_';
-import type { InlineContentBlock } from '$lib/typescript/data/_index_';
+import type { InlineContentBlock } from '#lib/typescript/data/_index_.js';
 
 export type CompanionAction = {
 	readonly name: string;

@@ -7,13 +7,13 @@
 		CommunityMetadata,
 		CommunityPortalLink,
 		LinkPath
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 	import {
 		getPageLabel,
 		resolveLinkPath
-	} from '$lib/typescript/pages/currentPage';
+	} from '#lib/typescript/pages/currentPage.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 	import CommunityBadge from './CommunityBadge.svelte';
 
 	let {

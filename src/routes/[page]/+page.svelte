@@ -6,22 +6,22 @@
 	import type {
 		PageContentSection as PageContentSectionData,
 		PageTableOfContentsSection
-	} from '$lib/typescript/data/_index_';
- import { pugilist } from '$lib/typescript/data/internals/classes/pugilist/_index_';
- import { companionItems } from '$lib/typescript/data/internals/companions';
-	import { equipmentItems } from '$lib/typescript/data/internals/equipment-items';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
-	import { getCanonicalPageData } from '$lib/typescript/pages/canonicalPage';
-	import { getFaqItems } from '$lib/typescript/pages/faq';
+	} from '#lib/typescript/data/_index_.js';
+ import { pugilist } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
+ import { companionItems } from '#lib/typescript/data/internals/companions.js';
+	import { equipmentItems } from '#lib/typescript/data/internals/equipment-items.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import { getCanonicalPageData } from '#lib/typescript/pages/canonicalPage.js';
+	import { getFaqItems } from '#lib/typescript/pages/faq.js';
 
-	import EquipmentBrowser from '$lib/svelte/components/page/EquipmentBrowser.svelte';
-	import Faq from '$lib/svelte/components/page/Faq.svelte';
-	import NpcBrowser from '$lib/svelte/components/page/NpcBrowser.svelte';
-	import CompanionBrowser from '$lib/svelte/components/page/CompanionBrowser.svelte';
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
+	import EquipmentBrowser from '#lib/svelte/components/page/EquipmentBrowser.svelte';
+	import Faq from '#lib/svelte/components/page/Faq.svelte';
+	import NpcBrowser from '#lib/svelte/components/page/NpcBrowser.svelte';
+	import CompanionBrowser from '#lib/svelte/components/page/CompanionBrowser.svelte';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import TableOfContents from '#lib/svelte/components/page/TableOfContents.svelte';
 
 	type TopLevelPageContent = {
 		readonly sections: readonly PageContentSectionData[];

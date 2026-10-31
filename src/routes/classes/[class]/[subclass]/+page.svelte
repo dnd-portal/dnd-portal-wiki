@@ -4,19 +4,19 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import type { LinkPath } from '$lib/typescript/data/_index_';
-	import { getSubclassBySlug } from '$lib/typescript/data/internals/classes/_index_';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
+	import { getSubclassBySlug } from '#lib/typescript/data/internals/classes/_index_.js';
 
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import Faq from '$lib/svelte/components/page/Faq.svelte';
-	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
-	import EditionSelector from '$lib/svelte/components/page/EditionSelector.svelte';
-	import { editions } from '$lib/typescript/data/internals/editions';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
-	import { getFaqItems } from '$lib/typescript/pages/faq';
-	import { getFaqGroupBySourcePage } from '$lib/typescript/data/internals/faq';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import Faq from '#lib/svelte/components/page/Faq.svelte';
+	import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import TableOfContents from '#lib/svelte/components/page/TableOfContents.svelte';
+	import EditionSelector from '#lib/svelte/components/page/EditionSelector.svelte';
+	import { editions } from '#lib/typescript/data/internals/editions.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import { getFaqItems } from '#lib/typescript/pages/faq.js';
+	import { getFaqGroupBySourcePage } from '#lib/typescript/data/internals/faq.js';
 
 	let subclassData = $derived(
 		getSubclassBySlug(

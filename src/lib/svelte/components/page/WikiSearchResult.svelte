@@ -3,10 +3,10 @@
 	Use: Renders a single Wiki search result.
 -->
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { siteMetadata } from '$lib/typescript/data/runtime/site-metadata';
-	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
-	import type { SearchResult } from '$lib/typescript/pages/search';
+	const base: string = '';
+	import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
+	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
+	import type { SearchResult } from '#lib/typescript/pages/search.js';
 
 	let { result }: { result: SearchResult } = $props();
 

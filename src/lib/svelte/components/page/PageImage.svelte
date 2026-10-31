@@ -4,15 +4,15 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 	import {
 		resolveSessionImageGender,
 		setImageGenderPreference
-	} from '$lib/typescript/pages/preferences';
+	} from '#lib/typescript/pages/preferences.js';
 	import type {
 		ImageGender,
 		ResponsiveImageData
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	let { presentation = 'default' }: { presentation?: 'default' | 'class-header' } = $props();
 	const currentPage = getCurrentPageContext();

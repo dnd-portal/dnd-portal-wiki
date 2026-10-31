@@ -3,7 +3,7 @@
 	Use: Shared detail layout for equipment and NPC reference pages.
 -->
 <script lang="ts">
-	import type { InlineContent } from '$lib/typescript/data/_index_';
+	import type { InlineContent } from '#lib/typescript/data/_index_.js';
 
 	import InlineContentRenderer from './InlineContent.svelte';
 

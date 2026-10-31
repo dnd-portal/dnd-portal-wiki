@@ -1,5 +1,5 @@
-import { faq } from '$lib/typescript/data/internals/faq';
-import { getFaqGroup, getFaqQuestion } from '$lib/typescript/data/internals/faq';
+import { faq } from '#lib/typescript/data/internals/faq.js';
+import { getFaqGroup, getFaqQuestion } from '#lib/typescript/data/internals/faq.js';
 import { error } from '@sveltejs/kit';
 
 export const prerender = true;

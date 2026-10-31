@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageContentSection as PageContentSectionData, ProgressionData } from '$lib/typescript/pages/content-types';
+	import type { PageContentSection as PageContentSectionData, ProgressionData } from '#lib/typescript/pages/content-types.js';
 	import PageContentSection from './PageContentSection.svelte';
 
 	let {

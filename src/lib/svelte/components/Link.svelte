@@ -3,12 +3,12 @@
 </script>
 
 <script lang="ts">
-	import type { LinkPath } from '$lib/typescript/data/_index_';
-	import { getRuntimeData } from '$lib/typescript/data/runtime';
-	import { siteMetadata } from '$lib/typescript/data/runtime/site-metadata';
-	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
+	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
+	import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
+	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
 
-	import { base } from '$app/paths';
+	const base: string = '';
 
 	export type LinkPopupMode = 'full' | 'description' | 'none';
 

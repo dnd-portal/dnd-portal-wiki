@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { page } from '$app/state';
-	import HomebrewCollectionInfo from '$lib/svelte/components/page/HomebrewCollectionInfo.svelte';
-	import { getHomebrewCollection } from '$lib/typescript/data/internals/homebrew/_index_';
+	import HomebrewCollectionInfo from '#lib/svelte/components/page/HomebrewCollectionInfo.svelte';
+	import { getHomebrewCollection } from '#lib/typescript/data/internals/homebrew/_index_.js';
 
 	let { children }: { children: Snippet } = $props();
 	let collection = $derived(getHomebrewCollection(page.params.collection ?? ''));

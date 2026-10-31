@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 	import {
 		getImageGenderPreference,
 		getSpellViewPreference,
@@ -14,7 +14,7 @@
 		spellViewPreferences,
 		type ImageGenderPreference,
 		type SpellViewPreference
-	} from '$lib/typescript/pages/preferences';
+	} from '#lib/typescript/pages/preferences.js';
 
 	const imageGenderLabels = {
 		random: {

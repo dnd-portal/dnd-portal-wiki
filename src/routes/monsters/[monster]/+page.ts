@@ -1,4 +1,4 @@
-import { getData } from '$lib/typescript/data/_index_';
+import { getData } from '#lib/typescript/data/_index_.js';
 
 export const prerender = true;
 

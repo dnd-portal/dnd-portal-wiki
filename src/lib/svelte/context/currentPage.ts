@@ -7,7 +7,7 @@ import {
 	getContext,
 	setContext
 } from 'svelte';
-import type { CurrentPageContext } from '$lib/typescript/pages/currentPage';
+import type { CurrentPageContext } from '#lib/typescript/pages/currentPage.js';
 
 const currentPageContextKey = Symbol('current-page-context');
 

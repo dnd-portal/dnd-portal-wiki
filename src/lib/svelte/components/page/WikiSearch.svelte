@@ -3,14 +3,14 @@
 	Use: Search the central Wiki data and spell dataset.
 -->
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { replaceState } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import {
 		searchIndex,
 		searchWiki,
 		type SearchCategory
-	} from '$lib/typescript/pages/search';
+	} from '#lib/typescript/pages/search.js';
 
 	import WikiSearchFilters from './WikiSearchFilters.svelte';
 	import WikiSearchResult from './WikiSearchResult.svelte';

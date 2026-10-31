@@ -8,20 +8,20 @@
 		equipmentItems,
 		getEquipmentTypeBySlug,
 		getEquipmentTypePathKey
-	} from '$lib/typescript/data/internals/equipment-items';
-	import { getData } from '$lib/typescript/data/_index_';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
+	} from '#lib/typescript/data/internals/equipment-items.js';
+	import { getData } from '#lib/typescript/data/_index_.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 	import type {
 		PageContentSection as PageContentSectionData,
 		PageTableOfContentsSection,
 		PagePath
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
-	import EquipmentBrowser from '$lib/svelte/components/page/EquipmentBrowser.svelte';
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
+	import EquipmentBrowser from '#lib/svelte/components/page/EquipmentBrowser.svelte';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import TableOfContents from '#lib/svelte/components/page/TableOfContents.svelte';
 
 	type EquipmentTypeContent = {
 		readonly sections: readonly PageContentSectionData[];

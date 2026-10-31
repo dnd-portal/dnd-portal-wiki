@@ -3,7 +3,7 @@
     use:
 */
 
-import type { LinkPath } from '$lib/typescript/data/_index_';
+import type { LinkPath } from '#lib/typescript/data/_index_.js';
 
 export type SidebarNode = {
 	path: LinkPath;

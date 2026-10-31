@@ -6,7 +6,7 @@ import {
 	pugilistEquipmentItems,
 	type PugilistEquipmentItem
 } from './classes/pugilist/_index_';
-import type { InlineContent } from '$lib/typescript/pages/content-types';
+import type { InlineContent } from '#lib/typescript/pages/content-types.js';
 
 export type EquipmentImage = {
 	readonly href: string;

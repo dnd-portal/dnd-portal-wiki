@@ -4,16 +4,16 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import EditionSelector from '$lib/svelte/components/page/EditionSelector.svelte';
-	import { editions } from '$lib/typescript/data/internals/editions';
-	import { getClassEditionRoute } from '$lib/typescript/data/internals/classes/edition-route';
+	import EditionSelector from '#lib/svelte/components/page/EditionSelector.svelte';
+	import { editions } from '#lib/typescript/data/internals/editions.js';
+	import { getClassEditionRoute } from '#lib/typescript/data/internals/classes/edition-route.js';
 
-	import ClassPageContent from '$lib/svelte/components/page/ClassPageContent.svelte';
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import type { EditionId } from '$lib/typescript/data/internals/editions';
-	import type { ClassPageContentData } from '$lib/typescript/pages/class-content-types';
-	import type { LinkPath } from '$lib/typescript/data/_index_';
-	import { getOptionalRuntimeData, getRuntimeChildren, getRuntimeData } from '$lib/typescript/data/runtime';
+	import ClassPageContent from '#lib/svelte/components/page/ClassPageContent.svelte';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import type { EditionId } from '#lib/typescript/data/internals/editions.js';
+	import type { ClassPageContentData } from '#lib/typescript/pages/class-content-types.js';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
+	import { getOptionalRuntimeData, getRuntimeChildren, getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 
 	let { data } = $props();
 	let resolvedRoute = $derived(data.resolvedRoute);

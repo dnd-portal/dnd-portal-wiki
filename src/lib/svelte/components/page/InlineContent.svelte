@@ -3,13 +3,13 @@
 	Use: Renders structured inline page content without raw HTML.
 -->
 <script lang="ts">
-	import type { InlineContentNode } from '$lib/typescript/data/_index_';
+	import type { InlineContentNode } from '#lib/typescript/data/_index_.js';
 	import {
 		getPageLabel,
 		resolveLinkPath
-	} from '$lib/typescript/pages/currentPage';
+	} from '#lib/typescript/pages/currentPage.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	let { content }: { content: readonly InlineContentNode[] } = $props();
 </script>

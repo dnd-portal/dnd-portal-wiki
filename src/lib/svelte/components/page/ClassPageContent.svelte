@@ -3,8 +3,8 @@
 	Use: Renders reusable class page content from central class data.
 -->
 <script lang="ts">
-	import type { ClassPageContentData } from '$lib/typescript/pages/class-content-types';
-	import type { InlineContentBlock } from '$lib/typescript/pages/content-types';
+	import type { ClassPageContentData } from '#lib/typescript/pages/class-content-types.js';
+	import type { InlineContentBlock } from '#lib/typescript/pages/content-types.js';
 
 	import PageContentSection from './PageContentSection.svelte';
 	import ClassFeatures from './ClassFeatures.svelte';
@@ -16,9 +16,9 @@
 	import StartingEquipment from './StartingEquipment.svelte';
 	import TableOfContents from './TableOfContents.svelte';
 	import PageActions from './PageActions.svelte';
-	import type { PageAction } from '$lib/typescript/pages/page-actions';
+	import type { PageAction } from '#lib/typescript/pages/page-actions.js';
 	import type { Snippet } from 'svelte';
-import type { FaqItem } from '$lib/typescript/pages/faq';
+import type { FaqItem } from '#lib/typescript/pages/faq.js';
 
 	let {
 		content,

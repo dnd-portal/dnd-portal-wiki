@@ -2,7 +2,7 @@ import type {
 	InlineContent,
 	InlineContentNode,
 	PageContentBlock
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 import type { NewSpell } from '../spell-types';
 import { acidSplashFaq } from './faq/_index_';
 import {

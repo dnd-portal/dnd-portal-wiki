@@ -10,7 +10,7 @@ import {
 	getEquipmentTypePathKey,
 	type EquipmentItem
 } from './equipment-items';
-import type { InlineContent, PageContentSection } from '$lib/typescript/pages/content-types';
+import type { InlineContent, PageContentSection } from '#lib/typescript/pages/content-types.js';
 
 const website = core.internals.website;
 const current = core.internals.equipment;

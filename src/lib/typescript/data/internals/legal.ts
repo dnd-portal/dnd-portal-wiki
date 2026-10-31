@@ -5,7 +5,7 @@ import type {
 	InlineContentNode,
 	PageContentBlock,
 	PageContentSection
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 const website = core.internals.website;
 const current = core.internals.legal;

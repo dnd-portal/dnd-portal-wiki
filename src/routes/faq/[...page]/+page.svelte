@@ -1,15 +1,15 @@
 <!-- FAQ detail pages use the same central page data and content blocks as Wiki pages. -->
 <script lang="ts">
 	import { page as appPage } from '$app/state';
-	import type { LinkPath } from '$lib/typescript/data/_index_';
-	import { getFaqGroup, getFaqQuestion } from '$lib/typescript/data/internals/faq';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
+	import { getFaqGroup, getFaqQuestion } from '#lib/typescript/data/internals/faq.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import Faq from '$lib/svelte/components/page/Faq.svelte';
-	import Link from '$lib/svelte/components/Link.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import InlineContent from '$lib/svelte/components/page/InlineContent.svelte';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import Faq from '#lib/svelte/components/page/Faq.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import InlineContent from '#lib/svelte/components/page/InlineContent.svelte';
 
 	const currentPage = getCurrentPageContext();
 	let faqSegments = $derived((appPage.params.page ?? '').split('/').filter(Boolean));

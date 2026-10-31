@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import { convertCurrency, currencies } from '$lib/typescript/tools/currency';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import { convertCurrency, currencies } from '#lib/typescript/tools/currency.js';
 
 	let amounts = $state<string[]>(currencies.map(() => '0'));
 

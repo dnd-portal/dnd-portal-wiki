@@ -3,8 +3,8 @@
 	Use: Dedicated Wiki search page.
 -->
 <script lang="ts">
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import WikiSearch from '$lib/svelte/components/page/WikiSearch.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import WikiSearch from '#lib/svelte/components/page/WikiSearch.svelte';
 </script>
 
 <div class="page-layout">

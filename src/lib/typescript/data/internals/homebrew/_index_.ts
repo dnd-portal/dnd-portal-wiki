@@ -3,7 +3,7 @@ import { eldor } from './eldor/_index_';
 import {
 	magicItemPages as eldorMagicItemPages,
 	magicItems as eldorMagicItems
-} from '$lib/typescript/data/core/internals/homebrew/eldor/magic-items/_index_';
+} from '#lib/typescript/data/core/internals/homebrew/eldor/magic-items/_index_.js';
 import type { HomebrewCollectionMetadata, HomebrewMagicItem } from './types';
 
 export const homebrew = {

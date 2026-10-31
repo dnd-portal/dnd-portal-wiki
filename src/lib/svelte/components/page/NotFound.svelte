@@ -3,10 +3,10 @@
 	Use: Shared not-found state for router errors and data-driven catch-all routes.
 -->
 <script lang="ts">
-	import { base } from '$app/paths';
+	const base: string = '';
 	import { page } from '$app/state';
-	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
-	import { suggestWiki } from '$lib/typescript/pages/search';
+	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
+	import { suggestWiki } from '#lib/typescript/pages/search.js';
 
 	let { analyticsPathname }: { analyticsPathname?: string } = $props();
 

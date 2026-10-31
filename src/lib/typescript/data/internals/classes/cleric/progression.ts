@@ -3,8 +3,8 @@
 	Use: Central Cleric class and subclass content data.
 */
 
-import { createInternalPage } from '$lib/typescript/data/internals/_helpers_';
-import type { ProgressionData } from '$lib/typescript/pages/content-types';
+import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
+import type { ProgressionData } from '#lib/typescript/pages/content-types.js';
 
 
 export const progression: ProgressionData<string> = {

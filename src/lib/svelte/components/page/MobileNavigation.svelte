@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	const base: string = '';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 

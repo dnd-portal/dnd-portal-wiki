@@ -2,9 +2,9 @@
 	Location: src/lib/typescript/pages/seo.ts
 	Use: Builds page-level SEO metadata from central page data and route overrides.
 */
-import type { PageData, PagePath } from '$lib/typescript/data/_index_';
-import { getRuntimeData } from '$lib/typescript/data/runtime';
-import { siteMetadata } from '$lib/typescript/data/runtime/site-metadata';
+import type { PageData, PagePath } from '#lib/typescript/data/_index_.js';
+import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
+import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
 import { getBreadcrumbItems, getPageLabel } from './currentPage';
 
 export type SeoMetadataInput = {
@@ -140,6 +140,10 @@ function formatContextTitle({
 		if (pageData?.subTitle && !cleanTitle.toLowerCase().includes(pageData.subTitle.toLowerCase())) {
 			return `${cleanTitle} ${pageData.subTitle} - ${siteName}`;
 		}
+	}
+
+	if (segments[0] === 'homebrew') {
+		return `${cleanTitle} - Homebrew - ${siteName}`;
 	}
 
 	if (segments[0] === 'spells') {

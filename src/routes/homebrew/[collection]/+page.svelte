@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 	import { page } from '$app/state';
 
 	const collectionCards = {

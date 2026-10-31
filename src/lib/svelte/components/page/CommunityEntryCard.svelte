@@ -6,7 +6,7 @@
 	import type {
 		CommunityLink,
 		CommunityMetadata
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import CommunityBadge from './CommunityBadge.svelte';
 	import CommunityLinks from './CommunityLinks.svelte';

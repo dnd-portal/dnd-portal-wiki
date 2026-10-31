@@ -57,6 +57,6 @@ export type {
 	RoadmapStatus,
 	TraitTableColumnLabels,
 	TraitTableRow
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 export const data = { externals, internals, socials};

@@ -9,18 +9,18 @@
 		type PageData,
 		type PagePath,
 		type PageTableOfContentsSection
-	} from '$lib/typescript/data/_index_';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
-	import { getPageLabel } from '$lib/typescript/pages/currentPage';
-	import { getCanonicalPageData } from '$lib/typescript/pages/canonicalPage';
-	import { getFaqItems } from '$lib/typescript/pages/faq';
+	} from '#lib/typescript/data/_index_.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import { getPageLabel } from '#lib/typescript/pages/currentPage.js';
+	import { getCanonicalPageData } from '#lib/typescript/pages/canonicalPage.js';
+	import { getFaqItems } from '#lib/typescript/pages/faq.js';
 
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import Faq from '$lib/svelte/components/page/Faq.svelte';
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
-	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import Faq from '#lib/svelte/components/page/Faq.svelte';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
+	import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import TableOfContents from '#lib/svelte/components/page/TableOfContents.svelte';
 
 	type RulePageContent = {
 		readonly sections: readonly PageContentSectionData[];

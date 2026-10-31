@@ -6,13 +6,13 @@
 	import type {
 		PageContentSection as PageContentSectionData,
 		PageTableOfContentsSection
-	} from '$lib/typescript/data/_index_';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
-	import { getCanonicalPageData } from '$lib/typescript/pages/canonicalPage';
+	} from '#lib/typescript/data/_index_.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import { getCanonicalPageData } from '#lib/typescript/pages/canonicalPage.js';
 
-	import PageContentSection from '$lib/svelte/components/page/PageContentSection.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import TableOfContents from '$lib/svelte/components/page/TableOfContents.svelte';
+	import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import TableOfContents from '#lib/svelte/components/page/TableOfContents.svelte';
 
 	type DiscordPageContent = {
 		readonly sections: readonly PageContentSectionData[];

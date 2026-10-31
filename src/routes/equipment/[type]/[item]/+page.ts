@@ -6,8 +6,8 @@ import {
 	equipmentItems,
 	getEquipmentItemBySlug,
 	getEquipmentItemTypeSlug
-} from '$lib/typescript/data/internals/equipment-items';
-import { createEquipmentSeoMetadata } from '$lib/typescript/pages/seo';
+} from '#lib/typescript/data/internals/equipment-items.js';
+import { createEquipmentSeoMetadata } from '#lib/typescript/pages/seo.js';
 
 export function entries() {
 	return equipmentItems.map((item) => ({

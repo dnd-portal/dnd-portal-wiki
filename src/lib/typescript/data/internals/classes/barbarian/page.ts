@@ -1,13 +1,13 @@
-import * as core from '$lib/typescript/data/core/_index_';
-import { createInternalPage } from '$lib/typescript/data/internals/_helpers_';
+import * as core from '#lib/typescript/data/core/_index_.js';
+import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type {
 	CoreTraitsData,
 	InlineContent,
 	PageContentBlock,
 	PageContentSection,
 	ProgressionData
-} from '$lib/typescript/pages/content-types';
-import type { CampaignNote } from '$lib/typescript/data/functions/Types/PageData';
+} from '#lib/typescript/pages/content-types.js';
+import type { CampaignNote } from '#lib/typescript/data/functions/Types/PageData.js';
 
 
 export const website = core.internals.website;

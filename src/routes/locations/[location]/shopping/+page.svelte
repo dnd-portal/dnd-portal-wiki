@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { PageContentSection, PageTableOfContentsSection } from '$lib/typescript/data/_index_';
-	import LocationPage from '$lib/svelte/components/page/LocationPage.svelte';
+	import type { PageContentSection, PageTableOfContentsSection } from '#lib/typescript/data/_index_.js';
+	import LocationPage from '#lib/svelte/components/page/LocationPage.svelte';
 
 	let { data } = $props();
 	const pageData = $derived(data.pageData as {

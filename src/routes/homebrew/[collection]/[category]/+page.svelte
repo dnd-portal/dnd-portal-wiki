@@ -1,11 +1,11 @@
 <script lang="ts">
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 	import { page } from '$app/state';
 	import {
 		getHomebrewMagicItemPagePath,
 		getHomebrewMagicItems
-	} from '$lib/typescript/data/internals/homebrew/_index_';
+	} from '#lib/typescript/data/internals/homebrew/_index_.js';
 
 	let category = $derived(page.params.category);
 	let items = $derived(getHomebrewMagicItems(page.params.collection ?? '', category ?? ''));

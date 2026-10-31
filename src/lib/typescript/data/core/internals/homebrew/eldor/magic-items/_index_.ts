@@ -1,5 +1,5 @@
-import { createInternalPage } from '$lib/typescript/data/internals/_helpers_';
-import type { HomebrewMagicItem } from '$lib/typescript/data/internals/homebrew/types';
+import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
+import type { HomebrewMagicItem } from '#lib/typescript/data/internals/homebrew/types.js';
 import { item as mimicStick } from './mimic-stick/page';
 
 export const magicItems: readonly HomebrewMagicItem[] = [

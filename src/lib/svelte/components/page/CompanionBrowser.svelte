@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
-	import type { Companion } from '$lib/typescript/data/internals/companions';
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
+	import type { Companion } from '#lib/typescript/data/internals/companions.js';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
 	let { items }: { items: readonly Companion[] } = $props();
 	let searchTerm = $state('');
 	let selectedType = $state('all');

@@ -1,6 +1,6 @@
 export type NewSpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
-import type { InlineContent, PageContentBlock } from '$lib/typescript/pages/content-types';
+import type { InlineContent, PageContentBlock } from '#lib/typescript/pages/content-types.js';
 import type { SpellSourceKey } from './sources';
 
 export type NewSpellContentBlock = PageContentBlock;

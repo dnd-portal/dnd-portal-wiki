@@ -1,4 +1,4 @@
-import type { HomebrewMagicItem } from '$lib/typescript/data/internals/homebrew/types';
+import type { HomebrewMagicItem } from '#lib/typescript/data/internals/homebrew/types.js';
 
 export const item: HomebrewMagicItem = {
 	id: 'mimic-stick',

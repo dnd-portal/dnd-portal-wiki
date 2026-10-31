@@ -11,13 +11,13 @@
 		spellSchools,
 		type SpellData,
 		type SpellLevel
-	} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
-	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
+	} from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
+	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
 	import {
 		getSpellViewPreference,
 		setSpellViewPreference,
 		type SpellViewPreference
-	} from '$lib/typescript/pages/preferences';
+	} from '#lib/typescript/pages/preferences.js';
 
 	type SpellViewMode = SpellViewPreference;
 

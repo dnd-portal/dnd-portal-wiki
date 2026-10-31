@@ -3,7 +3,7 @@
 	Use: Shared metadata badge for community pages.
 -->
 <script lang="ts">
-	import type { CommunityMetadata } from '$lib/typescript/data/_index_';
+	import type { CommunityMetadata } from '#lib/typescript/data/_index_.js';
 
 	let {
 		value,

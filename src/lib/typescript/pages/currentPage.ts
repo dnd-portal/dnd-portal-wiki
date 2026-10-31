@@ -8,9 +8,9 @@ import {
 	type LinkPath,
 	type PageData,
 	type PagePath
-} from '$lib/typescript/data/_index_';
-import { getRuntimeData, runtimeLinks } from '$lib/typescript/data/runtime';
-import { getSpellBySlug } from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+} from '#lib/typescript/data/_index_.js';
+import { getRuntimeData, runtimeLinks } from '#lib/typescript/data/runtime/index.js';
+import { getSpellBySlug } from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 
 export type CurrentPageContext = {
 	readonly pathname: string;

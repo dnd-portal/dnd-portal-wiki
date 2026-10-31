@@ -1,10 +1,10 @@
 <script lang="ts">
- import Breadcrumbs from '$lib/svelte/components/page/Breadcrumbs.svelte';
- import SpellSectionHeading from '$lib/svelte/components/page/SpellSectionHeading.svelte';
- import EditionSelector from '$lib/svelte/components/page/EditionSelector.svelte';
- import InlineContent from '$lib/svelte/components/page/InlineContent.svelte';
- import Faq from '$lib/svelte/components/page/Faq.svelte';
- import type { SpellDetailViewModel } from '$lib/typescript/pages/spellDetail';
+ import Breadcrumbs from '#lib/svelte/components/page/Breadcrumbs.svelte';
+ import SpellSectionHeading from '#lib/svelte/components/page/SpellSectionHeading.svelte';
+ import EditionSelector from '#lib/svelte/components/page/EditionSelector.svelte';
+ import InlineContent from '#lib/svelte/components/page/InlineContent.svelte';
+ import Faq from '#lib/svelte/components/page/Faq.svelte';
+ import type { SpellDetailViewModel } from '#lib/typescript/pages/spellDetail.js';
  let { model }: { model: SpellDetailViewModel } = $props();
  const artwork = $derived(model.artwork ?? '/icons/white/game/spell.svg');
  let isMobile = $state(false); let expanded = $state(new Set(['description']));

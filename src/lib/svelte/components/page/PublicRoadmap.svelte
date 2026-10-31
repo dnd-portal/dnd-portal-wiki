@@ -3,7 +3,7 @@
 	Use: Renders public roadmap items grouped by status with URL-backed filters.
 -->
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { replaceState } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type {
@@ -12,7 +12,7 @@
 		RoadmapItem,
 		RoadmapPriority,
 		RoadmapStatus
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import CommunityBadge from './CommunityBadge.svelte';
 	import CommunityLinks from './CommunityLinks.svelte';

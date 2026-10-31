@@ -1,7 +1,7 @@
 <script lang="ts">
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import { homebrewCollections } from '$lib/typescript/data/internals/homebrew/_index_';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import { homebrewCollections } from '#lib/typescript/data/internals/homebrew/_index_.js';
 </script>
 
 <article class="wiki-article">

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MonsterEntry } from '$lib/typescript/data/internals/monsters/rotwood-sovereign';
+	import type { MonsterEntry } from '#lib/typescript/data/internals/monsters/rotwood-sovereign.js';
 	let { items }: { items: readonly MonsterEntry[] } = $props();
 	let query = $state('');
 	let type = $state('all');

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getRuntimeData } from '$lib/typescript/data/runtime';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 
 	const toolPaths = ['internals.utility.diceRoller', 'internals.utility.myCharacter', 'internals.utility.currencyConverter'] as const;
 	const tools = toolPaths.map((path) => ({ path, data: getRuntimeData(path) }));
@@ -8,6 +8,7 @@
 
 <article class="wiki-article tools-page">
 	<PageHeader />
+	<h1>Tools</h1>
 	<div class="tools-page__grid">
 		{#each tools as tool}
 			<a class="tools-page__card" href={tool.data.href}>

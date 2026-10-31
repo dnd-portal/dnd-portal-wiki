@@ -3,14 +3,14 @@
     use:
 -->
 <script lang="ts">
-	import { base } from '$app/paths';
+	const base: string = '';
 	import { onMount } from 'svelte';
-	import { getRuntimeData } from '$lib/typescript/data/runtime';
-	import { siteMetadata } from '$lib/typescript/data/runtime/site-metadata';
-	import { searchWiki, type SearchResult } from '$lib/typescript/pages/search';
-	import type { NavbarDataType } from '$lib/typescript/components/_index_';
+	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
+	import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
+	import { searchWiki, type SearchResult } from '#lib/typescript/pages/search.js';
+	import type { NavbarDataType } from '#lib/typescript/components/_index_.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	let { logoPath, searchPath, actions }: NavbarDataType = $props();
 

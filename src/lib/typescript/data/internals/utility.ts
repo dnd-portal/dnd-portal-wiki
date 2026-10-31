@@ -1,6 +1,6 @@
 import * as core from '../core/_index_';
 import { createInternalPage } from './_helpers_';
-import type { PageContentSection, PageTableOfContentsSection } from '$lib/typescript/pages/content-types';
+import type { PageContentSection, PageTableOfContentsSection } from '#lib/typescript/pages/content-types.js';
 
 const website = core.internals.website;
 const current = core.internals.utility;

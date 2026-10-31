@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
 </script>
 
 <NotFound analyticsPathname={page.url.pathname} />

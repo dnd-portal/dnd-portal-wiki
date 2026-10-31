@@ -2,7 +2,7 @@ import type { LinkData } from './LinkData';
 import type {
 	HeaderContentSection,
 	InlineContentBlock
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 export type ImageGender = 'female' | 'male';
 export type ImageSize = 's' | 'm' | 'l';

@@ -3,10 +3,10 @@
 	Use: Filterable equipment browser for the central equipment category.
 -->
 <script lang="ts">
-	import type { EquipmentItem as EquipmentBrowserItem } from '$lib/typescript/data/internals/equipment-items';
-	import { getEquipmentItemHref } from '$lib/typescript/data/internals/equipment-items';
-	import type { InlineContentNode } from '$lib/typescript/data/_index_';
-	import { getCanonicalInternalHref } from '$lib/typescript/pages/currentPage';
+	import type { EquipmentItem as EquipmentBrowserItem } from '#lib/typescript/data/internals/equipment-items.js';
+	import { getEquipmentItemHref } from '#lib/typescript/data/internals/equipment-items.js';
+	import type { InlineContentNode } from '#lib/typescript/data/_index_.js';
+	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
 
 	let {
 		items,

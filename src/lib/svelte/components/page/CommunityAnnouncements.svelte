@@ -7,7 +7,7 @@
 		CommunityAnnouncement,
 		CommunityLink,
 		CommunityMetadata
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import CommunityEntryCard from './CommunityEntryCard.svelte';
 
