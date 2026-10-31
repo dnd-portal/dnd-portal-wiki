@@ -194,6 +194,9 @@ function isKnownInternalRoute(href) {
 		/^\/npcs\/[^/]+$/.test(clean) ||
 		/^\/rules\/.+$/.test(clean) ||
 		/^\/spells\/[^/]+$/.test(clean) ||
+		/^\/(?:companions|locations|magic-items|monsters|organizations)\/[^/]+(?:\/shopping)?$/.test(clean) ||
+		/^\/homebrew\/[a-z0-9-]+\/(?:companions|magic-items|monsters|organizations)\/[^/]+$/.test(clean) ||
+		/^\/homebrew\/[a-z0-9-]+\/locations\/[^/]+(?:\/shopping)?$/.test(clean) ||
 		/^\/[a-z0-9-]+$/.test(clean)
 	);
 }
@@ -402,6 +405,12 @@ function isAssetPath(pathname) {
 	return /\.(avif|css|gif|ico|jpg|jpeg|js|json|png|svg|txt|webmanifest|webp|xml)$/i.test(pathname);
 }
 
+function getRedirectTarget(content) {
+	const scriptTarget = content.match(/location(?:\.href)?\s*=\s*["']([^"']+)["']/i)?.[1];
+	const metaTarget = content.match(/<meta\b[^>]*http-equiv=["']refresh["'][^>]*content=["'][^"']*url=([^"']+)["'][^>]*>/i)?.[1];
+	return scriptTarget ?? metaTarget ?? null;
+}
+
 function collectPrerenderOriginFindings() {
 	return getBuildTextFiles()
 		.flatMap((file) => {
@@ -432,12 +441,29 @@ function collectGeneratedHtmlSeoFindings(productionOrigin) {
 		invalidAriaDescribedby: [],
 		interactiveTooltipContent: [],
 		missingSeoAssets: [],
-		invalidJsonLd: []
+		invalidJsonLd: [],
+		redirects: []
 	};
 
 	for (const file of getBuildHtmlFiles()) {
 		const relative = toPosixPath(file.slice(root.length + 1));
 		const content = readFileSync(file, 'utf8');
+		const redirectTarget = getRedirectTarget(content);
+
+		if (redirectTarget) {
+			const targetPath = normalizeHref(new URL(redirectTarget, `${productionOrigin}/`).pathname);
+			const targetFile = getOutputFileForRoute(targetPath);
+
+			if (!targetPath.startsWith('/') || !existsSync(targetFile)) {
+				findings.redirects.push(`${relative} redirects to missing target ${redirectTarget}`);
+			} else if (targetFile !== file && getRedirectTarget(readFileSync(targetFile, 'utf8'))) {
+				findings.redirects.push(`${relative} redirects through another redirect: ${targetPath}`);
+			} else if (targetFile === file) {
+				findings.redirects.push(`${relative} redirects to itself`);
+			}
+
+			continue;
+		}
 		const titles = [...content.matchAll(/<title>([\s\S]*?)<\/title>/gi)]
 			.map((match) => decodeHtmlEntities(match[1].replace(/\s+/g, ' ').trim()))
 			.filter(Boolean);
@@ -729,7 +755,8 @@ try {
 				invalidAriaDescribedby: [],
 				interactiveTooltipContent: [],
 				missingSeoAssets: [],
-				invalidJsonLd: []
+				invalidJsonLd: [],
+				redirects: []
 			};
 	const placeholderFindings = collectPlaceholderFindings()
 		.map((finding) => `${finding.file}:${finding.line} ${finding.text}`);
@@ -767,6 +794,7 @@ try {
 		report('tooltip popups do not contain interactive content', generatedHtmlSeoFindings.interactiveTooltipContent),
 		report('referenced SEO assets exist in build output', generatedHtmlSeoFindings.missingSeoAssets),
 		report('generated JSON-LD syntax', generatedHtmlSeoFindings.invalidJsonLd),
+		report('redirect-only pages resolve directly to valid content', generatedHtmlSeoFindings.redirects),
 		report('placeholder or unfinished content markers', placeholderFindings)
 	].some(Boolean);
 

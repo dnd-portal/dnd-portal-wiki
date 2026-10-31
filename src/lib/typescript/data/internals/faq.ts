@@ -105,7 +105,7 @@ const acidSplashFaqGroup: FaqGroup = {
 	slug: 'acid-splash-3-5e',
 	title: 'Acid Splash 3.5e',
 	description: 'Frequently asked questions about Acid Splash in D&D 3.5e.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash35eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,
@@ -131,7 +131,7 @@ const acidSplash2eFaqGroup: FaqGroup = {
 	slug: 'acid-splash-2e',
 	title: 'Acid Splash 2e FAQ',
 	description: 'Frequently asked questions about the D&D Portal Acid Splash conversion for AD&D 2e.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash2eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,
@@ -153,7 +153,7 @@ const acidSplash1eFaqGroup: FaqGroup = {
 	slug: 'acid-splash-1e',
 	title: 'Acid Splash 1e FAQ',
 	description: 'Frequently asked questions about the D&D Portal Acid Splash conversion for AD&D 1e.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash1eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,
@@ -175,7 +175,7 @@ const acidSplash3eFaqGroup: FaqGroup = {
 	slug: 'acid-splash-3e',
 	title: 'Acid Splash 3e',
 	description: 'Frequently asked questions about Acid Splash in D&D 3e.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash3eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,
@@ -197,7 +197,7 @@ const acidSplash4eFaqGroup: FaqGroup = {
 	slug: 'acid-splash-4e',
 	title: 'Acid Splash 4e FAQ',
 	description: 'Frequently asked questions about the D&D Portal 4e Acid Splash conversion.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash4eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,
@@ -219,7 +219,7 @@ const acidSplash5eFaqGroup: FaqGroup = {
 	slug: 'acid-splash-5e',
 	title: 'Acid Splash 5e FAQ',
 	description: 'Frequently asked questions about Acid Splash in D&D 5e.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash5eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,
@@ -241,7 +241,7 @@ const acidSplash55eFaqGroup: FaqGroup = {
 	slug: 'acid-splash-5-5e',
 	title: 'Acid Splash 5.5e FAQ',
 	description: 'Frequently asked questions about Acid Splash in D&D 5.5e.',
-	sourcePage: 'internals.spells.acidSplash55e',
+	sourcePage: '/spells/acid-splash/',
 	questions: acidSplash55eFaq.map((question) => ({
 		slug: question.slug,
 		question: question.question,

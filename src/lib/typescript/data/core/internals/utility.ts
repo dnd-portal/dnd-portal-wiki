@@ -47,7 +47,7 @@ export const utility = {
 				alt: 'A stylized character icon representing a personal character sheet.'
 			}
 		},
-		href: '/my-character'
+		href: '/my-character/'
 	},
 
 	diceRoller: {
@@ -58,7 +58,7 @@ export const utility = {
 				alt: 'A twenty-sided die icon representing the dice roller.'
 			}
 		},
-		href: '/dice-roller'
+		href: '/dice-roller/'
 	},
 
 	currencyConverter: {
@@ -69,6 +69,6 @@ export const utility = {
 				alt: 'A gold coin icon representing currency conversion.'
 			}
 		},
-		href: '/currency-converter'
+		href: '/currency-converter/'
 	}
 }

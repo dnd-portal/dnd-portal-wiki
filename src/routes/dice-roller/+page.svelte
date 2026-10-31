@@ -60,10 +60,6 @@
 	}
 </script>
 
-<svelte:head>
-	<meta name="description" content="Roll standard or custom dice with advantage and disadvantage." />
-</svelte:head>
-
 <article class="wiki-article dice-roller-page">
 	<PageHeader />
 		<section class="dice-roller">

@@ -8,6 +8,7 @@
 
 <article class="wiki-article tools-page">
 	<PageHeader />
+	<h1>Tools</h1>
 	<div class="tools-page__grid">
 		{#each tools as tool}
 			<a class="tools-page__card" href={tool.data.href}>

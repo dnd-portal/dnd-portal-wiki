@@ -142,6 +142,10 @@ function formatContextTitle({
 		}
 	}
 
+	if (segments[0] === 'homebrew') {
+		return `${cleanTitle} - Homebrew - ${siteName}`;
+	}
+
 	if (segments[0] === 'spells') {
 		if (segments.length === 1) {
 			return formatTitle(cleanTitle);
