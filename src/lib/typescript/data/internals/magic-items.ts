@@ -1,5 +1,5 @@
 import { createInternalPage } from './_helpers_';
-import { item as mimicStick } from '$lib/typescript/data/core/internals/homebrew/eldor/magic-items/mimic-stick/page';
+import { item as mimicStick } from '#lib/typescript/data/core/internals/homebrew/eldor/magic-items/mimic-stick/page.js';
 
 export const magicItems = {
 	page: createInternalPage({

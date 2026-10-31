@@ -3,12 +3,12 @@
 	Use: Detailed NPC reference pages.
 -->
 <script lang="ts">
- import type { PugilistNpc } from '$lib/typescript/data/internals/classes/pugilist/_index_';
+ import type { PugilistNpc } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
 	import type {
 		InlineContent,
 		InlineContentNode,
 		TraitTableRow
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import InlineContentRenderer from './InlineContent.svelte';
 	import TraitTable from './TraitTable.svelte';

@@ -9,7 +9,7 @@ import type {
 	RoadmapItem,
 	RoadmapPriority,
 	RoadmapStatus
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 export type {
 	CommunityAnnouncement,

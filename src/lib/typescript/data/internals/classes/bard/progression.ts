@@ -1,5 +1,5 @@
 import { content } from './page';
-import type { ProgressionData } from '$lib/typescript/pages/content-types';
+import type { ProgressionData } from '#lib/typescript/pages/content-types.js';
 
 export const progression: ProgressionData<string> = {
     "title": "Bard progression",

@@ -3,25 +3,26 @@
     use: 
 -->
 <script lang='ts'>
-	import { base as appBase } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import type { Snippet } from 'svelte';
-	import '$lib/scss/style.scss';
+	import '#lib/scss/style.scss';
 
-	import { buildPage } from '$lib/typescript/pages/pageBuilder';
-	import { resolveCurrentPage } from '$lib/typescript/pages/currentPage';
+	import { buildPage } from '#lib/typescript/pages/pageBuilder.js';
+	import { resolveCurrentPage } from '#lib/typescript/pages/currentPage.js';
 	import {
 		createSeoMetadata,
 		type SeoMetadataInput
-	} from '$lib/typescript/pages/seo';
-	import { setCurrentPageContext } from '$lib/svelte/context/currentPage';
+	} from '#lib/typescript/pages/seo.js';
+	import { setCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 
-	import Breadcrumbs from '$lib/svelte/components/page/Breadcrumbs.svelte';
-	import Footer from '$lib/svelte/components/page/Footer.svelte';
-	import Navbar from '$lib/svelte/components/page/Navbar.svelte';
-	import Sidebar from '$lib/svelte/components/page/Sidebar.svelte';
-	import MobileNavigation from '$lib/svelte/components/page/MobileNavigation.svelte';
-	import Analytics from '$lib/svelte/components/Analytics.svelte';
+	import Breadcrumbs from '#lib/svelte/components/page/Breadcrumbs.svelte';
+	import Footer from '#lib/svelte/components/page/Footer.svelte';
+	import Navbar from '#lib/svelte/components/page/Navbar.svelte';
+	import Sidebar from '#lib/svelte/components/page/Sidebar.svelte';
+	import MobileNavigation from '#lib/svelte/components/page/MobileNavigation.svelte';
+	import Analytics from '#lib/svelte/components/Analytics.svelte';
+
+	const appBase = '';
 
 	const page = buildPage();
 	let routeData = $derived(appPage.data as { path?: string });

@@ -5,7 +5,7 @@
 import {
 	equipmentTypes,
 	getEquipmentTypeBySlug
-} from '$lib/typescript/data/internals/equipment-items';
+} from '#lib/typescript/data/internals/equipment-items.js';
 
 export function entries() {
 	return equipmentTypes.map((type) => ({

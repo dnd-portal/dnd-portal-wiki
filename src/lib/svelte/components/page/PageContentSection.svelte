@@ -7,9 +7,9 @@
 		PageContentBlock,
 		PageContentField,
 		PageContentSection
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
 
 	import Changelog from './Changelog.svelte';
 	import CommunityAnnouncements from './CommunityAnnouncements.svelte';
@@ -86,16 +86,16 @@
 		{#if Array.isArray(block.columns)}
 			<PageContentTable
 				caption={block.caption}
-				columns={block.columns as readonly import('$lib/typescript/data/_index_').PageContentTableColumn[]}
-				rows={block.rows as readonly import('$lib/typescript/data/_index_').PageContentTableRow[]}
+				columns={block.columns as readonly import('#lib/typescript/data/_index_.js').PageContentTableColumn[]}
+				rows={block.rows as readonly import('#lib/typescript/data/_index_.js').PageContentTableRow[]}
 				showCaption={block.showCaption}
 				responsiveCards={block.responsiveCards}
 			/>
 		{:else}
 			<TraitTable
 				caption={block.caption}
-				columns={block.columns as import('$lib/typescript/data/_index_').TraitTableColumnLabels}
-				rows={block.rows as readonly import('$lib/typescript/data/_index_').TraitTableRow[]}
+				columns={block.columns as import('#lib/typescript/data/_index_.js').TraitTableColumnLabels}
+				rows={block.rows as readonly import('#lib/typescript/data/_index_.js').TraitTableRow[]}
 				showCaption={block.showCaption}
 			/>
 		{/if}

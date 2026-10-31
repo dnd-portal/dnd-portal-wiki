@@ -1,6 +1,6 @@
 <script lang="ts">
- import SpellDetailPage from '$lib/svelte/components/page/SpellDetailPage.svelte';
- import { buildAcidSplashDetail, type AcidSplashEdition } from '$lib/typescript/pages/acidSplashDetail';
+ import SpellDetailPage from '#lib/svelte/components/page/SpellDetailPage.svelte';
+ import { buildAcidSplashDetail, type AcidSplashEdition } from '#lib/typescript/pages/acidSplashDetail.js';
 	import { page } from '$app/state';
 
 	const editions = ['1e', '2e', '3e', '3-5e', '4e', '5e'] as const;

@@ -5,7 +5,7 @@
 import {
 	classList,
 	getClassBySlug
-} from '$lib/typescript/data/internals/classes/_index_';
+} from '#lib/typescript/data/internals/classes/_index_.js';
 
 export function entries() {
 	return classList.flatMap(({ slug }) => {

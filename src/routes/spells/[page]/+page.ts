@@ -2,8 +2,8 @@
 	Location: src/routes/spells/[page]/+page.ts
 	Use: Static prerender entries for spell list and spell detail routes.
 */
-import { spells, spellLevels } from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
-import { createSpellSeoMetadata } from '$lib/typescript/pages/seo';
+import { spells, spellLevels } from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
+import { createSpellSeoMetadata } from '#lib/typescript/pages/seo.js';
 import { redirect } from '@sveltejs/kit';
 
 export function entries() {

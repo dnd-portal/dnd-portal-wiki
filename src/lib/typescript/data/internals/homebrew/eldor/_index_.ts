@@ -2,12 +2,12 @@ import { createInternalPage } from '../../_helpers_';
 import {
 	magicItemPages,
 	magicItems
-} from '$lib/typescript/data/core/internals/homebrew/eldor/magic-items/_index_';
+} from '#lib/typescript/data/core/internals/homebrew/eldor/magic-items/_index_.js';
 import type { HomebrewCollectionMetadata } from '../types';
-import { rotwoodSovereign, rotwoodSovereignPage } from '$lib/typescript/data/internals/monsters/_index_';
-import { organizations } from '$lib/typescript/data/internals/organizations';
-import { locations as wikiLocations } from '$lib/typescript/data/internals/locations/_index_';
-import { companions as wikiCompanions } from '$lib/typescript/data/internals/companions';
+import { rotwoodSovereign, rotwoodSovereignPage } from '#lib/typescript/data/internals/monsters/_index_.js';
+import { organizations } from '#lib/typescript/data/internals/organizations.js';
+import { locations as wikiLocations } from '#lib/typescript/data/internals/locations/_index_.js';
+import { companions as wikiCompanions } from '#lib/typescript/data/internals/companions.js';
 
 const icon = '/icons/white/homebrew/eldor-sigil.svg';
 const magicItemIcon = '/icons/white/entity/magic-item.svg';

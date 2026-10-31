@@ -2,7 +2,7 @@
 	import type {
 		PageContentTableColumn,
 		PageContentTableRow
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 	import InlineContent from './InlineContent.svelte';
 
 	let {

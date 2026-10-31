@@ -4,12 +4,12 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import SpellBrowser from '$lib/svelte/components/page/SpellBrowser.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import SpellBrowser from '#lib/svelte/components/page/SpellBrowser.svelte';
 	import {
 		spellLevels,
 		type SpellLevel
-	} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+	} from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 
 	let level = $derived(
 		(spellLevels.find((entry) => entry.slug === page.params.level)?.level ?? 1) as SpellLevel

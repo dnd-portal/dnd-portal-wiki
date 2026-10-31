@@ -2,7 +2,7 @@
 	Location: src/routes/rules/spellcasting/spells/[level]/+page.ts
 	Use: Static prerender entries for level-specific spell rule pages.
 */
-import { spellLevels } from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+import { spellLevels } from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 
 export function entries() {
 	return spellLevels

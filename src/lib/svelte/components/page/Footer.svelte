@@ -3,9 +3,9 @@
     use: 
 -->
 <script lang='ts'>
-	import type { FooterDataType } from '$lib/typescript/components/footer/footer-types';
+	import type { FooterDataType } from '#lib/typescript/components/footer/footer-types.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	let data: FooterDataType = $props();
 

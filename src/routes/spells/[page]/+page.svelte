@@ -8,17 +8,17 @@
 		getSpellBySlug,
 		spellLevels,
 		type SpellLevel
-	} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+	} from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 
-	import NotFound from '$lib/svelte/components/page/NotFound.svelte';
-	import Faq from '$lib/svelte/components/page/Faq.svelte';
-	import PageCard from '$lib/svelte/components/PageCard.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import SpellBrowser from '$lib/svelte/components/page/SpellBrowser.svelte';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
-	import { getFaqItems } from '$lib/typescript/pages/faq';
-	import SpellDetailPage from '$lib/svelte/components/page/SpellDetailPage.svelte';
-	import type { SpellDetailViewModel } from '$lib/typescript/pages/spellDetail';
+	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+	import Faq from '#lib/svelte/components/page/Faq.svelte';
+	import PageCard from '#lib/svelte/components/PageCard.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import SpellBrowser from '#lib/svelte/components/page/SpellBrowser.svelte';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import { getFaqItems } from '#lib/typescript/pages/faq.js';
+	import SpellDetailPage from '#lib/svelte/components/page/SpellDetailPage.svelte';
+	import type { SpellDetailViewModel } from '#lib/typescript/pages/spellDetail.js';
 
 	const slug = $derived(appPage.params.page ?? '');
 	const level = $derived(spellLevels.find((item) => item.slug === slug));

@@ -5,10 +5,10 @@
 <script lang="ts">
 	import {
 		type CommunityLink,
-	} from '$lib/typescript/data/_index_';
-	import { resolveLinkPath } from '$lib/typescript/pages/currentPage';
+	} from '#lib/typescript/data/_index_.js';
+	import { resolveLinkPath } from '#lib/typescript/pages/currentPage.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	let {
 		links,

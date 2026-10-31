@@ -1,4 +1,4 @@
-import type { InlineContentNode } from '$lib/typescript/data/_index_';
+import type { InlineContentNode } from '#lib/typescript/data/_index_.js';
 export type SpellDetailField = { readonly id: string; readonly label: string; readonly value: string; readonly icon?: string; readonly layout?: 'compact' | 'wide' | 'full' };
 export type SpellDetailSection = { readonly id: string; readonly title: string; readonly paragraphs?: readonly string[]; readonly content?: readonly (readonly InlineContentNode[])[]; readonly icon?: string };
 export type SpellDetailFaqItem = { readonly question: string; readonly answer: string; readonly reference: string; readonly referenceLabel: string; readonly faqPath?: string; readonly faqLabel?: string };

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import InlineContent from './InlineContent.svelte';
-	import type { InlineContent as InlineContentData } from '$lib/typescript/pages/content-types';
+	import type { InlineContent as InlineContentData } from '#lib/typescript/pages/content-types.js';
 
 	type Trait = {
 		label: string | InlineContentData;

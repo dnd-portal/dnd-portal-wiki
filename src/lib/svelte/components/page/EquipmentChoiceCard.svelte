@@ -3,7 +3,7 @@
 	Use: Displays one informational starting-equipment group.
 -->
 <script lang="ts">
-	import type { EquipmentChoiceGroup } from '$lib/typescript/data/_index_';
+	import type { EquipmentChoiceGroup } from '#lib/typescript/data/_index_.js';
 
 	import InlineContent from './InlineContent.svelte';
 

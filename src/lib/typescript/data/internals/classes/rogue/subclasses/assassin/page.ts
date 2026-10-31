@@ -3,7 +3,7 @@
 	Use: Central Rogue class and subclass content data.
 */
 
-import { createInternalPage } from '$lib/typescript/data/internals/_helpers_';
+import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 
 
 export const page = createInternalPage({

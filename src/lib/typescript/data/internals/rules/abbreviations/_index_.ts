@@ -3,7 +3,7 @@ import { createInternalPage } from '../../_helpers_';
 import type {
 	PageContentBlock,
 	PageContentSection
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 import { createGroupContent } from '../_content_';
 

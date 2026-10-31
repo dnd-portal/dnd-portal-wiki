@@ -1,4 +1,4 @@
-import { getCompanionBySlug } from '$lib/typescript/data/internals/companions';
+import { getCompanionBySlug } from '#lib/typescript/data/internals/companions.js';
 
 export const prerender = true;
 

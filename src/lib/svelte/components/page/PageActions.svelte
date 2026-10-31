@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { PageAction } from '$lib/typescript/pages/page-actions';
+	import type { PageAction } from '#lib/typescript/pages/page-actions.js';
 
 	let { actions }: { actions: readonly PageAction[] } = $props();
 	let isOpen = $state(false);

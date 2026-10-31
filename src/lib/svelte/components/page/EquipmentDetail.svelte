@@ -4,8 +4,8 @@
 		EquipmentImage,
 		EquipmentItem,
 		EquipmentStatistic
-	} from '$lib/typescript/data/internals/equipment-items';
-	import type { InlineContent, PageContentSection as PageContentSectionData } from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/internals/equipment-items.js';
+	import type { InlineContent, PageContentSection as PageContentSectionData } from '#lib/typescript/data/_index_.js';
 
 	import InlineContentRenderer from './InlineContent.svelte';
 	import PageContentSection from './PageContentSection.svelte';

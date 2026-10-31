@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 	import { onMount } from 'svelte';
 
 	type Die = { sides: number; icon: string; label: string };

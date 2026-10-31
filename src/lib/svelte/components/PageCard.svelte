@@ -6,13 +6,13 @@
 		type PageData,
 		type PagePath,
 		type ResponsiveImageData
-	} from '$lib/typescript/data/_index_';
-	import { getRuntimeData } from '$lib/typescript/data/runtime';
+	} from '#lib/typescript/data/_index_.js';
+	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 	import {
 		getCanonicalInternalHref,
 		getPageLabel
-	} from '$lib/typescript/pages/currentPage';
-	import { resolveSessionImageGender } from '$lib/typescript/pages/imageGender';
+	} from '#lib/typescript/pages/currentPage.js';
+	import { resolveSessionImageGender } from '#lib/typescript/pages/imageGender.js';
 
 	type CardVariant = 'icon' | 'image';
 	type CardDensity = 'regular' | 'compact';

@@ -3,8 +3,8 @@ import type {
 	PageContentSection,
 	PageTableOfContentsSection,
 	ProgressionData
-} from '$lib/typescript/pages/content-types';
-import type { ClassPageContentData } from '$lib/typescript/pages/class-content-types';
+} from '#lib/typescript/pages/content-types.js';
+import type { ClassPageContentData } from '#lib/typescript/pages/class-content-types.js';
 import type { ClassEditionData } from './edition-types';
 import { barbarianFaqEntries } from '../faq';
 import { barbarian } from './barbarian/_index_';

@@ -2,7 +2,7 @@ import type {
 	InlineContent,
 	PageContentBlock,
 	PageContentSection
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 type RuleContent = {
 	readonly sections: readonly PageContentSection[];

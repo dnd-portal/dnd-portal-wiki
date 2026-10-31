@@ -3,8 +3,8 @@
 	Use: Reusable controls for the Wiki search page.
 -->
 <script lang="ts">
-	import type { SearchCategory } from '$lib/typescript/pages/search';
-	import { searchCategories } from '$lib/typescript/pages/search';
+	import type { SearchCategory } from '#lib/typescript/pages/search.js';
+	import { searchCategories } from '#lib/typescript/pages/search.js';
 
 	let {
 		query = $bindable(),

@@ -2,14 +2,14 @@ import {
 	createBasicClass,
 	link,
 	text
-} from '$lib/typescript/data/internals/classes/_basic-class';
-import { createInternalPage } from '$lib/typescript/data/internals/_helpers_';
+} from '#lib/typescript/data/internals/classes/_basic-class.js';
+import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type {
 	InlineContent,
 	PageContentSection,
 	ProgressionData,
 	ProgressionFeature
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 const imageBaseUrl = '/images/classes/shinobi';
 const images = {

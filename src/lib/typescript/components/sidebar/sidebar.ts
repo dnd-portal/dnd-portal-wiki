@@ -3,12 +3,12 @@
     use:
 */
 
-import type { LinkData, LinkPath } from '$lib/typescript/data/_index_';
+import type { LinkData, LinkPath } from '#lib/typescript/data/_index_.js';
 import {
 	getRuntimeChildren,
 	getRuntimeData,
 	getRuntimeNavigationChildren
-} from '$lib/typescript/data/runtime';
+} from '#lib/typescript/data/runtime/index.js';
 
 import type {
 	SidebarDataType,

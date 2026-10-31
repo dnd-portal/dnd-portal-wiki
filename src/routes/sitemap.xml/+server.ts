@@ -1,5 +1,5 @@
-import { runtimeLinkEntries } from '$lib/typescript/data/runtime/generated';
-import { siteMetadata } from '$lib/typescript/data/runtime/site-metadata';
+import { runtimeLinkEntries } from '#lib/typescript/data/runtime/generated.js';
+import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
 
 export const prerender = true;
 

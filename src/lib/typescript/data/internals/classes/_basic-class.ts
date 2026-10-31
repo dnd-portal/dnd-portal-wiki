@@ -13,7 +13,7 @@ import type {
 	PageTableOfContentsSection,
 	ProgressionData,
 	ProgressionFeature
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 
 type ClassFeatureConfig = {
 	readonly level: number;

@@ -6,7 +6,7 @@
         createDefaultCharacter,
         abilityNames,
         skillNames
-    } from '$lib/character/defaults';
+    } from '#lib/character/defaults.js';
 
     import {
         formatModifier,
@@ -15,7 +15,7 @@
         proficiencyBonus,
         savingThrowModifier,
         skillModifier
-    } from '$lib/character/calculations';
+    } from '#lib/character/calculations.js';
 
     import {
         canUseFilePicker,
@@ -24,14 +24,14 @@
         serialize,
         writeCharacter,
         type CharacterFileHandle
-    } from '$lib/character/file';
+    } from '#lib/character/file.js';
 
-    import { parseCharacter } from '$lib/character/validation';
+    import { parseCharacter } from '#lib/character/validation.js';
 
     import type {
         Character,
         SessionNote
-    } from '$lib/character/types';
+    } from '#lib/character/types.js';
 
     let character = $state<Character>(createDefaultCharacter());
     let loaded = $state(false);

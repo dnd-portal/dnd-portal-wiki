@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { HomebrewCollectionMetadata } from '$lib/typescript/data/internals/homebrew/types';
-	import type { LinkPath } from '$lib/typescript/data/_index_';
-	import Link from '$lib/svelte/components/Link.svelte';
+	import type { HomebrewCollectionMetadata } from '#lib/typescript/data/internals/homebrew/types.js';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	let { metadata }: { metadata: HomebrewCollectionMetadata } = $props();
 </script>

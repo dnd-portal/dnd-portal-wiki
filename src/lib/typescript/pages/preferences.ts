@@ -3,7 +3,7 @@
 	Use: SSR-safe browser preference helpers shared by page images and spell views.
 */
 
-import type { ImageGender } from '$lib/typescript/data/_index_';
+import type { ImageGender } from '#lib/typescript/data/_index_.js';
 
 export type ImageGenderPreference = ImageGender | 'random';
 export type SpellViewPreference = 'cards' | 'list' | 'table';

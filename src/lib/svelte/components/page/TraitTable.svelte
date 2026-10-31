@@ -6,7 +6,7 @@
 	import type {
 		TraitTableColumnLabels,
 		TraitTableRow
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import InlineContent from './InlineContent.svelte';
 

@@ -3,17 +3,17 @@
     use:
 -->
 <script lang="ts">
-	import { base } from '$app/paths';
+	const base: string = '';
 	import { page } from '$app/state';
-	import { getRuntimeData } from '$lib/typescript/data/runtime';
+	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 	import { onMount } from 'svelte';
 	import {
 		getSidebarLabel,
 		type SidebarDataType,
 		type SidebarNode
-	} from '$lib/typescript/components/_index_';
+	} from '#lib/typescript/components/_index_.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	let { sections }: SidebarDataType = $props();
 	let mobileOpen = $state(false);

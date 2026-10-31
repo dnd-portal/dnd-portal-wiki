@@ -4,7 +4,7 @@
 */
 
 import type { FooterDataType } from './footer-types';
-import { date } from '$lib/typescript/helpers/_index_';
+import { date } from '#lib/typescript/helpers/_index_.js';
 
 export const footerData: FooterDataType = {
 	informationSection: {

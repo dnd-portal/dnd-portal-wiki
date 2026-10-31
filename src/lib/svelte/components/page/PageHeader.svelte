@@ -3,12 +3,12 @@
 	Use: Renders the current page header from centralized metadata.
 -->
 <script lang="ts">
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
-	import { getPageLabel } from '$lib/typescript/pages/currentPage';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import { getPageLabel } from '#lib/typescript/pages/currentPage.js';
 	import type {
 		InlineContent as InlineContentData,
 		InlineContentBlock
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 	import type { Snippet } from 'svelte';
 
 	import InlineContent from './InlineContent.svelte';

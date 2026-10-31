@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { PageTableOfContentsSection } from '$lib/typescript/data/_index_';
+	import type { PageTableOfContentsSection } from '#lib/typescript/data/_index_.js';
 
 	let {
 		sections,

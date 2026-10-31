@@ -3,7 +3,7 @@ import type {
 	HeaderContentSection,
 	InlineContent,
 	InlineContentBlock
-} from '$lib/typescript/pages/content-types';
+} from '#lib/typescript/pages/content-types.js';
 import type { CampaignNote, PageSourceMetadata } from '../functions/Types/PageData';
 
 type ImageSizeSources = {

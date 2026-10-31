@@ -48,7 +48,7 @@ import { acidSplash4eFaq } from './spells/acid-splash/4e/faq/_index_';
 import { acidSplash5eFaq } from './spells/acid-splash/5e/faq/_index_';
 import { acidSplash55eFaq } from './spells/acid-splash/5-5e/faq/_index_';
 import { acidSplash1eFaq } from './spells/acid-splash/1e/faq/_index_';
-import type { InlineContent } from '$lib/typescript/pages/content-types';
+import type { InlineContent } from '#lib/typescript/pages/content-types.js';
 import { combatLinks, damageTypeLinks, d20TestLinks } from './classes/barbarian/page';
 
 export type FaqContentBlock =

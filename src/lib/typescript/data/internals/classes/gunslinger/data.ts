@@ -1,4 +1,4 @@
-import { createBasicClass, link, text } from '$lib/typescript/data/internals/classes/_basic-class';
+import { createBasicClass, link, text } from '#lib/typescript/data/internals/classes/_basic-class.js';
 
 export const data = {
 	name: 'Gunslinger',

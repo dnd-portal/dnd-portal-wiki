@@ -3,8 +3,8 @@
 	Use: Filterable spell index.
 -->
 <script lang="ts">
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
-	import SpellBrowser from '$lib/svelte/components/page/SpellBrowser.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+	import SpellBrowser from '#lib/svelte/components/page/SpellBrowser.svelte';
 </script>
 
 <div class="page-layout">

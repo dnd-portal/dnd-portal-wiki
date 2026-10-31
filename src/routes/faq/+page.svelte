@@ -1,10 +1,10 @@
 <!-- FAQ index: renders only registered FAQ groups from the central dataset. -->
 <script lang="ts">
-	import type { LinkPath } from '$lib/typescript/data/_index_';
-	import { faqGroups } from '$lib/typescript/data/internals/faq';
+	import type { LinkPath } from '#lib/typescript/data/_index_.js';
+	import { faqGroups } from '#lib/typescript/data/internals/faq.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
-	import PageHeader from '$lib/svelte/components/page/PageHeader.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
+	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 
 </script>
 

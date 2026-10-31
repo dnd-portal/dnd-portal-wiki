@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MonsterEntry, MonsterAction } from '$lib/typescript/data/internals/monsters/rotwood-sovereign';
+	import type { MonsterEntry, MonsterAction } from '#lib/typescript/data/internals/monsters/rotwood-sovereign.js';
 	let { monster }: { monster: MonsterEntry } = $props();
 	const stats = $derived([['Armor Class', monster.armorClass], ['Hit Points', monster.hitPoints], ['Speed', monster.speed], ['Challenge Rating', monster.challengeRating], ['XP', monster.xp], ['Proficiency Bonus', monster.proficiencyBonus]]);
 </script>

@@ -7,7 +7,7 @@
 		EquipmentChoiceGroup,
 		InlineContent,
 		PageSection
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import EquipmentChoiceCard from './EquipmentChoiceCard.svelte';
 	import InlineContentRenderer from './InlineContent.svelte';

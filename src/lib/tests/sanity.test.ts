@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getDynamicSpellBreadcrumbItems } from '$lib/typescript/pages/currentPage';
+import { getDynamicSpellBreadcrumbItems } from '#lib/typescript/pages/currentPage.js';
 
 describe('D&D Portal test environment', () => {
     it('runs unit tests successfully', () => {

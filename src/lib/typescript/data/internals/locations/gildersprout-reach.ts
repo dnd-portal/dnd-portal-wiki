@@ -3,7 +3,7 @@ import type {
 	PageContentSection,
 	PageContentTableColumn,
 	PageContentTableRow
-} from '$lib/typescript/data/_index_';
+} from '#lib/typescript/data/_index_.js';
 
 type MarketVendor = {
 	readonly id: string;

@@ -3,7 +3,7 @@
 	Use: Renders breadcrumbs from the current-page context.
 -->
 <script lang="ts">
-	import { base } from '$app/paths';
+	const base: string = '';
 	import { page as appPage } from '$app/state';
 	import { goto } from '$app/navigation';
 	import {
@@ -12,12 +12,12 @@
 		getBreadcrumbItems,
 		getDynamicSpellBreadcrumbItems,
 		homePagePath
-	} from '$lib/typescript/pages/currentPage';
-	import type { BreadcrumbItem } from '$lib/typescript/pages/currentPage';
-	import { getRuntimeData } from '$lib/typescript/data/runtime';
-	import { getCurrentPageContext } from '$lib/svelte/context/currentPage';
+	} from '#lib/typescript/pages/currentPage.js';
+	import type { BreadcrumbItem } from '#lib/typescript/pages/currentPage.js';
+	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
+	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 
-	import Link from '$lib/svelte/components/Link.svelte';
+	import Link from '#lib/svelte/components/Link.svelte';
 
 	const currentPage = getCurrentPageContext();
 	const isDynamicSpellPath = (pathname: string): boolean => {

@@ -1,5 +1,5 @@
 import type { EquipmentAttunement, EquipmentImage, EquipmentItem } from '../equipment-items';
-import type { PageContentSection } from '$lib/typescript/pages/content-types';
+import type { PageContentSection } from '#lib/typescript/pages/content-types.js';
 
 export type HomebrewCollectionMetadata = {
 	readonly setting: {

@@ -2,7 +2,7 @@
 	import type {
 		PageContentSection as PageContentSectionData,
 		PageTableOfContentsSection
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 	import PageContentSection from './PageContentSection.svelte';
 	import PageHeader from './PageHeader.svelte';
 	import TableOfContents from './TableOfContents.svelte';

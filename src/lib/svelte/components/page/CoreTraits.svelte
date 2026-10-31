@@ -6,7 +6,7 @@
 	import type {
 		CoreTraitsData,
 		PageSection
-	} from '$lib/typescript/data/_index_';
+	} from '#lib/typescript/data/_index_.js';
 
 	import StartingEquipment from './StartingEquipment.svelte';
 	import TraitTable from './TraitTable.svelte';

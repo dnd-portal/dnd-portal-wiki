@@ -6,24 +6,24 @@ import {
 	data,
 	type PageData,
 	type PagePath
-} from '$lib/typescript/data/_index_';
+} from '#lib/typescript/data/_index_.js';
 import {
 	spells,
 	type SpellData
-} from '$lib/typescript/data/internals/rules/spellcasting/spells/spell-data';
+} from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 import {
 	equipmentItems,
 	getEquipmentItemHref,
 	type EquipmentItem
-} from '$lib/typescript/data/internals/equipment-items';
+} from '#lib/typescript/data/internals/equipment-items.js';
 import {
 	getPugilistNpcHref,
 	getPugilistNpcSlug,
 	pugilistNpcs,
 	type PugilistNpc
-} from '$lib/typescript/data/internals/classes/pugilist/_index_';
+} from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
 import { getPageLabel } from './currentPage';
-import { faqGroups, type FaqGroup, type FaqQuestion } from '$lib/typescript/data/internals/faq';
+import { faqGroups, type FaqGroup, type FaqQuestion } from '#lib/typescript/data/internals/faq.js';
 
 export type SearchCategory =
 	| 'all'

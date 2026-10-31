@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Companion, CompanionAction } from '$lib/typescript/data/internals/companions';
+	import type { Companion, CompanionAction } from '#lib/typescript/data/internals/companions.js';
 	let { companion }: { companion: Companion } = $props();
 	const intro = $derived(companion.description.split('\n\n')[0]);
 	const stats = $derived([['🛡', 'Armor Class', companion.armorClass], ['♥', 'Hit Points', companion.hitPoints], ['↝', 'Speed', companion.speed], ['✦', 'Proficiency Bonus', companion.proficiencyBonus], ['◆', 'Size', companion.size]]);
