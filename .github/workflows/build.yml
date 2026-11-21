@@ -44,11 +44,39 @@ jobs:
       - name: Run Svelte and TypeScript checks
         run: pnpm check
 
+      - name: Run Svelte and TypeScript 7 checks
+        run: pnpm check:tsgo
+
+      - name: Run unit and architecture tests
+        run: pnpm test
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Build static website
         run: pnpm build
+
+      - name: Audit production output
+        run: pnpm audit:production
+
+      - name: Crawl production output
+        run: pnpm audit:prelive:crawl
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run production browser and accessibility tests
+        run: pnpm test:browser
+
+      - name: Upload browser test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-test-reports
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
 
       - name: Verify static output
         run: test -f build/index.html

@@ -1,7 +1,3 @@
-<script lang="ts" module>
-	let linkInstanceCount = 0;
-</script>
-
 <script lang="ts">
 	import type { LinkPath } from '#lib/typescript/data/_index_.js';
 	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
@@ -31,22 +27,11 @@
 	} = $props();
 
 	let link = $derived(getRuntimeData(goto));
-	let linkDescription = $derived(
-		'descriptions' in link && link.descriptions && typeof link.descriptions === 'object' && 'short' in link.descriptions && typeof link.descriptions.short === 'string'
-			? link.descriptions.short
-			: link.description
-	);
 	let iconSize = $derived(
 		'navigation' in link && link.navigation && typeof link.navigation === 'object'
 			? (link.navigation as { iconSize?: 'default' | 'large' }).iconSize
 			: undefined
 	);
-	let popupVisible = $state(false);
-	let hoverTimer: ReturnType<typeof setTimeout> | undefined;
-	let trigger = $state<HTMLElement>();
-	let popupElement = $state<HTMLElement>();
-	const popupInstanceId = linkInstanceCount++;
-	let popupId = $derived(`link-popup-${goto.replaceAll('.', '-')}-${popupInstanceId}`);
 
 	function getInternalHref(href: string): string {
 		return getCanonicalInternalHref(href, base);
@@ -64,156 +49,48 @@
 		return query ? `${href}${query}` : href;
 	}
 
-	function supportsHover(): boolean {
-		return (
-			typeof window !== 'undefined' &&
-			window.matchMedia('(hover: hover) and (pointer: fine)').matches
-		);
-	}
-
-	function clearHoverTimer(): void {
-		if (hoverTimer) {
-			clearTimeout(hoverTimer);
-			hoverTimer = undefined;
+	function popupEvent(name: 'dnd-portal:popup-open' | 'dnd-portal:popup-close', detail: unknown): void {
+		if (typeof window !== 'undefined') {
+			window.dispatchEvent(new CustomEvent(name, { detail }));
 		}
 	}
 
-	function positionPopup(): void {
-		const currentTrigger = trigger;
-		const currentPopupElement = popupElement;
-
-		if (!currentTrigger || !currentPopupElement) {
-			return;
-		}
-
-		requestAnimationFrame(() => {
-			const triggerRect = currentTrigger.getBoundingClientRect();
-			const popupRect = currentPopupElement.getBoundingClientRect();
-			const margin = 12;
-
-			let left =
-				popup === 'description'
-					? triggerRect.right + margin
-					: triggerRect.left;
-
-			if (
-				popup === 'description' &&
-				left + popupRect.width > window.innerWidth - margin
-			) {
-				left = triggerRect.left - popupRect.width - margin;
-			}
-
-			if (left + popupRect.width > window.innerWidth - margin) {
-				left = window.innerWidth - popupRect.width - margin;
-			}
-
-			left = Math.max(margin, left);
-
-			let top =
-				popup === 'description'
-					? triggerRect.top + triggerRect.height / 2 - popupRect.height / 2
-					: triggerRect.bottom;
-
-			if (top + popupRect.height > window.innerHeight - margin) {
-				top = triggerRect.top - popupRect.height;
-			}
-
-			top = Math.max(margin, top);
-
-			currentPopupElement.style.left = `${left}px`;
-			currentPopupElement.style.top = `${top}px`;
+	function openPopup(event: MouseEvent | FocusEvent): void {
+		if (popup === 'none' || typeof window === 'undefined') return;
+		const trigger = event.currentTarget;
+		if (!(trigger instanceof HTMLElement)) return;
+		popupEvent('dnd-portal:popup-open', {
+			link,
+			href: withQuery(getInternalHref(link.href)),
+			displayHref: getDisplayUrl(link.href),
+			mode: popup,
+			trigger,
+			id: 'wiki-shared-popup',
+			source: event.type === 'focus' ? 'focus' : 'hover'
 		});
 	}
 
-	function openPopup(source: 'focus' | 'hover'): void {
-		if (popup === 'none' || (source === 'hover' && !supportsHover())) {
-			return;
-		}
-
-		clearHoverTimer();
-		positionPopup();
-
-		if (popup === 'description' && source === 'hover') {
-			hoverTimer = setTimeout(() => {
-				popupVisible = true;
-				positionPopup();
-			}, 275);
-
-			return;
-		}
-
-		popupVisible = true;
-	}
-
-	function closePopup(): void {
-		clearHoverTimer();
-		popupVisible = false;
-	}
-
-	function handleContainerMouseEnter(): void {
-		if (popup === 'full') {
-			openPopup('hover');
-		}
-	}
-
-	function handleContainerMouseLeave(): void {
-		if (popup === 'full') {
-			closePopup();
-		}
-	}
-
-	function handleLinkMouseEnter(): void {
-		if (popup === 'description') {
-			openPopup('hover');
-		}
-	}
-
-	function handleLinkMouseLeave(): void {
-		if (popup === 'description') {
-			closePopup();
-		}
-	}
-
-	function handleFocusIn(): void {
-		openPopup('focus');
-	}
-
-	function handleFocusOut(event: FocusEvent): void {
-		const nextTarget = event.relatedTarget;
-		const container = event.currentTarget;
-
-		if (
-			popup === 'full' &&
-			container instanceof HTMLElement &&
-			nextTarget instanceof Node &&
-			container.contains(nextTarget)
-		) {
-			return;
-		}
-
-		closePopup();
+	function closePopup(event: FocusEvent | MouseEvent): void {
+		popupEvent('dnd-portal:popup-close', { relatedTarget: event.relatedTarget });
 	}
 </script>
 
 <span
 	class={`link-container link-container--popup-${popup}`}
 	role="presentation"
-	onmouseenter={handleContainerMouseEnter}
-	onmouseleave={handleContainerMouseLeave}
-	onfocusin={handleFocusIn}
-	onfocusout={handleFocusOut}
 >
 	<a
-		bind:this={trigger}
 		class="link"
 		href={withQuery(getInternalHref(link.href))}
 		target={link.external ? '_blank' : undefined}
 		rel={link.external ? 'noopener noreferrer' : undefined}
 		aria-current={current ? 'page' : undefined}
-		aria-describedby={popup === 'description' ? popupId : undefined}
+		aria-describedby={popup !== 'none' ? 'wiki-shared-popup' : undefined}
 		onclick={onNavigate}
-		onmouseenter={handleLinkMouseEnter}
-		onmouseleave={handleLinkMouseLeave}
+		onmouseenter={openPopup}
+		onmouseleave={closePopup}
+		onfocus={openPopup}
+		onblur={closePopup}
 	>
 		{#if showIcon}
 			<span
@@ -229,61 +106,4 @@
 		{/if}
 	</a>
 
-	{#if popup === 'full'}
-		<span
-			bind:this={popupElement}
-			class="popup popup--full"
-			class:popup--visible={popupVisible}
-			data-nosnippet
-		>
-			<span class="popup__top">
-				<img
-					class="popup__top-img"
-					class:popup__top-img--white={link.img.href.includes('/icons/white/')}
-					src={link.img.href}
-					alt={link.img.alt}
-				>
-
-				<span class="popup__top__header">
-					<span class="popup__top__header-title">
-						{link.title}
-					</span>
-
-					<span class="popup__top__header-subtitle">
-						{link.subTitle}
-					</span>
-				</span>
-			</span>
-
-			<span class="popup-description">
-				{linkDescription}
-			</span>
-
-			<span class="popup__link-container">
-				Full link:
-
-				<a
-					class="popup__link"
-					href={withQuery(getInternalHref(link.href))}
-					target={link.external ? '_blank' : undefined}
-					rel={link.external ? 'noopener noreferrer' : undefined}
-				>
-					{getDisplayUrl(link.href)}
-				</a>
-			</span>
-		</span>
-	{:else if popup === 'description'}
-		<span
-			id={popupId}
-			bind:this={popupElement}
-			class="popup popup--description"
-			class:popup--visible={popupVisible}
-			role="tooltip"
-			data-nosnippet
-		>
-			<span class="popup-description">
-				{linkDescription}
-			</span>
-		</span>
-	{/if}
 </span>

@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 	import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
-	import { searchWiki, type SearchResult } from '#lib/typescript/pages/search.js';
+	import type { SearchResult } from '#lib/typescript/pages/search.js';
 	import type { NavbarDataType } from '#lib/typescript/components/_index_.js';
 
 	import Link from '#lib/svelte/components/Link.svelte';
@@ -21,10 +21,27 @@
 	let isNavbarHidden = $state(false);
 	let mobileSidebarOpen = $state(false);
 	let searchQuery = $state('');
-	let searchSuggestions = $derived(
-		searchQuery.trim().length >= 2 ? searchWiki(searchQuery).slice(0, 6) : []
-	);
+	let searchSuggestions = $state<readonly SearchResult[]>([]);
 	let searchSuggestionsOpen = $state(false);
+
+	$effect(() => {
+		const query = searchQuery.trim();
+		if (query.length < 2) {
+			searchSuggestions = [];
+			return;
+		}
+
+		let active = true;
+		import('#lib/typescript/pages/search.js').then(({ searchWiki }) => {
+			if (active) {
+				searchSuggestions = searchWiki(query).slice(0, 6);
+			}
+		});
+
+		return () => {
+			active = false;
+		};
+	});
 
 	function getValidUrl(href: string): string {
 		if (!href.startsWith('/')) {
@@ -154,7 +171,7 @@
 				aria-label="Search the Wiki"
 				bind:value={searchQuery}
 				aria-autocomplete="list"
-				aria-controls="navbar-search-suggestions"
+				aria-controls={searchSuggestions.length > 0 ? 'navbar-search-suggestions' : undefined}
 				onfocus={() => (searchSuggestionsOpen = true)}
 			>
 

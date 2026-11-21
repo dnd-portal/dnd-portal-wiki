@@ -21,6 +21,7 @@
 	import Sidebar from '#lib/svelte/components/page/Sidebar.svelte';
 	import MobileNavigation from '#lib/svelte/components/page/MobileNavigation.svelte';
 	import Analytics from '#lib/svelte/components/Analytics.svelte';
+	import PopupHost from '#lib/svelte/components/PopupHost.svelte';
 
 	const appBase = '';
 
@@ -112,4 +113,5 @@
 		<Footer {...page.footer} />
 	{/if}
 	<MobileNavigation />
+	<PopupHost />
 </div>
