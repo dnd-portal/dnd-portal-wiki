@@ -27,7 +27,10 @@
 		position: absolute;
 		inset: 0;
 		z-index: -2;
-		background: url('/backgrounds/homepage-wallpaper.png') center top /
+		background: image-set(
+			url('/backgrounds/homepage-wallpaper.webp') type('image/webp'),
+			url('/backgrounds/homepage-wallpaper.png') type('image/png')
+		) center top /
 			var(--home-wallpaper-width) var(--home-wallpaper-height) no-repeat;
 		opacity: 0.4;
 		mask-image: linear-gradient(
@@ -51,7 +54,10 @@
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		background: url('/backgrounds/homepage-wallpaper-2.png') center
+		background: image-set(
+			url('/backgrounds/homepage-wallpaper-2.webp') type('image/webp'),
+			url('/backgrounds/homepage-wallpaper-2.png') type('image/png')
+		) center
 			var(--home-wallpaper-second-top) / var(--home-wallpaper-width) var(--home-wallpaper-height) no-repeat;
 		opacity: 0.4;
 		mask-image: linear-gradient(
