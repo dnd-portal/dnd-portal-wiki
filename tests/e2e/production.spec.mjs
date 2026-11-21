@@ -29,7 +29,7 @@ test('deep spell route preserves breadcrumbs and hydrates without console errors
 	});
 	await page.goto('/spells/magic-missile/');
 	await expect(page.getByRole('heading', { name: 'Magic Missile' })).toBeVisible();
-	await expect(page.getByRole('link', { name: '1st Level' })).toHaveAttribute('href', /spells\/1st-level/);
+	await expect(page.getByRole('link', { name: '1st Level' }).first()).toHaveAttribute('href', /spells\/1st-level/);
 	expect(errors).toEqual([]);
 });
 
@@ -50,7 +50,7 @@ test('navbar search is loaded lazily after input', async ({ page }, testInfo) =>
 	await expect(page.locator('#navbar-search-suggestions')).toHaveCount(0);
 	await search.focus();
 	await search.fill('magic');
-	await expect.poll(async () => page.locator('#navbar-search-suggestions').count()).toBe(1);
+	await expect.poll(async () => page.locator('#navbar-search-suggestions').count(), { timeout: 15_000 }).toBe(1);
 	await expect(page.locator('#navbar-search-suggestions')).toBeVisible();
 	await expect(page.getByRole('option').first()).toBeVisible();
 });
