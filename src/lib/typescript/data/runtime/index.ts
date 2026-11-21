@@ -1,6 +1,12 @@
-import { runtimeChildren, runtimeLinkEntries, type RuntimeLinkMetadata } from './generated';
+import {
+	runtimeChildren,
+	runtimeLinkEntries,
+	runtimeSpellBreadcrumbEntries,
+	type RuntimeLinkMetadata,
+	type RuntimeSpellBreadcrumbMetadata
+} from './generated';
 
-export type { RuntimeLinkMetadata } from './generated';
+export type { RuntimeLinkMetadata, RuntimeSpellBreadcrumbMetadata } from './generated';
 
 const runtimeLinks: Readonly<Record<string, RuntimeLinkMetadata>> = Object.fromEntries(
 	runtimeLinkEntries.map(([
@@ -60,6 +66,17 @@ export function getRuntimeNavigationChildren(parentPath: string): readonly strin
 	return runtimeLinkEntries
 		.filter(([, , , , , , , , , , , , navigation]) => navigation?.parent === pagePath)
 		.map(([path]) => path);
+}
+
+const runtimeSpellBreadcrumbs: Readonly<Record<string, RuntimeSpellBreadcrumbMetadata>> =
+	Object.fromEntries(
+		runtimeSpellBreadcrumbEntries.map((entry) => [entry[0], entry])
+	);
+
+export function getRuntimeSpellBreadcrumbMetadata(
+	slug: string
+): RuntimeSpellBreadcrumbMetadata | undefined {
+	return runtimeSpellBreadcrumbs[slug];
 }
 
 export { runtimeLinks };

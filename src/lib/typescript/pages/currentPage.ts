@@ -4,13 +4,16 @@
 */
 
 import {
-	type LinkData,
-	type LinkPath,
-	type PageData,
-	type PagePath
-} from '#lib/typescript/data/_index_.js';
-import { getRuntimeData, runtimeLinks } from '#lib/typescript/data/runtime/index.js';
-import { getSpellBySlug } from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
+	getRuntimeData,
+	getRuntimeSpellBreadcrumbMetadata,
+ runtimeLinks
+} from '#lib/typescript/data/runtime/index.js';
+import type {
+	LinkData,
+	LinkPath,
+	PageData,
+	PagePath
+} from '#lib/typescript/data/functions/Types/_index_.js';
 
 export type CurrentPageContext = {
 	readonly pathname: string;
@@ -40,13 +43,13 @@ const spellLevelParent = (levelSlug: string): PagePath => {
 };
 
 export function getDynamicSpellBreadcrumbItems(slug: string): readonly BreadcrumbItem[] {
-	const spell = getSpellBySlug(slug);
+	const spell = getRuntimeSpellBreadcrumbMetadata(slug);
 	if (!spell) return [];
-	const parent = spellLevelParent(spell.levelSlug);
+	const parent = spellLevelParent(spell[2]);
 	return [
 		{ key: 'internals.spells.page', path: 'internals.spells.page', label: 'Spells' },
-		{ key: parent, path: parent, label: spell.levelSlug === 'cantrips' ? 'Cantrips' : spell.levelLabel },
-		{ key: `/spells/${spell.slug}`, label: spell.name }
+		{ key: parent, path: parent, label: spell[2] === 'cantrips' ? 'Cantrips' : spell[3] },
+		{ key: `/spells/${spell[0]}`, label: spell[1] }
 	];
 }
 

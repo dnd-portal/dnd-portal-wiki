@@ -20,7 +20,9 @@
 	{:else if node.type === 'link'}
 		{@const path = resolveLinkPath(node.path)}
 
-		{#if path}
+		{#if node.path.startsWith('/')}
+			<a href={node.path}>{node.label ?? node.path}</a>
+		{:else if path}
 			<Link
 				goto={path}
 				placeholder={node.label ?? getPageLabel(path)}
