@@ -45,13 +45,14 @@ test('keyboard focus exposes a popup relationship without changing anchor semant
 test('navbar search is loaded lazily after input', async ({ page }, testInfo) => {
 	test.skip(testInfo.project.name === 'mobile', 'The mobile layout exposes search through mobile navigation.');
 	await page.goto('/');
-	const before = await page.evaluate(() => performance.getEntriesByType('resource').map((entry) => entry.name));
+	await page.waitForLoadState('networkidle');
 	const search = page.getByRole('searchbox', { name: 'Search the Wiki' });
+	await expect(page.locator('#navbar-search-suggestions')).toHaveCount(0);
+	await search.focus();
 	await search.fill('magic');
-	await page.waitForTimeout(500);
-	const after = await page.evaluate(() => performance.getEntriesByType('resource').map((entry) => entry.name));
-	const loadedAfterInput = after.filter((resource) => !before.includes(resource));
-	expect(loadedAfterInput.some((resource) => resource.includes('/_app/immutable/chunks/'))).toBe(true);
+	await expect.poll(async () => page.locator('#navbar-search-suggestions').count()).toBe(1);
+	await expect(page.locator('#navbar-search-suggestions')).toBeVisible();
+	await expect(page.getByRole('option').first()).toBeVisible();
 });
 
 test('mobile search route remains usable', async ({ page }, testInfo) => {
