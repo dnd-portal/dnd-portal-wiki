@@ -44,15 +44,44 @@ test('keyboard focus exposes a popup relationship without changing anchor semant
 
 test('navbar search is loaded lazily after input', async ({ page }, testInfo) => {
 	test.skip(testInfo.project.name === 'mobile', 'The mobile layout exposes search through mobile navigation.');
+	const requests = [];
+	const initialHeavyChunks = [];
+	const heavyResponseChecks = [];
+	const pageErrors = [];
+	let searchInteractionStarted = false;
+	page.on('pageerror', (error) => pageErrors.push(error.message));
+	page.on('request', (request) => {
+		if (request.url().includes('/_data/navbar-search.json')) requests.push(request.url());
+	});
+	page.on('response', (response) => {
+		if (!searchInteractionStarted && response.url().includes('/_app/immutable/chunks/')) {
+			heavyResponseChecks.push(response.body().then((body) => {
+				// The shared runtime metadata chunk is currently about 750 kB and is
+				// intentionally part of the root layout. Identify it by its stable
+				// generated metadata marker, then keep the size guard focused on
+				// canonical, FAQ and spell-data regressions.
+				const isRuntimeMetadata = body.includes('externals.discord.homepage');
+				if (!isRuntimeMetadata && body.length > 500_000) {
+					initialHeavyChunks.push({ url: response.url(), bytes: body.length });
+				}
+			}));
+		}
+	});
 	await page.goto('/');
 	await page.waitForLoadState('networkidle');
+	await Promise.all(heavyResponseChecks);
+	expect(requests).toEqual([]);
+	expect(initialHeavyChunks).toEqual([]);
 	const search = page.getByRole('searchbox', { name: 'Search the Wiki' });
 	await expect(page.locator('#navbar-search-suggestions')).toHaveCount(0);
 	await search.focus();
+	searchInteractionStarted = true;
 	await search.fill('magic');
 	await expect.poll(async () => page.locator('#navbar-search-suggestions').count(), { timeout: 15_000 }).toBe(1);
+	expect(pageErrors).toEqual([]);
 	await expect(page.locator('#navbar-search-suggestions')).toBeVisible();
 	await expect(page.getByRole('option').first()).toBeVisible();
+	await expect.poll(() => requests.length, { timeout: 15_000 }).toBe(1);
 });
 
 test('mobile search route remains usable', async ({ page }, testInfo) => {

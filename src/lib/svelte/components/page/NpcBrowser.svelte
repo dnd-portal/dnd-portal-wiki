@@ -4,9 +4,9 @@
 -->
 <script lang="ts">
  import type { PugilistNpc as NpcBrowserItem } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
- import { getPugilistNpcHref } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
 	import type { InlineContentNode } from '#lib/typescript/data/_index_.js';
 	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
+	import { getNpcReferenceHref } from '#lib/typescript/pages/reference-hrefs.js';
 
 	let { items }: { items: readonly NpcBrowserItem[] } = $props();
 
@@ -61,7 +61,7 @@
 	}
 
 	function getItemHref(item: NpcBrowserItem): string {
-		return getCanonicalInternalHref(getPugilistNpcHref(item));
+		return getCanonicalInternalHref(getNpcReferenceHref(item));
 	}
 
 	function getDescriptionText(item: NpcBrowserItem): string {

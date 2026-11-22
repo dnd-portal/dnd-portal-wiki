@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	build: {
+		modulePreload: false,
 		cssTarget: [
 			'chrome87',
 			'edge88',

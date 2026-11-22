@@ -3,12 +3,14 @@
 	Use: Shared not-found state for router errors and data-driven catch-all routes.
 -->
 <script lang="ts">
+	import { onMount } from 'svelte';
 	const base: string = '';
 	import { page } from '$app/state';
 	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
-	import { suggestWiki } from '#lib/typescript/pages/search.js';
+	import type { NavbarSearchResult } from '#lib/typescript/pages/navbar-search.js';
 
 	let { analyticsPathname }: { analyticsPathname?: string } = $props();
+	let suggestions = $state<readonly NavbarSearchResult[]>([]);
 
 	function getSearchQuery(pathname: string): string {
 		return pathname
@@ -25,7 +27,13 @@
 
 	let query = $derived(getSearchQuery(page.url.pathname));
 	let searchHref = $derived(getInternalHref(`/search/?q=${encodeURIComponent(query)}`));
-	let suggestions = $derived(query ? suggestWiki(query) : []);
+
+	onMount(async () => {
+		if (!query || query.length < 2) return;
+
+		const { searchNavbar } = await import('#lib/typescript/pages/navbar-search.js');
+		suggestions = await searchNavbar(query);
+	});
 	let analyticsTitle = $derived(
 		analyticsPathname ? `404: ${analyticsPathname} - D&D Portal Wiki` : 'Page Not Found - D&D Portal Wiki'
 	);
