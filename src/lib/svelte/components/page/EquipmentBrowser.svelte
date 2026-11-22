@@ -4,9 +4,9 @@
 -->
 <script lang="ts">
 	import type { EquipmentItem as EquipmentBrowserItem } from '#lib/typescript/data/internals/equipment-items.js';
-	import { getEquipmentItemHref } from '#lib/typescript/data/internals/equipment-items.js';
 	import type { InlineContentNode } from '#lib/typescript/data/_index_.js';
 	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
+	import { getEquipmentReferenceHref } from '#lib/typescript/pages/reference-hrefs.js';
 
 	let {
 		items,
@@ -91,7 +91,7 @@
 	}
 
 	function getItemHref(item: EquipmentBrowserItem): string {
-		return getCanonicalInternalHref(getEquipmentItemHref(item));
+		return getCanonicalInternalHref(getEquipmentReferenceHref(item));
 	}
 
 	function getDescriptionText(item: EquipmentBrowserItem): string {

@@ -5,14 +5,14 @@
 <script lang="ts">
 	import type {
 		PageContentSection as PageContentSectionData,
-		PageTableOfContentsSection
+		PageTableOfContentsSection,
+		PageData
 	} from '#lib/typescript/data/_index_.js';
- import { pugilist } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
- import { companionItems } from '#lib/typescript/data/internals/companions.js';
-	import { equipmentItems } from '#lib/typescript/data/internals/equipment-items.js';
+	import type { Companion } from '#lib/typescript/data/internals/companions.js';
+	import type { EquipmentItem } from '#lib/typescript/data/internals/equipment-items.js';
+	import type { PugilistNpc } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
+	import type { FaqItem } from '#lib/typescript/pages/faq.js';
 	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
-	import { getCanonicalPageData } from '#lib/typescript/pages/canonicalPage.js';
-	import { getFaqItems } from '#lib/typescript/pages/faq.js';
 
 	import EquipmentBrowser from '#lib/svelte/components/page/EquipmentBrowser.svelte';
 	import Faq from '#lib/svelte/components/page/Faq.svelte';
@@ -47,12 +47,21 @@
 	}
 
 	const currentPage = getCurrentPageContext();
-	let canonicalPage = $derived(getCanonicalPageData(currentPage.path));
+	let { data }: {
+		data: {
+			canonicalPage: PageData | null;
+			faqItems: readonly FaqItem[];
+			equipmentItems: readonly EquipmentItem[];
+			npcItems: readonly PugilistNpc[];
+			companionItems: readonly Companion[];
+		}
+	} = $props();
+	let canonicalPage = $derived(data.canonicalPage);
 	let content = $derived(getTopLevelPageContent(canonicalPage));
 	let isEquipmentPage = $derived(currentPage.path === 'internals.equipment.page');
 	let isNpcsPage = $derived(currentPage.path === 'internals.npcs.page');
 	let isCompanionsPage = $derived(currentPage.path === 'internals.companions.page');
-	let faqItems = $derived(getFaqItems(currentPage.path));
+	let faqItems = $derived(data.faqItems);
 </script>
 
 {#if currentPage.data}
@@ -61,7 +70,7 @@
 			<PageHeader />
 
 			{#if isCompanionsPage}
-				<CompanionBrowser items={companionItems} />
+				<CompanionBrowser items={data.companionItems} />
 			{/if}
 
 			{#if content}
@@ -71,11 +80,11 @@
 			{/if}
 
 			{#if isEquipmentPage}
-				<EquipmentBrowser items={equipmentItems} />
+				<EquipmentBrowser items={data.equipmentItems} />
 			{/if}
 
 			{#if isNpcsPage}
-				<NpcBrowser items={pugilist.npcItems} />
+				<NpcBrowser items={data.npcItems} />
 			{/if}
 			{#if faqItems.length}
 				<Faq items={faqItems} />

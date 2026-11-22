@@ -30,7 +30,8 @@ describe('shared client bundle boundaries', () => {
 	});
 
 	it('keeps navbar search as a lazy dependency', () => {
-		expect(navbarSource).toMatch(/import\(['"]#lib\/typescript\/pages\/search\.js['"]\)/);
+		expect(navbarSource).toMatch(/import\(['"]#lib\/typescript\/pages\/navbar-search\.js['"]\)/);
+		expect(navbarSource).not.toContain("import('#lib/typescript/pages/search.js')");
 		expect(navbarSource).not.toMatch(/import\s*\{[^}]*searchWiki[^}]*\}\s*from\s*['"]#lib\/typescript\/pages\/search\.js['"]/);
 	});
 });

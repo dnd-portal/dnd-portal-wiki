@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 	import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
-	import type { SearchResult } from '#lib/typescript/pages/search.js';
+	import type { NavbarSearchResult } from '#lib/typescript/pages/navbar-search.js';
 	import type { NavbarDataType } from '#lib/typescript/components/_index_.js';
 
 	import Link from '#lib/svelte/components/Link.svelte';
@@ -21,7 +21,7 @@
 	let isNavbarHidden = $state(false);
 	let mobileSidebarOpen = $state(false);
 	let searchQuery = $state('');
-	let searchSuggestions = $state<readonly SearchResult[]>([]);
+	let searchSuggestions = $state<readonly NavbarSearchResult[]>([]);
 	let searchSuggestionsOpen = $state(false);
 
 	$effect(() => {
@@ -32,9 +32,11 @@
 		}
 
 		let active = true;
-		import('#lib/typescript/pages/search.js').then(({ searchWiki }) => {
+		import('#lib/typescript/pages/navbar-search.js').then(({ searchNavbar }) => {
 			if (active) {
-				searchSuggestions = searchWiki(query).slice(0, 6);
+				searchNavbar(query).then((results) => {
+					if (active) searchSuggestions = results;
+				});
 			}
 		});
 
@@ -115,7 +117,7 @@
 		window.dispatchEvent(new CustomEvent('dnd-portal:toggle-mobile-sidebar'));
 	}
 
-	function getSuggestionHref(result: SearchResult): string {
+	function getSuggestionHref(result: NavbarSearchResult): string {
 		return getValidUrl(result.href);
 	}
 

@@ -17,8 +17,9 @@
 	},
 	"scripts": {
 		"generate:runtime": "node scripts/generate-runtime-metadata.mjs",
-		"dev": "pnpm generate:runtime && vite dev",
-		"build": "pnpm generate:runtime && vite build",
+		"generate:search-index": "node scripts/generate-navbar-search-index.mjs",
+		"dev": "pnpm generate:runtime && pnpm generate:search-index && vite dev",
+		"build": "pnpm generate:runtime && pnpm generate:search-index && vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"audit:prelive": "node scripts/audit-prelive.mjs",
