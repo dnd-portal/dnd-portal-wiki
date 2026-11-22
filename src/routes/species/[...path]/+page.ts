@@ -78,7 +78,7 @@ async function readJson<T>(fetcher: typeof fetch, relativePath: string): Promise
 }
 
 export const load: PageLoad = async ({ params, fetch }) => {
-  const parts = params.path.split('/');
+  const parts = params.path.split('/').filter(Boolean);
   const species = parts[0];
   const explicitEdition = parts[1];
 
