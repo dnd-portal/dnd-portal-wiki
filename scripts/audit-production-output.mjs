@@ -124,3 +124,7 @@ for (const { filePath } of htmlFiles) {
 		throw new Error(`${path.relative(buildRoot, filePath)} contains prerendered popup content.`);
 	}
 }
+
+// This CLI has completed all synchronous output checks. Exit explicitly so
+// incidental handles inherited from the build environment cannot hang CI.
+process.exit(0);

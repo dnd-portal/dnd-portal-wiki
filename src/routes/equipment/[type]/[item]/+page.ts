@@ -5,9 +5,13 @@
 import {
 	equipmentItems,
 	getEquipmentItemBySlug,
-	getEquipmentItemTypeSlug
+	getEquipmentItemTypeSlug,
+	getEquipmentItemPathKey
 } from '#lib/typescript/data/internals/equipment-items.js';
 import { createEquipmentSeoMetadata } from '#lib/typescript/pages/seo.js';
+import { getData } from '#lib/typescript/data/_index_.js';
+import { createRoutePageData } from '#lib/typescript/pages/routePageData.js';
+import type { PageData, PagePath } from '#lib/typescript/data/_index_.js';
 
 export function entries() {
 	return equipmentItems.map((item) => ({
@@ -24,6 +28,10 @@ export function load({ params }) {
 	}
 
 	return {
-		seo: createEquipmentSeoMetadata(item)
+		seo: createEquipmentSeoMetadata(item),
+		routePageData: createRoutePageData(
+			`internals.equipment.${getEquipmentItemPathKey(item)}` as PagePath,
+			getData(`internals.equipment.${getEquipmentItemPathKey(item)}` as PagePath) as PageData
+		)
 	};
 }

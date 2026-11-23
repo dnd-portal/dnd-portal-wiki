@@ -23,9 +23,14 @@
 		images?: Partial<Record<ImageGender, ResponsiveImageData>>;
 		tags?: readonly string[];
 	};
+	type CardData = Pick<
+		PageData,
+		'href' | 'external' | 'title' | 'label' | 'description' | 'descriptions' | 'images' | 'img' | 'tags'
+	>;
 
 	let {
 		page,
+		cardData,
 		fallback,
 		variant = 'icon',
 		imageGender,
@@ -36,6 +41,7 @@
 		density = 'regular'
 	}: {
 		page?: PagePath | string;
+		cardData?: CardData;
 		fallback?: CardFallback;
 		variant?: CardVariant;
 		imageGender?: ImageGender;
@@ -46,13 +52,13 @@
 		density?: CardDensity;
 	} = $props();
 
-	let pageData: PageData | undefined = $derived(
-		page ? (getRuntimeData(page as PagePath) as unknown as PageData) : undefined
+	let pageData: CardData | undefined = $derived(
+		cardData ?? (page ? (getRuntimeData(page as PagePath) as unknown as PageData) : undefined)
 	);
 	let resolvedImageGender = $state<ImageGender | null>(null);
 	let displayGender = $derived(imageGender ?? resolvedImageGender ?? 'female');
 	let cardTitle = $derived(
-		page && pageData ? getPageLabel(page as PagePath) : fallback?.title
+		pageData?.label ?? (page && pageData ? getPageLabel(page as PagePath) : fallback?.title)
 	);
 	let cardSource = $derived(eyebrow ?? fallback?.source);
 	let cardDescription = $derived(
@@ -184,7 +190,7 @@
 				aria-hidden="true"
 			></span>
 
-			<h3>{getPageLabel(page as PagePath)}</h3>
+			<h3>{cardTitle}</h3>
 			<p>{cardDescription}</p>
 
 			<span class="pagecard__open">

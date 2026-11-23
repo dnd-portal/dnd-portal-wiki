@@ -10,6 +10,23 @@
 	import Link from '#lib/svelte/components/Link.svelte';
 	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 	import InlineContent from '#lib/svelte/components/page/InlineContent.svelte';
+	import type { PageProps } from './$types';
+	import type { PageData } from '#lib/typescript/data/_index_.js';
+	import type { RoutePageData } from '#lib/typescript/pages/routePageData.js';
+	import type { CurrentPageBreadcrumb } from '#lib/typescript/pages/currentPageData.js';
+	import { createSeoMetadata } from '#lib/typescript/pages/seo.js';
+	import SeoHead from '#lib/svelte/components/SeoHead.svelte';
+
+	let { data }: PageProps & { data: PageProps['data'] & { routePageData: RoutePageData<PageData> | null } } = $props();
+	let routeSeo = $derived(data.routePageData
+		? createSeoMetadata({
+				path: data.routePageData.identity.path,
+				pageData: data.routePageData.pageData,
+				routeLabel: data.routePageData.identity.label,
+				pathname: appPage.url.pathname,
+				breadcrumbs: (appPage.data as { currentPage?: { breadcrumbs?: readonly CurrentPageBreadcrumb[] } }).currentPage?.breadcrumbs ?? []
+			})
+		: null);
 
 	const currentPage = getCurrentPageContext();
 	let faqSegments = $derived((appPage.params.page ?? '').split('/').filter(Boolean));
@@ -28,10 +45,14 @@
 	})) ?? []);
 </script>
 
-{#if currentPage.data}
+{#if routeSeo}
+	<SeoHead seo={routeSeo} />
+{/if}
+
+{#if currentPage.data || data.routePageData}
 	<div class="page-layout">
 		<article class="wiki-article page-layout__article">
-			<PageHeader />
+			<PageHeader pageData={data.routePageData?.pageData} />
 
 			{#if question && group}
 				<header class="faq-article__header">

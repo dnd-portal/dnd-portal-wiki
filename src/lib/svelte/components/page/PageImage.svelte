@@ -4,7 +4,6 @@
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 	import {
 		resolveSessionImageGender,
 		setImageGenderPreference
@@ -13,15 +12,23 @@
 		ImageGender,
 		ResponsiveImageData
 	} from '#lib/typescript/data/_index_.js';
+	import type { PageData, PagePath } from '#lib/typescript/data/functions/Types/_index_.js';
 
-	let { presentation = 'default' }: { presentation?: 'default' | 'class-header' } = $props();
-	const currentPage = getCurrentPageContext();
+	let {
+		presentation = 'default',
+		imageSet: sourceImageSet,
+		path
+	}: {
+		presentation?: 'default' | 'class-header';
+		imageSet?: NonNullable<PageData['images']>['header'] | NonNullable<PageData['images']>['card'];
+		path?: PagePath | null;
+	} = $props();
 	let selectedGender = $state<ImageGender | null>(null);
 	let imageDialog = $state<HTMLDialogElement>();
 	let expandButton = $state<HTMLButtonElement>();
 
 	let imageSet = $derived(
-		currentPage.data?.images?.header ?? currentPage.data?.images?.card
+		sourceImageSet
 	);
 	let displayGender = $derived(selectedGender ?? 'female');
 	let image = $derived<ResponsiveImageData | undefined>(
@@ -29,8 +36,8 @@
 	);
 
 	onMount(() => {
-		if (currentPage.path) {
-			selectedGender = resolveSessionImageGender(currentPage.path);
+		if (path) {
+			selectedGender = resolveSessionImageGender(path);
 		}
 	});
 

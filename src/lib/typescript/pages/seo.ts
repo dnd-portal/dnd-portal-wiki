@@ -3,9 +3,8 @@
 	Use: Builds page-level SEO metadata from central page data and route overrides.
 */
 import type { PageData, PagePath } from '#lib/typescript/data/_index_.js';
-import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
-import { getBreadcrumbItems, getPageLabel } from './currentPage';
+import type { CurrentPageBreadcrumb } from './currentPageData.js';
 
 export type SeoMetadataInput = {
 	readonly title?: string;
@@ -65,7 +64,8 @@ function normalizeText(value: string): string {
 function getDisplayTitle(title: string): string {
 	return title
 		.replace(/^D&D Portal Wiki\s+-\s+/i, '')
-		.replace(/^D&D Portal\s+-\s+/i, '');
+		.replace(/^D&D Portal\s+-\s+/i, '')
+		.replace(/\s+FAQ\s+FAQ$/i, ' FAQ');
 }
 
 function formatTitle(title: string): string {
@@ -84,9 +84,7 @@ function getTitlePathSegments(canonicalPath: string): readonly string[] {
 		.filter(Boolean);
 }
 
-function getParentPageLabel(path: PagePath | null): string | null {
-	const items = getBreadcrumbItems(path);
-
+function getParentPageLabel(items: readonly CurrentPageBreadcrumb[]): string | null {
 	if (items.length < 2) {
 		return null;
 	}
@@ -97,12 +95,12 @@ function getParentPageLabel(path: PagePath | null): string | null {
 function formatContextTitle({
 	title,
 	pageData,
-	path,
+	breadcrumbs,
 	canonicalPath
 }: {
 	readonly title: string;
 	readonly pageData: PageData | null;
-	readonly path: PagePath | null;
+	readonly breadcrumbs: readonly CurrentPageBreadcrumb[];
 	readonly canonicalPath: string;
 }): string {
 	if (pageData?.seoTitle) {
@@ -122,7 +120,7 @@ function formatContextTitle({
 		}
 
 		if (segments.length >= 3) {
-			const parentLabel = getParentPageLabel(path);
+			const parentLabel = getParentPageLabel(breadcrumbs);
 			const classLabel = parentLabel && parentLabel !== 'Classes'
 				? parentLabel
 				: pageData?.subTitle.replace(/\s+subclass$/i, '') ?? '';
@@ -196,38 +194,36 @@ function createWebsiteStructuredData(description: string) {
 	};
 }
 
-function createBreadcrumbStructuredData(path: PagePath | null) {
-	const items = getBreadcrumbItems(path);
-
+function createBreadcrumbStructuredData(items: readonly CurrentPageBreadcrumb[]) {
 	if (items.length < 2) {
 		return null;
 	}
 
 	return {
 		'@type': 'BreadcrumbList',
-		'@id': `${getAbsoluteCanonicalUrl(getRuntimeData(items[items.length - 1].path!).href)}#breadcrumb`,
+		'@id': `${getAbsoluteCanonicalUrl(items[items.length - 1].href ?? '/')}#breadcrumb`,
 		itemListElement: items.map((item, index) => ({
 			'@type': 'ListItem',
 			position: index + 1,
 			name: item.label,
-			item: getAbsoluteCanonicalUrl(getRuntimeData(item.path!).href)
+			item: getAbsoluteCanonicalUrl(item.href ?? '/')
 		}))
 	};
 }
 
 function createStructuredDataJson({
-	path,
 	description,
-	canonicalPath
+	canonicalPath,
+	breadcrumbs
 }: {
-	readonly path: PagePath | null;
 	readonly description: string;
 	readonly canonicalPath: string;
+	readonly breadcrumbs: readonly CurrentPageBreadcrumb[];
 }): string | null {
 	const graph = [
 		...(canonicalPath === '/' ? [createWebsiteStructuredData(description)] : []),
 		...(canonicalPath !== '/'
-			? [createBreadcrumbStructuredData(path)].filter(Boolean)
+			? [createBreadcrumbStructuredData(breadcrumbs)].filter(Boolean)
 			: [])
 	];
 
@@ -245,19 +241,23 @@ export function createSeoMetadata({
 	path,
 	pageData,
 	routeSeo,
+	routeLabel,
+	breadcrumbs = [],
 	pathname,
 	basePath = ''
 }: {
 	readonly path: PagePath | null;
 	readonly pageData: PageData | null;
 	readonly routeSeo?: SeoMetadataInput;
+	readonly routeLabel?: string | null;
+	readonly breadcrumbs?: readonly CurrentPageBreadcrumb[];
 	readonly pathname: string;
 	readonly basePath?: string;
 }): SeoMetadata {
 	const image = routeSeo?.image ?? defaultImage;
 	const title =
 		routeSeo?.title ??
-		(path && pageData ? getPageLabel(path) : pageData?.title ?? siteName);
+		routeLabel ?? pageData?.title ?? siteName;
 	const description =
 		routeSeo?.description ??
 		pageData?.descriptions?.medium ??
@@ -272,7 +272,7 @@ export function createSeoMetadata({
 		title: formatContextTitle({
 			title,
 			pageData,
-			path,
+			breadcrumbs,
 			canonicalPath
 		}),
 		description: normalizedDescription,
@@ -289,9 +289,9 @@ export function createSeoMetadata({
 		appleTouchIconHref: appleTouchIcon.href,
 		manifestHref: manifest.href,
 		structuredDataJson: createStructuredDataJson({
-			path,
 			description: normalizedDescription,
-			canonicalPath
+			canonicalPath,
+			breadcrumbs
 		}),
 		type: routeSeo?.type ?? (canonicalPath === '/' ? 'website' : 'article'),
 		twitterCard: imageUrl.endsWith('.svg') ? 'summary' : 'summary_large_image'

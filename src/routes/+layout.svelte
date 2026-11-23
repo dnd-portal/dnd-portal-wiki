@@ -14,6 +14,8 @@
 		type SeoMetadataInput
 	} from '#lib/typescript/pages/seo.js';
 	import { setCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+	import type { CurrentPageRouteData } from '#lib/typescript/pages/currentPageData.js';
+	import type { PagePath } from '#lib/typescript/data/functions/Types/_index_.js';
 
 	import Breadcrumbs from '#lib/svelte/components/page/Breadcrumbs.svelte';
 	import Footer from '#lib/svelte/components/page/Footer.svelte';
@@ -22,20 +24,62 @@
 	import MobileNavigation from '#lib/svelte/components/page/MobileNavigation.svelte';
 	import Analytics from '#lib/svelte/components/Analytics.svelte';
 	import PopupHost from '#lib/svelte/components/PopupHost.svelte';
+	import SeoHead from '#lib/svelte/components/SeoHead.svelte';
 
 	const appBase = '';
 
 	const page = buildPage();
-	let routeData = $derived(appPage.data as { path?: string });
-	let currentPage = $derived(resolveCurrentPage(appPage.url.pathname, appBase, routeData.path));
+	let routeData = $derived(appPage.data as { path?: string; currentPage?: CurrentPageRouteData });
+	let faqRouteData = $derived(
+		(appPage.data as {
+			routePageData?: { identity: { path: string }; pageData: import('#lib/typescript/data/functions/Types/PageData.js').PageData } | null;
+		}).routePageData
+	);
+	let rulesRouteData = $derived(
+		(appPage.data as {
+			routePageData?: { identity: { path: string }; pageData: import('#lib/typescript/data/functions/Types/PageData.js').PageData } | null;
+		}).routePageData
+	);
+	let isFaqDetail = $derived(
+		appPage.url.pathname.startsWith('/faq/') && appPage.url.pathname !== '/faq/'
+	);
+	let isRulesDetail = $derived(
+		appPage.url.pathname.startsWith('/rules/') &&
+		appPage.url.pathname !== '/rules/spellcasting/cantrips/' &&
+		appPage.url.pathname !== '/rules/spellcasting/spells/' &&
+		!/^\/rules\/spellcasting\/spells\/[^/]+\/?$/.test(appPage.url.pathname) &&
+		Boolean(rulesRouteData)
+	);
+	let resolvedPage = $derived(
+		isFaqDetail || isRulesDetail
+			? {
+				path: ((isFaqDetail ? faqRouteData?.identity.path : rulesRouteData?.identity.path) as PagePath | undefined) ?? null,
+				data: isFaqDetail ? faqRouteData?.pageData ?? null : rulesRouteData?.pageData ?? null
+			}
+			: resolveCurrentPage(appPage.url.pathname, appBase, routeData.path)
+	);
+	let currentPage = $derived({
+		path: routeData.currentPage?.path ?? resolvedPage.path,
+		data: resolvedPage.data
+	});
 	let routeSeo = $derived((appPage.data as { seo?: SeoMetadataInput }).seo);
 	let seo = $derived(createSeoMetadata({
 		path: currentPage.path,
 		pageData: currentPage.data,
 		routeSeo,
+		routeLabel: routeData.currentPage?.label,
+		breadcrumbs: routeData.currentPage?.breadcrumbs,
 		pathname: appPage.url.pathname,
 		basePath: appBase
 	}));
+	let routeOwnsSeo = $derived(
+		(appPage.url.pathname.startsWith('/faq/') && appPage.url.pathname !== '/faq/') ||
+		(appPage.url.pathname.startsWith('/rules/') &&
+			appPage.url.pathname !== '/rules/spellcasting/cantrips/' &&
+			appPage.url.pathname !== '/rules/spellcasting/spells/' &&
+			!/^\/rules\/spellcasting\/spells\/[^/]+\/?$/.test(appPage.url.pathname)) ||
+		/^\/equipment\/[^/]+\/[^/]+\/?$/.test(appPage.url.pathname)
+	);
 	setCurrentPageContext({
 		get pathname() {
 			return appPage.url.pathname;
@@ -45,52 +89,16 @@
 		},
 		get data() {
 			return currentPage.data;
+		},
+		get route() {
+			return routeData.currentPage ?? null;
 		}
 	});
 
 	let { children }: { children: Snippet } = $props();
 </script>
 
-<svelte:head>
-	<link rel="icon" href={seo.faviconHref} sizes="any" />
-	<link rel="icon" type="image/svg+xml" href={seo.iconSvgHref} />
-	<link rel="icon" type="image/png" sizes="96x96" href={seo.icon96Href} />
-	<link rel="icon" type="image/png" sizes="192x192" href={seo.icon192Href} />
-	<link rel="icon" type="image/png" sizes="512x512" href={seo.icon512Href} />
-	<link rel="apple-touch-icon" sizes="180x180" href={seo.appleTouchIconHref} />
-	<link rel="manifest" href={seo.manifestHref} />
-	<title>{seo.title}</title>
-	<meta
-		name='description'
-		content={seo.description}
-	/>
-	<link rel="canonical" href={seo.canonicalUrl} />
-	<meta name="robots" content="index, follow" />
-	<meta name="theme-color" content="#0b0d0c" />
-	<meta property="og:site_name" content="D&D Portal Wiki" />
-	<meta property="og:type" content={seo.type} />
-	<meta property="og:title" content={seo.title} />
-	<meta property="og:description" content={seo.description} />
-	<meta property="og:url" content={seo.canonicalUrl} />
-	<meta property="og:image" content={seo.imageUrl} />
-	<meta property="og:image:alt" content={seo.imageAlt} />
-	<meta
-		property="og:image:width"
-		content={seo.imageWidth == null ? undefined : String(seo.imageWidth)}
-	/>
-	<meta
-		property="og:image:height"
-		content={seo.imageHeight == null ? undefined : String(seo.imageHeight)}
-	/>
-	<meta name="twitter:card" content={seo.twitterCard} />
-	<meta name="twitter:title" content={seo.title} />
-	<meta name="twitter:description" content={seo.description} />
-	<meta name="twitter:image" content={seo.imageUrl} />
-	<meta name="twitter:image:alt" content={seo.imageAlt} />
-	{#if seo.structuredDataJson}
-		{@html `<script type="application/ld+json">${seo.structuredDataJson}</script>`}
-	{/if}
-</svelte:head>
+<SeoHead {seo} enabled={!routeOwnsSeo} />
 
 <div class='layout'>
 	<Analytics />

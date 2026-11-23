@@ -14,11 +14,15 @@ import type {
 	PageData,
 	PagePath
 } from '#lib/typescript/data/functions/Types/_index_.js';
+import { normalizeInternalHref } from './pageUrls.js';
+import type { CurrentPageRouteData } from './currentPageData.js';
+export { getCanonicalInternalHref } from './pageUrls.js';
 
 export type CurrentPageContext = {
 	readonly pathname: string;
 	readonly path: PagePath | null;
 	readonly data: PageData | null;
+	readonly route: CurrentPageRouteData | null;
 };
 
 export type CurrentPageResolution = {
@@ -144,23 +148,6 @@ function collectPageEntries(
 	});
 }
 
-export function normalizeInternalHref(href: string, basePath = ''): string {
-	const parsedHref = href.split(/[?#]/, 1)[0] || homeHref;
-	const withoutBase =
-		basePath &&
-		parsedHref !== basePath &&
-		parsedHref.startsWith(`${basePath}/`)
-			? parsedHref.slice(basePath.length)
-			: parsedHref;
-	const normalized = withoutBase || homeHref;
-
-	if (normalized.length > 1 && normalized.endsWith('/')) {
-		return normalized.slice(0, -1);
-	}
-
-	return normalized;
-}
-
 const pageEntries = Object.entries(runtimeLinks)
 	.filter(([, value]) => isPageData(value))
 	.map(([path, value]) => [path as PagePath, value] as const);
@@ -171,25 +158,7 @@ const hrefToPagePath = new Map(
 	])
 );
 const pagePathSet = new Set<string>(pageEntries.map(([path]) => path));
-const fileExtensionPattern = /\.[A-Za-z0-9]+$/;
-
 export const homePagePath = hrefToPagePath.get(homeHref) ?? null;
-
-export function getCanonicalInternalHref(href: string, basePath = ''): string {
-	if (!href.startsWith('/') || href.startsWith('//')) {
-		return href;
-	}
-
-	if (/[?#]/.test(href) || fileExtensionPattern.test(href)) {
-		return `${basePath}${href}`;
-	}
-
-	const normalized = normalizeInternalHref(href, basePath);
-
-	return normalized === homeHref
-		? `${basePath}${homeHref}`
-		: `${basePath}${normalized}/`;
-}
 
 export function isLinkPath(path: string): path is LinkPath {
 	return isLinkData(getValue(path));

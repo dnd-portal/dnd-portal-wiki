@@ -6,37 +6,17 @@
 	const base: string = '';
 	import { page as appPage } from '$app/state';
 	import { goto } from '$app/navigation';
-	import {
-		getCanonicalInternalHref,
-		getBreadcrumbBackPath,
-		getBreadcrumbItems,
-		getDynamicSpellBreadcrumbItems,
-		homePagePath
-	} from '#lib/typescript/pages/currentPage.js';
+	import { getCanonicalInternalHref } from '#lib/typescript/pages/pageUrls.js';
 	import type { BreadcrumbItem } from '#lib/typescript/pages/currentPage.js';
-	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
-	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
 
 	import Link from '#lib/svelte/components/Link.svelte';
 
-	const currentPage = getCurrentPageContext();
-	const isDynamicSpellPath = (pathname: string): boolean => {
-		const parts = pathname.split('/').filter(Boolean);
-		return parts[0] === 'spells' && Boolean(parts[1]) && !['spellcasting', 'cantrips', 'level-1'].includes(parts[1]);
-	};
 	let { itemsOverride }: { itemsOverride?: readonly BreadcrumbItem[] } = $props();
-	let spellBreadcrumbs = $derived.by(() => {
-		if (itemsOverride || !isDynamicSpellPath(appPage.url.pathname)) return undefined;
-		const parts = appPage.url.pathname.split('/').filter(Boolean);
-		if (parts[0] !== 'spells' || !parts[1] || ['spellcasting', 'cantrips', 'level-1'].includes(parts[1])) return undefined;
-		const items = getDynamicSpellBreadcrumbItems(parts[1]);
-		return items.length ? items : undefined;
-	});
-	let items = $derived(itemsOverride ?? spellBreadcrumbs ?? getBreadcrumbItems(currentPage.path) ?? []);
-	let backPath = $derived(getBreadcrumbBackPath(items));
+	let routeData = $derived(appPage.data as { currentPage?: { path: string | null; breadcrumbs: readonly BreadcrumbItem[]; breadcrumbBackPath: string | null; breadcrumbBackHref: string | null } });
+	let items = $derived(itemsOverride ?? routeData.currentPage?.breadcrumbs ?? []);
+	let backHref = $derived(itemsOverride ? null : routeData.currentPage?.breadcrumbBackHref ?? null);
 	let shouldRender = $derived(
-		(itemsOverride ? items.length > 0 : (currentPage.path !== null && currentPage.path !== homePagePath) || Boolean(spellBreadcrumbs)) &&
-		items.length > 0
+		items.length > 0 && (itemsOverride || routeData.currentPage != null)
 	);
 
 	function getInternalUrl(href: string): string {
@@ -44,11 +24,11 @@
 	}
 
 	function goBack(): void {
-		if (!backPath) {
+		if (!backHref) {
 			return;
 		}
 
-		goto(getInternalUrl(getRuntimeData(backPath).href));
+		goto(getInternalUrl(backHref));
 	}
 </script>
 

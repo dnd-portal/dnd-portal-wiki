@@ -4,18 +4,20 @@ import { equipmentItems } from '#lib/typescript/data/internals/equipment-items.j
 import { pugilist } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
 import { getFaqItems, type FaqItem } from '#lib/typescript/pages/faq.js';
 import { resolveCurrentPage } from '#lib/typescript/pages/currentPage.js';
+import { createRoutePageData } from '#lib/typescript/pages/routePageData.js';
 
 export function load({ url }: { url: URL }) {
 	const path = resolveCurrentPage(url.pathname).path;
-
 	return {
 		canonicalPage: path ? getData(path) as PageData : null,
+		routePageData: path ? createRoutePageData(path, getData(path) as PageData) : null,
 		faqItems: getFaqItems(path),
 		equipmentItems,
 		npcItems: pugilist.npcItems,
 		companionItems
 	} satisfies {
 		canonicalPage: PageData | null;
+		routePageData: ReturnType<typeof createRoutePageData> | null;
 		faqItems: readonly FaqItem[];
 		equipmentItems: typeof equipmentItems;
 		npcItems: typeof pugilist.npcItems;

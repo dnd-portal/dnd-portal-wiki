@@ -1,6 +1,4 @@
 import { faq } from '#lib/typescript/data/internals/faq.js';
-import { getFaqGroup, getFaqQuestion } from '#lib/typescript/data/internals/faq.js';
-import { error } from '@sveltejs/kit';
 
 export const prerender = true;
 
@@ -12,19 +10,4 @@ export function entries() {
 			page: page.href.replace(/^\/faq\//, '').replace(/\/$/, '')
 		}))
 	);
-}
-
-export function load({ params }) {
-	const segments = (params.page ?? '').split('/').filter(Boolean);
-	const group = getFaqGroup(segments[0] ?? '');
-
-	if (!group) {
-		throw error(404, 'FAQ group not found');
-	}
-
-	if (segments[1] && !getFaqQuestion(group.slug, segments[1])) {
-		throw error(404, 'FAQ question not found');
-	}
-
-	return {};
 }

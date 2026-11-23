@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { getDynamicSpellBreadcrumbItems } from '#lib/typescript/pages/currentPage.js';
 import { getData } from '#lib/typescript/data/_index_.js';
 import { createSeoMetadata } from '#lib/typescript/pages/seo.js';
+import { createRoutePageData } from '#lib/typescript/pages/routePageData.js';
 
 describe('D&D Portal test environment', () => {
     it('runs unit tests successfully', () => {
@@ -32,5 +33,20 @@ describe('D&D Portal test environment', () => {
 		expect(homebrew.title).not.toBe(wiki.title);
 		expect(homebrew.title).toContain('Homebrew');
 		expect(homebrew.canonicalUrl).toContain('/homebrew/eldor/magic-items/mimic-stick/');
+	});
+
+	it('projects canonical page data into a typed route-owned contract', () => {
+		const pageData = getData('internals.magicItems.mimicStick');
+		const routeData = createRoutePageData('internals.magicItems.mimicStick', pageData, {
+			kind: 'wiki'
+		});
+
+		expect(routeData.identity).toEqual({
+			path: 'internals.magicItems.mimicStick',
+			href: pageData.href,
+			label: routeData.identity.label
+		});
+		expect(routeData.pageData).toBe(pageData);
+		expect(routeData.content).toEqual({ kind: 'wiki' });
 	});
 });

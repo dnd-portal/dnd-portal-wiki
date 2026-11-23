@@ -34,6 +34,26 @@ const ignoredPlaceholderLineParts = [
 	'placeholder ??',
 	'temporary placeholders'
 ];
+const auditTimeoutMs = Number(process.env.PRELIVE_AUDIT_TIMEOUT_MS ?? 120_000);
+const verbose = process.env.PRELIVE_AUDIT_VERBOSE === 'true';
+
+function diagnostic(message) {
+	if (verbose) console.error(`[audit-prelive] ${message}`);
+}
+
+async function withTimeout(operation, label, timeoutMs = auditTimeoutMs) {
+	let timer;
+	try {
+		return await Promise.race([
+			operation,
+			new Promise((_, reject) => {
+				timer = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs} ms`)), timeoutMs);
+			})
+		]);
+	} finally {
+		if (timer) clearTimeout(timer);
+	}
+}
 
 function isRecord(value) {
 	return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -97,6 +117,41 @@ function getBuildHtmlFiles() {
 	return getBuildFiles()
 		.filter((file) => extname(file) === '.html')
 		.filter((file) => toPosixPath(file.slice(buildDir.length + 1)) !== '404.html');
+}
+
+function collectRouteDataRegressionFindings() {
+	const findings = [];
+	const routePrefixes = ['faq/', 'rules/', 'equipment/'];
+
+	for (const file of getBuildHtmlFiles()) {
+		const relative = toPosixPath(file.slice(buildDir.length + 1));
+		if (!routePrefixes.some((prefix) => relative.startsWith(prefix))) continue;
+
+		const content = readFileSync(file, 'utf8');
+		const title = decodeHtmlEntities(content.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? '');
+		const isFaq = relative.startsWith('faq/');
+		const isRules = relative.startsWith('rules/');
+		if (!title || /^Page Not Found(?: - D&D Portal Wiki)?$/i.test(title)) {
+			findings.push(`${relative} rendered without a valid route title`);
+		}
+		if (isFaq && /FAQ\s+FAQ/i.test(title)) {
+			findings.push(`${relative} contains a duplicated FAQ title suffix`);
+		}
+		if (isFaq || isRules) {
+			const count = (pattern) => (content.match(pattern) ?? []).length;
+			if (count(/<title>/gi) !== 1) findings.push(`${relative} has duplicate title metadata`);
+			if (count(/<link[^>]+rel=["']canonical["']/gi) !== 1) findings.push(`${relative} has duplicate canonical metadata`);
+			if (count(/<meta[^>]+name=["']description["']/gi) !== 1) findings.push(`${relative} has duplicate description metadata`);
+		}
+		if (!content.includes('class="wiki-article')) {
+			findings.push(`${relative} rendered without a wiki article`);
+		}
+		if ((isFaq || isRules) && (content.match(/class="page-header(?:\s|\")/g) ?? []).length !== 1) {
+			findings.push(`${relative} does not contain exactly one PageHeader`);
+		}
+	}
+
+	return findings;
 }
 
 function collectLinks(value, path = '') {
@@ -689,11 +744,21 @@ const server = await createServer({
 });
 
 try {
-	const { data } = await server.ssrLoadModule('/src/lib/typescript/data/_index_.ts');
-	const { base } = await server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts');
-	const { spells } = await server.ssrLoadModule(
-		'/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts'
+	diagnostic('Vite SSR module loading started');
+	const { data } = await withTimeout(
+		server.ssrLoadModule('/src/lib/typescript/data/_index_.ts'),
+		'canonical data SSR module load'
 	);
+	diagnostic('Canonical data loaded');
+	const { base } = await withTimeout(
+		server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts'),
+		'core data SSR module load'
+	);
+	diagnostic('Core data loaded');
+	const { spells } = await withTimeout(server.ssrLoadModule(
+		'/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts'
+	), 'spell data SSR module load');
+	diagnostic('Spell data loaded');
 	const productionOrigin = base.siteLink.replace(/\/$/, '');
 	const links = collectLinks(data);
 	const pages = links.filter(({ value }) => isPageData(value));
@@ -735,9 +800,11 @@ try {
 		...spells.map((spell) => `/spells/${spell.slug}`)
 	];
 	const crawlBuilt = shouldCrawlBuiltOutput();
+	diagnostic(`Route validation starting for ${routeUrls.length} URLs`);
 	const crawlFailures = crawlBuilt
 		? await crawlBuiltOutput(routeUrls)
 		: await crawlUrls(crawlBaseUrl, routeUrls);
+	diagnostic('Route validation completed');
 	const prerenderOriginFindings = collectPrerenderOriginFindings();
 	const generatedHtmlSeoFindings = crawlBuilt
 		? collectGeneratedHtmlSeoFindings(productionOrigin)
@@ -758,6 +825,9 @@ try {
 				invalidJsonLd: [],
 				redirects: []
 			};
+	const routeDataRegressionFindings = crawlBuilt
+		? collectRouteDataRegressionFindings()
+		: [];
 	const placeholderFindings = collectPlaceholderFindings()
 		.map((finding) => `${finding.file}:${finding.line} ${finding.text}`);
 
@@ -782,6 +852,7 @@ try {
 		report('generated public files without sveltekit-prerender origin', prerenderOriginFindings),
 		report('generated canonical URLs use HTTPS production URLs', generatedHtmlSeoFindings.badCanonicals),
 		report('generated pages have titles', generatedHtmlSeoFindings.missingTitles),
+		report('route data renders FAQ, rules and equipment pages', routeDataRegressionFindings),
 		report('generated page titles are unique', generatedHtmlSeoFindings.duplicateTitles),
 		report('generated pages have meta descriptions', generatedHtmlSeoFindings.missingDescriptions),
 		report('generated pages have exactly one H1', generatedHtmlSeoFindings.h1Counts),
@@ -800,5 +871,13 @@ try {
 
 	process.exitCode = failed ? 1 : 0;
 } finally {
-	await server.close();
+	// Vite's middleware server can retain watcher handles on Windows after all
+	// checks have completed. Bound cleanup so this audit has a deterministic
+	// process result instead of hanging after printing its findings.
+	await Promise.race([
+		server.close(),
+		new Promise((resolve) => setTimeout(resolve, 1000))
+	]);
 }
+
+process.exit(process.exitCode ?? 0);

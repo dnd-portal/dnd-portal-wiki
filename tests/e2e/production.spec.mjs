@@ -33,6 +33,88 @@ test('deep spell route preserves breadcrumbs and hydrates without console errors
 	expect(errors).toEqual([]);
 });
 
+test('FAQ route owns its prerendered SEO without duplicate metadata', async ({ page }) => {
+	const errors = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.goto('/faq/acid-splash-5e/');
+	await expect(page).toHaveTitle('Acid Splash 5e FAQ - D&D Portal Wiki');
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://dnd-portal.com/faq/acid-splash-5e/');
+	await expect(page.locator('meta[name="description"]')).toHaveCount(1);
+	await expect(page.locator('.page-header')).toHaveCount(1);
+	await expect(page.locator('.page-header h1')).toContainText('Acid Splash 5e FAQ');
+	await expect(page.locator('article.wiki-article')).toBeVisible();
+	await page.locator('a[href="/"]').first().click();
+	await expect(page).toHaveURL(/\/$/);
+	await page.goto('/faq/acid-splash-5e/');
+	await expect(page).toHaveTitle('Acid Splash 5e FAQ - D&D Portal Wiki');
+	await expect(page.locator('.page-header')).toHaveCount(1);
+	expect(errors).toEqual([]);
+});
+
+test('root layout consumes FAQ child route data during navigation', async ({ page }) => {
+	await page.goto('/');
+	await page.goto('/faq/acid-splash-5e/');
+	await expect(page).toHaveTitle('Acid Splash 5e FAQ - D&D Portal Wiki');
+	await expect(page.locator('.page-header h1')).toContainText('Acid Splash 5e FAQ');
+	await page.goto('/spells/');
+	await expect(page.locator('.page-header')).toHaveCount(1);
+	await page.goto('/faq/acid-splash-5e/');
+	await expect(page.locator('.page-header h1')).toContainText('Acid Splash 5e FAQ');
+});
+
+test('root layout consumes Rules child route data without changing spell indexes', async ({ page }) => {
+	await page.goto('/rules/combat/attack-roll/');
+	await expect(page.locator('.page-header h1')).toBeVisible();
+	await expect(page.locator('article.wiki-article')).toContainText('Attack Roll');
+	await page.goto('/rules/spellcasting/cantrips/');
+	await expect(page.locator('.page-header')).toHaveCount(1);
+	await expect(page).toHaveTitle(/Cantrips/);
+	await page.goBack();
+	await expect(page).toHaveURL(/rules\/combat\/attack-roll/);
+	await page.goto('/rules/combat/attack-roll/');
+	await expect(page.locator('.page-header h1')).toBeVisible();
+});
+
+test('rules route owns SEO and remains navigable', async ({ page }) => {
+	const errors = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.goto('/rules/combat/attack-roll/');
+	await expect(page.locator('article.wiki-article')).toBeVisible();
+	await expect(page.locator('.page-header')).toHaveCount(1);
+	await expect(page.locator('title')).toHaveCount(1);
+	await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+	await expect(page.locator('meta[name="description"]')).toHaveCount(1);
+	expect(errors).toEqual([]);
+});
+
+test('equipment detail route owns SEO and remains navigable', async ({ page }) => {
+	const errors = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.goto('/equipment/adventuring-gear/torch/');
+	await expect(page.locator('article.wiki-article')).toBeVisible();
+	await expect(page.locator('.equipment-detail__header')).toHaveCount(1);
+	await expect(page.locator('title')).toHaveCount(1);
+	await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+	await expect(page.locator('meta[name="description"]')).toHaveCount(1);
+	expect(errors).toEqual([]);
+});
+
+test('homebrew magic-item cards render from explicit route metadata', async ({ page }) => {
+	await page.goto('/homebrew/eldor/magic-items/');
+	const card = page.locator('.pagecard--image').first();
+	await expect(card).toBeVisible();
+	await expect(card.locator('h3')).toHaveText('The Mimic Stick');
+	await expect(card).toHaveAttribute('href', '/homebrew/eldor/magic-items/mimic-stick/');
+});
+
+test('class cards render from route-owned class metadata', async ({ page }) => {
+	await page.goto('/classes/');
+	const card = page.locator('.pagecard--image').filter({ hasText: 'Artificer' }).first();
+	await expect(card).toBeVisible();
+	await expect(card).toHaveAttribute('href', '/classes/artificer/');
+	await expect(card.locator('img')).toHaveCount(1);
+});
+
 test('keyboard focus exposes a popup relationship without changing anchor semantics', async ({ page }) => {
 	await page.goto('/');
 	const link = page.locator('a[aria-describedby="wiki-shared-popup"]').first();

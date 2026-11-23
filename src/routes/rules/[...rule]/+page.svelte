@@ -3,6 +3,7 @@
 	Use: Generic data-driven rule pages.
 -->
 <script lang="ts">
+	import { page as appPage } from '$app/state';
 	import {
 		data,
 		type PageContentSection as PageContentSectionData,
@@ -21,6 +22,22 @@
 	import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
 	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
 	import TableOfContents from '#lib/svelte/components/page/TableOfContents.svelte';
+	import type { PageProps } from './$types';
+	import type { RoutePageData } from '#lib/typescript/pages/routePageData.js';
+	import { createSeoMetadata } from '#lib/typescript/pages/seo.js';
+	import type { CurrentPageBreadcrumb } from '#lib/typescript/pages/currentPageData.js';
+	import SeoHead from '#lib/svelte/components/SeoHead.svelte';
+
+	let { data: pageData }: PageProps & { data: PageProps['data'] & { routePageData: RoutePageData<PageData> | null } } = $props();
+	let routeSeo = $derived(pageData.routePageData
+		? createSeoMetadata({
+				path: pageData.routePageData.identity.path,
+				pageData: pageData.routePageData.pageData,
+				routeLabel: pageData.routePageData.identity.label,
+				pathname: appPage.url.pathname,
+				breadcrumbs: (pageData as unknown as { currentPage?: { breadcrumbs?: readonly CurrentPageBreadcrumb[] } }).currentPage?.breadcrumbs ?? []
+			})
+		: null);
 
 	type RulePageContent = {
 		readonly sections: readonly PageContentSectionData[];
@@ -109,10 +126,14 @@
 	let faqItems = $derived(getFaqItems(currentPage.path));
 </script>
 
-{#if currentPage.data}
+{#if routeSeo}
+	<SeoHead seo={routeSeo} />
+{/if}
+
+{#if currentPage.data || pageData.routePageData}
 	<div class="page-layout">
 		<article class="wiki-article page-layout__article">
-			<PageHeader />
+			<PageHeader pageData={pageData.routePageData?.pageData} />
 
 			{#if content}
 				{#each content.sections as section}

@@ -6,6 +6,7 @@
 		getHomebrewMagicItemPagePath,
 		getHomebrewMagicItems
 	} from '#lib/typescript/data/internals/homebrew/_index_.js';
+	import { magicItemPages } from '#lib/typescript/data/core/internals/homebrew/eldor/magic-items/_index_.js';
 
 	let category = $derived(page.params.category);
 	let items = $derived(getHomebrewMagicItems(page.params.collection ?? '', category ?? ''));
@@ -23,6 +24,7 @@
 					{#if itemPage}
 						<PageCard
 							page={itemPage}
+							cardData={magicItemPages[item.slug]}
 							variant="image"
 							eyebrow={`${item.type} · ${item.rarity}${item.attunement ? ' · Requires attunement' : ''}`}
 						/>
