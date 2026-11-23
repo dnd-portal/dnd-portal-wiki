@@ -10,6 +10,8 @@
         InlineContentBlock,
     } from '#lib/typescript/data/_index_.js';
     import type { Snippet } from 'svelte';
+    import type { PageData } from '#lib/typescript/data/_index_.js';
+    import type { PageHeaderMetadata } from '#lib/typescript/pages/metadata.js';
 
     import InlineContent from './InlineContent.svelte';
     import PageImage from './PageImage.svelte';
@@ -47,6 +49,7 @@
         subtitleText,
         headerMeta,
         children,
+        metadata,
     }: {
         description?: 'short' | 'long';
         showHeaderSections?: boolean;
@@ -56,6 +59,7 @@
         subtitleText?: string;
         headerMeta?: Snippet;
         children?: Snippet;
+        metadata?: PageHeaderMetadata;
     } = $props();
     let descriptionParagraphs = $derived(
         descriptionText || descriptionContent
@@ -65,19 +69,24 @@
               )
             : description === 'short'
               ? getDescriptionParagraphs(
-                    currentPage.data?.descriptions?.short,
+                    metadata?.description ?? currentPage.data?.descriptions?.short,
                     currentPage.data?.description ?? '',
                 )
               : getDescriptionParagraphs(
-                    currentPage.data?.descriptions?.long,
+                    metadata?.description ?? currentPage.data?.descriptions?.long,
                     currentPage.data?.description ?? '',
                 ),
     );
-    let imageSet = $derived(currentPage.data?.images?.header ?? currentPage.data?.images?.card);
+    let imageSet = $derived(
+        metadata?.images?.header ??
+            metadata?.images?.card ??
+            currentPage.data?.images?.header ??
+            currentPage.data?.images?.card,
+    );
     let hasHeaderImage = $derived(Boolean(imageSet?.female ?? imageSet?.male));
 </script>
 
-{#if (titleText && subtitleText) || (currentPage.path && currentPage.data)}
+{#if (titleText && subtitleText) || metadata || (currentPage.path && currentPage.data)}
     <section
         class="page-header"
         id="class-overview"
@@ -85,10 +94,14 @@
     >
         <div class="page-header__content">
             <p class="page-header__subtitle">
-                {subtitleText ?? currentPage.data?.subTitle}
+                {subtitleText ?? metadata?.subtitle ?? currentPage.data?.subTitle}
             </p>
 
-            <h1>{titleText ?? (currentPage.path ? getPageLabel(currentPage.path) : '')}</h1>
+            <h1>
+                {titleText ??
+                    metadata?.title ??
+                    (currentPage.path ? getPageLabel(currentPage.path) : '')}
+            </h1>
 
             {@render headerMeta?.()}
 
@@ -100,9 +113,9 @@
                 {/each}
             </div>
 
-            {#if showHeaderSections && currentPage.data?.header?.sections?.length}
+            {#if showHeaderSections && (metadata?.sections ?? currentPage.data?.header?.sections)?.length}
                 <div class="page-header__sections">
-                    {#each currentPage.data?.header?.sections ?? [] as section}
+                    {#each metadata?.sections ?? currentPage.data?.header?.sections ?? [] as section}
                         <section
                             class="page-header__section"
                             id={section.id}
@@ -123,6 +136,10 @@
             {@render children?.()}
         </div>
 
-        <PageImage presentation={description === 'short' ? 'class-header' : 'default'} />
+        <PageImage
+            presentation={description === 'short' ? 'class-header' : 'default'}
+            images={metadata?.images}
+            routePath={metadata?.identity.path}
+        />
     </section>
 {/if}

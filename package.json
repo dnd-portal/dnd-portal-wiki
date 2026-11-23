@@ -27,6 +27,7 @@
         "audit:prelive": "node scripts/audit-prelive.mjs",
         "audit:prelive:crawl": "node scripts/audit-prelive.mjs --crawl-built",
         "audit:production": "node scripts/audit-production-output.mjs",
+        "audit:baseline": "node scripts/generate-runtime-metadata-baseline.mjs",
         "check": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:tsgo": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",

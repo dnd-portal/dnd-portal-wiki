@@ -4,6 +4,7 @@
     import type { LinkPath } from '#lib/typescript/data/_index_.js';
     import { getFaqGroup, getFaqQuestion } from '#lib/typescript/data/internals/faq.js';
     import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+    import type { RoutePageData } from '#lib/typescript/pages/metadata.js';
 
     import NotFound from '#lib/svelte/components/page/NotFound.svelte';
     import Faq from '#lib/svelte/components/page/Faq.svelte';
@@ -12,6 +13,10 @@
     import InlineContent from '#lib/svelte/components/page/InlineContent.svelte';
 
     const currentPage = getCurrentPageContext();
+    let routePageData = $derived(
+        (appPage.data as { routePageData?: RoutePageData | null }).routePageData,
+    );
+    let isMigratedRoute = $derived(appPage.params.page === 'acid-splash-5e');
     let faqSegments = $derived((appPage.params.page ?? '').split('/').filter(Boolean));
     const group = $derived(getFaqGroup(faqSegments[0] ?? ''));
     const question = $derived(
@@ -30,10 +35,10 @@
     );
 </script>
 
-{#if currentPage.data}
+{#if routePageData || (!isMigratedRoute && currentPage.data)}
     <div class="page-layout">
         <article class="wiki-article page-layout__article">
-            <PageHeader />
+            <PageHeader metadata={routePageData?.header} />
 
             {#if question && group}
                 <header class="faq-article__header">

@@ -33,6 +33,7 @@
             : [],
     );
     let pageContent = $derived(data.pageContent ?? classData?.content);
+    let routePageData = $derived(data.routePageData ?? null);
     let faqItems = $derived.by(() => {
         const slug = resolvedRoute?.baseClassSlug;
         if (!slug) return [];
@@ -83,6 +84,7 @@
 {:else if pageContent && resolvedRoute}
     <ClassPageContent
         content={pageContent as ClassPageContentData}
+        headerMetadata={routePageData?.header}
         {faqItems}
         header={{
             title: classData?.page.label ?? 'Barbarian',

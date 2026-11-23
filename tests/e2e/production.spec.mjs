@@ -42,6 +42,51 @@ test('deep spell route preserves breadcrumbs and hydrates without console errors
     expect(errors).toEqual([]);
 });
 
+test('FAQ route renders its route-owned header and metadata', async ({ page }) => {
+    const errors = [];
+    page.on('console', (message) => {
+        if (message.type() === 'error') errors.push(message.text());
+    });
+
+    await page.goto('/faq/acid-splash-5e/');
+    await expect(page.locator('.page-header')).toHaveCount(1);
+    await expect(page.getByRole('heading', { name: /Acid Splash 5e FAQ/i })).toBeVisible();
+    await expect(page.locator('article.wiki-article')).toContainText('Acid Splash');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        'href',
+        /\/faq\/acid-splash-5e\/$/,
+    );
+    await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
+
+    await page.goto('/faq/');
+    await page.locator('a[href="/faq/acid-splash-5e/"]').first().click();
+    await expect(page).toHaveURL(/\/faq\/acid-splash-5e\/$/);
+    await expect(page.locator('.page-header')).toHaveCount(1);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/faq\/$/);
+    expect(errors).toEqual([]);
+});
+
+test('representative class, species and spell routes retain route metadata', async ({ page }) => {
+    await page.goto('/classes/wizard/');
+    await expect(page.getByRole('heading', { name: /Wizard/i }).first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        'href',
+        /\/classes\/wizard\//,
+    );
+
+    await page.goto('/species/elf/');
+    await expect(page.getByRole('heading', { name: /Elf/i }).first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/species\/elf\//);
+
+    await page.goto('/spells/fireball/');
+    await expect(page.getByRole('heading', { name: 'Fireball' }).first()).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        'href',
+        /\/spells\/fireball\//,
+    );
+});
+
 test('keyboard focus exposes a popup relationship without changing anchor semantics', async ({
     page,
 }) => {
