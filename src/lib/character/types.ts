@@ -1,10 +1,5 @@
 export type AbilityName =
-    | 'strength'
-    | 'dexterity'
-    | 'constitution'
-    | 'intelligence'
-    | 'wisdom'
-    | 'charisma';
+    'strength' | 'dexterity' | 'constitution' | 'intelligence' | 'wisdom' | 'charisma';
 
 export type SkillName =
     | 'acrobatics'

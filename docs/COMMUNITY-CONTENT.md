@@ -191,13 +191,13 @@ Completed, paused, and cancelled items sort after active work.
 Use a central data path:
 
 ```ts
-relatedPage: 'internals.classes.page'
+relatedPage: 'internals.classes.page';
 ```
 
 or:
 
 ```ts
-href: 'internals.community.roadmap'
+href: 'internals.community.roadmap';
 ```
 
 Do not write raw internal URLs such as `/classes/` when a data path exists.
@@ -207,16 +207,16 @@ Do not write raw internal URLs such as `/classes/` when a data path exists.
 Prefer existing external data paths:
 
 ```ts
-href: 'externals.github.issues'
-href: 'externals.github.releases'
-href: 'externals.discord.homepage'
-href: 'externals.discord.general'
+href: 'externals.github.issues';
+href: 'externals.github.releases';
+href: 'externals.discord.homepage';
+href: 'externals.discord.general';
 ```
 
 Use a full URL only when no central external link exists yet:
 
 ```ts
-githubUrl: 'https://github.com/toon-van-berkel/dnd-wiki/issues/123'
+githubUrl: 'https://github.com/toon-van-berkel/dnd-wiki/issues/123';
 ```
 
 ## Checks

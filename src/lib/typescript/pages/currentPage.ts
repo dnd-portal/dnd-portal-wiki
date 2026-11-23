@@ -4,171 +4,166 @@
 */
 
 import {
-	getRuntimeData,
-	getRuntimeSpellBreadcrumbMetadata,
- runtimeLinks
+    getRuntimeData,
+    getRuntimeSpellBreadcrumbMetadata,
+    runtimeLinks,
 } from '#lib/typescript/data/runtime/index.js';
 import type {
-	LinkData,
-	LinkPath,
-	PageData,
-	PagePath
+    LinkData,
+    LinkPath,
+    PageData,
+    PagePath,
 } from '#lib/typescript/data/functions/Types/_index_.js';
 
 export type CurrentPageContext = {
-	readonly pathname: string;
-	readonly path: PagePath | null;
-	readonly data: PageData | null;
+    readonly pathname: string;
+    readonly path: PagePath | null;
+    readonly data: PageData | null;
 };
 
 export type CurrentPageResolution = {
-	readonly path: PagePath | null;
-	readonly data: PageData | null;
+    readonly path: PagePath | null;
+    readonly data: PageData | null;
 };
 
 export type BreadcrumbItem = {
-	readonly key: string;
-	readonly path?: PagePath;
-	readonly label: string;
+    readonly key: string;
+    readonly path?: PagePath;
+    readonly label: string;
 };
 
 const spellLevelParent = (levelSlug: string): PagePath => {
-	if (levelSlug === 'cantrips') return 'internals.spells.cantrips';
-	const levelKey = {
-		'1st-level': 'firstLevel', '2nd-level': 'secondLevel', '3rd-level': 'thirdLevel',
-		'4th-level': 'fourthLevel', '5th-level': 'fifthLevel', '6th-level': 'sixthLevel',
-		'7th-level': 'seventhLevel', '8th-level': 'eighthLevel', '9th-level': 'ninthLevel'
-	}[levelSlug];
-	return `internals.spells.spellLevels.${levelKey ?? 'firstLevel'}` as PagePath;
+    if (levelSlug === 'cantrips') return 'internals.spells.cantrips';
+    const levelKey = {
+        '1st-level': 'firstLevel',
+        '2nd-level': 'secondLevel',
+        '3rd-level': 'thirdLevel',
+        '4th-level': 'fourthLevel',
+        '5th-level': 'fifthLevel',
+        '6th-level': 'sixthLevel',
+        '7th-level': 'seventhLevel',
+        '8th-level': 'eighthLevel',
+        '9th-level': 'ninthLevel',
+    }[levelSlug];
+    return `internals.spells.spellLevels.${levelKey ?? 'firstLevel'}` as PagePath;
 };
 
 export function getDynamicSpellBreadcrumbItems(slug: string): readonly BreadcrumbItem[] {
-	const spell = getRuntimeSpellBreadcrumbMetadata(slug);
-	if (!spell) return [];
-	const parent = spellLevelParent(spell[2]);
-	return [
-		{ key: 'internals.spells.page', path: 'internals.spells.page', label: 'Spells' },
-		{ key: parent, path: parent, label: spell[2] === 'cantrips' ? 'Cantrips' : spell[3] },
-		{ key: `/spells/${spell[0]}`, label: spell[1] }
-	];
+    const spell = getRuntimeSpellBreadcrumbMetadata(slug);
+    if (!spell) return [];
+    const parent = spellLevelParent(spell[2]);
+    return [
+        { key: 'internals.spells.page', path: 'internals.spells.page', label: 'Spells' },
+        { key: parent, path: parent, label: spell[2] === 'cantrips' ? 'Cantrips' : spell[3] },
+        { key: `/spells/${spell[0]}`, label: spell[1] },
+    ];
 }
 
 const homeHref = '/';
 
 function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
-	return typeof value === 'object' && value !== null && !Array.isArray(value);
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function hasStringProperty<
-	T extends Readonly<Record<string, unknown>>,
-	K extends string
->(value: T, key: K): value is T & Readonly<Record<K, string>> {
-	return typeof value[key] === 'string';
+function hasStringProperty<T extends Readonly<Record<string, unknown>>, K extends string>(
+    value: T,
+    key: K,
+): value is T & Readonly<Record<K, string>> {
+    return typeof value[key] === 'string';
 }
 
 function isLinkData(value: unknown): value is LinkData {
-	if (!isRecord(value)) {
-		return false;
-	}
+    if (!isRecord(value)) {
+        return false;
+    }
 
-	if (
-		!hasStringProperty(value, 'href') ||
-		typeof value.external !== 'boolean' ||
-		!hasStringProperty(value, 'title') ||
-		!hasStringProperty(value, 'subTitle') ||
-		!hasStringProperty(value, 'description') ||
-		!isRecord(value.img)
-	) {
-		return false;
-	}
+    if (
+        !hasStringProperty(value, 'href') ||
+        typeof value.external !== 'boolean' ||
+        !hasStringProperty(value, 'title') ||
+        !hasStringProperty(value, 'subTitle') ||
+        !hasStringProperty(value, 'description') ||
+        !isRecord(value.img)
+    ) {
+        return false;
+    }
 
-	return (
-		hasStringProperty(value.img, 'href') &&
-		hasStringProperty(value.img, 'alt')
-	);
+    return hasStringProperty(value.img, 'href') && hasStringProperty(value.img, 'alt');
 }
 
 function isPageData(value: unknown): value is PageData {
-	return isLinkData(value) && value.external === false;
+    return isLinkData(value) && value.external === false;
 }
 
 function getValue(path: string): unknown {
-	return runtimeLinks[path];
+    return runtimeLinks[path];
 }
 
 function toLinkPath(path: string, value: unknown): LinkPath {
-	if (!isLinkData(value)) {
-		throw new Error(`Path "${path}" does not resolve to link data.`);
-	}
+    if (!isLinkData(value)) {
+        throw new Error(`Path "${path}" does not resolve to link data.`);
+    }
 
-	return path as LinkPath;
+    return path as LinkPath;
 }
 
 function toPagePath(path: string, value: unknown): PagePath {
-	if (!isPageData(value)) {
-		throw new Error(`Path "${path}" does not resolve to page data.`);
-	}
+    if (!isPageData(value)) {
+        throw new Error(`Path "${path}" does not resolve to page data.`);
+    }
 
-	return path as PagePath;
+    return path as PagePath;
 }
 
 function shouldRecurseInto(key: string, value: unknown): boolean {
-	return (
-		isRecord(value) &&
-		key !== 'img' &&
-		key !== 'images' &&
-		key !== 'tags' &&
-		key !== 'descriptions' &&
-		key !== 'navigation'
-	);
+    return (
+        isRecord(value) &&
+        key !== 'img' &&
+        key !== 'images' &&
+        key !== 'tags' &&
+        key !== 'descriptions' &&
+        key !== 'navigation'
+    );
 }
 
-function collectPageEntries(
-	value: unknown,
-	path = ''
-): readonly [PagePath, PageData][] {
-	if (isPageData(value) && path) {
-		return [[toPagePath(path, value), value]];
-	}
+function collectPageEntries(value: unknown, path = ''): readonly [PagePath, PageData][] {
+    if (isPageData(value) && path) {
+        return [[toPagePath(path, value), value]];
+    }
 
-	if (!isRecord(value)) {
-		return [];
-	}
+    if (!isRecord(value)) {
+        return [];
+    }
 
-	return Object.entries(value).flatMap(([key, child]) => {
-		if (!shouldRecurseInto(key, child)) {
-			return [];
-		}
+    return Object.entries(value).flatMap(([key, child]) => {
+        if (!shouldRecurseInto(key, child)) {
+            return [];
+        }
 
-		return collectPageEntries(child, path ? `${path}.${key}` : key);
-	});
+        return collectPageEntries(child, path ? `${path}.${key}` : key);
+    });
 }
 
 export function normalizeInternalHref(href: string, basePath = ''): string {
-	const parsedHref = href.split(/[?#]/, 1)[0] || homeHref;
-	const withoutBase =
-		basePath &&
-		parsedHref !== basePath &&
-		parsedHref.startsWith(`${basePath}/`)
-			? parsedHref.slice(basePath.length)
-			: parsedHref;
-	const normalized = withoutBase || homeHref;
+    const parsedHref = href.split(/[?#]/, 1)[0] || homeHref;
+    const withoutBase =
+        basePath && parsedHref !== basePath && parsedHref.startsWith(`${basePath}/`)
+            ? parsedHref.slice(basePath.length)
+            : parsedHref;
+    const normalized = withoutBase || homeHref;
 
-	if (normalized.length > 1 && normalized.endsWith('/')) {
-		return normalized.slice(0, -1);
-	}
+    if (normalized.length > 1 && normalized.endsWith('/')) {
+        return normalized.slice(0, -1);
+    }
 
-	return normalized;
+    return normalized;
 }
 
 const pageEntries = Object.entries(runtimeLinks)
-	.filter(([, value]) => isPageData(value))
-	.map(([path, value]) => [path as PagePath, value] as const);
+    .filter(([, value]) => isPageData(value))
+    .map(([path, value]) => [path as PagePath, value] as const);
 const hrefToPagePath = new Map(
-	pageEntries.map(([path, pageData]) => [
-		normalizeInternalHref(pageData.href),
-		path
-	])
+    pageEntries.map(([path, pageData]) => [normalizeInternalHref(pageData.href), path]),
 );
 const pagePathSet = new Set<string>(pageEntries.map(([path]) => path));
 const fileExtensionPattern = /\.[A-Za-z0-9]+$/;
@@ -176,190 +171,181 @@ const fileExtensionPattern = /\.[A-Za-z0-9]+$/;
 export const homePagePath = hrefToPagePath.get(homeHref) ?? null;
 
 export function getCanonicalInternalHref(href: string, basePath = ''): string {
-	if (!href.startsWith('/') || href.startsWith('//')) {
-		return href;
-	}
+    if (!href.startsWith('/') || href.startsWith('//')) {
+        return href;
+    }
 
-	if (/[?#]/.test(href) || fileExtensionPattern.test(href)) {
-		return `${basePath}${href}`;
-	}
+    if (/[?#]/.test(href) || fileExtensionPattern.test(href)) {
+        return `${basePath}${href}`;
+    }
 
-	const normalized = normalizeInternalHref(href, basePath);
+    const normalized = normalizeInternalHref(href, basePath);
 
-	return normalized === homeHref
-		? `${basePath}${homeHref}`
-		: `${basePath}${normalized}/`;
+    return normalized === homeHref ? `${basePath}${homeHref}` : `${basePath}${normalized}/`;
 }
 
 export function isLinkPath(path: string): path is LinkPath {
-	return isLinkData(getValue(path));
+    return isLinkData(getValue(path));
 }
 
 export function resolveLinkPath(path: string): LinkPath | null {
-	return isLinkPath(path) ? toLinkPath(path, getValue(path)) : null;
+    return isLinkPath(path) ? toLinkPath(path, getValue(path)) : null;
 }
 
 export function resolveCurrentPage(
-	pathname: string,
-	basePath = '',
-	preferredPath?: string
+    pathname: string,
+    basePath = '',
+    preferredPath?: string,
 ): CurrentPageResolution {
-	const normalizedPathname = normalizeInternalHref(pathname, basePath);
-	if (preferredPath && pagePathSet.has(preferredPath)) {
-		const preferredData = getValue(preferredPath);
-		if (isPageData(preferredData) && normalizeInternalHref(preferredData.href) === normalizedPathname) {
-			return {
-				path: preferredPath as PagePath,
-				data: preferredData
-			};
-		}
-	}
-	const path = hrefToPagePath.get(normalizedPathname) ?? null;
+    const normalizedPathname = normalizeInternalHref(pathname, basePath);
+    if (preferredPath && pagePathSet.has(preferredPath)) {
+        const preferredData = getValue(preferredPath);
+        if (
+            isPageData(preferredData) &&
+            normalizeInternalHref(preferredData.href) === normalizedPathname
+        ) {
+            return {
+                path: preferredPath as PagePath,
+                data: preferredData,
+            };
+        }
+    }
+    const path = hrefToPagePath.get(normalizedPathname) ?? null;
 
-	if (!path) {
-		return {
-			path: null,
-			data: null
-		};
-	}
+    if (!path) {
+        return {
+            path: null,
+            data: null,
+        };
+    }
 
-	return {
-		path,
-		data: getRuntimeData(path) as unknown as PageData
-	};
+    return {
+        path,
+        data: getRuntimeData(path) as unknown as PageData,
+    };
 }
 
 function getNavigationParentPath(pageData: PageData): PagePath | null {
-	const parent = pageData.navigation?.parent;
+    const parent = pageData.navigation?.parent;
 
-	if (!parent || !pagePathSet.has(parent)) {
-		return null;
-	}
+    if (!parent || !pagePathSet.has(parent)) {
+        return null;
+    }
 
-	return toPagePath(parent, getValue(parent));
+    return toPagePath(parent, getValue(parent));
 }
 
 function getParentPathFromHref(pageData: PageData): PagePath | null {
-	const hrefParts = normalizeInternalHref(pageData.href)
-		.split('/')
-		.filter(Boolean);
+    const hrefParts = normalizeInternalHref(pageData.href).split('/').filter(Boolean);
 
-	while (hrefParts.length > 0) {
-		hrefParts.pop();
-		const parentHref = `/${hrefParts.join('/')}`;
-		const normalizedParentHref =
-			parentHref === '/' ? homeHref : normalizeInternalHref(parentHref);
-		const parentPath = hrefToPagePath.get(normalizedParentHref);
+    while (hrefParts.length > 0) {
+        hrefParts.pop();
+        const parentHref = `/${hrefParts.join('/')}`;
+        const normalizedParentHref =
+            parentHref === '/' ? homeHref : normalizeInternalHref(parentHref);
+        const parentPath = hrefToPagePath.get(normalizedParentHref);
 
-		if (parentPath) {
-			return parentPath;
-		}
-	}
+        if (parentPath) {
+            return parentPath;
+        }
+    }
 
-	return null;
+    return null;
 }
 
 function getParentPath(path: PagePath): PagePath | null {
-	const pageData = getRuntimeData(path) as unknown as PageData;
+    const pageData = getRuntimeData(path) as unknown as PageData;
 
-	return (
-		getNavigationParentPath(pageData) ??
-		getParentPathFromHref(pageData) ??
-		(path !== homePagePath ? homePagePath : null)
-	);
+    return (
+        getNavigationParentPath(pageData) ??
+        getParentPathFromHref(pageData) ??
+        (path !== homePagePath ? homePagePath : null)
+    );
 }
 
 function getDisplayTitle(title: string): string {
-	return title
-		.replace(/^D&D Portal Wiki\s+-\s+/i, '')
-		.replace(/^D&D Portal\s+-\s+/i, '');
+    return title.replace(/^D&D Portal Wiki\s+-\s+/i, '').replace(/^D&D Portal\s+-\s+/i, '');
 }
 
 export function getPageLabel(path: LinkPath | PagePath): string {
-	const link = getRuntimeData(path);
+    const link = getRuntimeData(path);
 
-	if ('label' in link && typeof link.label === 'string') {
-		return link.label;
-	}
+    if ('label' in link && typeof link.label === 'string') {
+        return link.label;
+    }
 
-	if (
-		'navigation' in link &&
-		isRecord(link.navigation) &&
-		hasStringProperty(link.navigation, 'label')
-	) {
-		return link.navigation.label;
-	}
+    if (
+        'navigation' in link &&
+        isRecord(link.navigation) &&
+        hasStringProperty(link.navigation, 'label')
+    ) {
+        return link.navigation.label;
+    }
 
-	return getDisplayTitle(link.title);
+    return getDisplayTitle(link.title);
 }
 
 export function getBreadcrumbItems(path: PagePath | null): readonly BreadcrumbItem[] {
-	if (!path) {
-		return [];
-	}
+    if (!path) {
+        return [];
+    }
 
-	const faqPathParts = path.split('.');
-	const isFaqArticlePath =
-		faqPathParts[0] === 'internals' &&
-		faqPathParts[1] === 'faq' &&
-		faqPathParts.length === 4 &&
-		faqPathParts[3] !== 'page';
+    const faqPathParts = path.split('.');
+    const isFaqArticlePath =
+        faqPathParts[0] === 'internals' &&
+        faqPathParts[1] === 'faq' &&
+        faqPathParts.length === 4 &&
+        faqPathParts[3] !== 'page';
 
-	if (isFaqArticlePath) {
-		const groupPathString = `internals.faq.${faqPathParts[2]}.page`;
-		const groupValue = getValue(groupPathString);
+    if (isFaqArticlePath) {
+        const groupPathString = `internals.faq.${faqPathParts[2]}.page`;
+        const groupValue = getValue(groupPathString);
 
-		if (isPageData(groupValue)) {
-			const groupPath = toPagePath(groupPathString, groupValue);
-			const faqIndexPath = getParentPath(groupPath);
-			const specialPaths = [homePagePath, faqIndexPath, groupPath, path].filter(
-				(item): item is PagePath => item !== null
-			);
+        if (isPageData(groupValue)) {
+            const groupPath = toPagePath(groupPathString, groupValue);
+            const faqIndexPath = getParentPath(groupPath);
+            const specialPaths = [homePagePath, faqIndexPath, groupPath, path].filter(
+                (item): item is PagePath => item !== null,
+            );
 
-			return specialPaths.map((itemPath) => ({
-				key: itemPath,
-				path: itemPath,
-				label: getPageLabel(itemPath)
-			}));
-		}
-	}
+            return specialPaths.map((itemPath) => ({
+                key: itemPath,
+                path: itemPath,
+                label: getPageLabel(itemPath),
+            }));
+        }
+    }
 
-	const seen = new Set<PagePath>();
-	const items: BreadcrumbItem[] = [];
-	let currentPath: PagePath | null = path;
+    const seen = new Set<PagePath>();
+    const items: BreadcrumbItem[] = [];
+    let currentPath: PagePath | null = path;
 
-	while (currentPath && !seen.has(currentPath)) {
-		seen.add(currentPath);
-		items.push({
-			key: currentPath,
-			path: currentPath,
-			label: getPageLabel(currentPath)
-		});
+    while (currentPath && !seen.has(currentPath)) {
+        seen.add(currentPath);
+        items.push({
+            key: currentPath,
+            path: currentPath,
+            label: getPageLabel(currentPath),
+        });
 
-		currentPath = getParentPath(currentPath);
-	}
+        currentPath = getParentPath(currentPath);
+    }
 
-	if (
-		homePagePath &&
-		!seen.has(homePagePath) &&
-		path !== homePagePath
-	) {
-		items.push({
-			key: homePagePath,
-			path: homePagePath,
-			label: getPageLabel(homePagePath)
-		});
-	}
+    if (homePagePath && !seen.has(homePagePath) && path !== homePagePath) {
+        items.push({
+            key: homePagePath,
+            path: homePagePath,
+            label: getPageLabel(homePagePath),
+        });
+    }
 
-	return items.reverse();
+    return items.reverse();
 }
 
-export function getBreadcrumbBackPath(
-	items: readonly BreadcrumbItem[]
-): PagePath | null {
-	if (items.length >= 2) {
-		return items[items.length - 2].path ?? null;
-	}
+export function getBreadcrumbBackPath(items: readonly BreadcrumbItem[]): PagePath | null {
+    if (items.length >= 2) {
+        return items[items.length - 2].path ?? null;
+    }
 
-	return homePagePath;
+    return homePagePath;
 }

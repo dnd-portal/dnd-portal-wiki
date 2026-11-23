@@ -15,12 +15,12 @@ deployed commit cannot be proven from the static response headers alone.
 
 ## Baseline before the change
 
-| Target | Score | FCP | LCP | TBT | CLS | Speed Index | Transfer | Requests |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Live mobile | 51 | 2.7 s | 23.7 s | 710 ms | 0 | 4.6 s | 4,504 KiB | 71 |
-| Live desktop | 77 | 0.4 s | 4.1 s | 110 ms | 0 | 1.0 s | 4,505 KiB | 72 |
-| Local mobile | 57 | 0.9 s | 25.2 s | 750 ms | 0 | 2.2 s | 4,597 KiB | 72 |
-| Local desktop | 76 | 0.2 s | 4.4 s | 120 ms | 0 | 0.6 s | 4,597 KiB | 73 |
+| Target        | Score |   FCP |    LCP |    TBT | CLS | Speed Index |  Transfer | Requests |
+| ------------- | ----: | ----: | -----: | -----: | --: | ----------: | --------: | -------: |
+| Live mobile   |    51 | 2.7 s | 23.7 s | 710 ms |   0 |       4.6 s | 4,504 KiB |       71 |
+| Live desktop  |    77 | 0.4 s |  4.1 s | 110 ms |   0 |       1.0 s | 4,505 KiB |       72 |
+| Local mobile  |    57 | 0.9 s | 25.2 s | 750 ms |   0 |       2.2 s | 4,597 KiB |       72 |
+| Local desktop |    76 | 0.2 s |  4.4 s | 120 ms |   0 |       0.6 s | 4,597 KiB |       73 |
 
 The live scores differ from the user-reported scores because Lighthouse runs
 are environment-sensitive. The measured bottleneck is nevertheless clear:
@@ -40,19 +40,19 @@ The two 1672×941 wallpaper PNGs are now served through CSS `image-set()` with
 WebP preferred and the original PNG retained as a fallback. The WebP files
 preserve the same dimensions and visual composition:
 
-| Asset | PNG | WebP |
-| --- | ---: | ---: |
-| `homepage-wallpaper` | 1,569 KB | 49 KB |
+| Asset                  |      PNG |  WebP |
+| ---------------------- | -------: | ----: |
+| `homepage-wallpaper`   | 1,569 KB | 49 KB |
 | `homepage-wallpaper-2` | 1,773 KB | 74 KB |
 
 This is an asset-format change, not a content removal or resolution reduction.
 
 ## Local result after the change
 
-| Target | Score | FCP | LCP | TBT | CLS | Speed Index | Transfer | Requests |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Local mobile | 100 | 0.8 s | 0.8 s | 10 ms | 0.02 | 0.8 s | 477 KiB | 37 |
-| Local desktop | 100 | 0.2 s | 0.2 s | 0 ms | 0.013 | 0.2 s | 477 KiB | 37 |
+| Target        | Score |   FCP |   LCP |   TBT |   CLS | Speed Index | Transfer | Requests |
+| ------------- | ----: | ----: | ----: | ----: | ----: | ----------: | -------: | -------: |
+| Local mobile  |   100 | 0.8 s | 0.8 s | 10 ms |  0.02 |       0.8 s |  477 KiB |       37 |
+| Local desktop |   100 | 0.2 s | 0.2 s |  0 ms | 0.013 |       0.2 s |  477 KiB |       37 |
 
 The local improvement is large because the two wallpaper downloads disappeared
 from the network waterfall and were replaced by the WebP versions. Live

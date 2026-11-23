@@ -1,5 +1,5 @@
-export { externals } from "./externals"
-export { internals } from "./internals/_index_"
+export { externals } from './externals';
+export { internals } from './internals/_index_';
 
 export const base = {
     siteSocial: 'D&D Portal Wiki',
@@ -8,18 +8,18 @@ export const base = {
     siteLink: 'https://dnd-portal.com',
 
     youTubeName: 'Toon van Berkel - Dev',
-    youTubeUsername: '@Toonvanberkel-dev'
-}
+    youTubeUsername: '@Toonvanberkel-dev',
+};
 
 export const people = {
     toon: {
         name: 'Toon van Berkel',
         slug: 'toon-van-berkel',
-		email: 'toonvanberkel.public@gmail.com',
-		pronounce: 'he/him'
+        email: 'contact@dnd-portal.com',
+        pronounce: 'he/him',
     },
-	tijs: {
-		name: 'Tijs van Klaveren',
-		slug: 'tijs-van-klaveren'
-	}
-}
+    tijs: {
+        name: 'Tijs van Klaveren',
+        slug: 'tijs-van-klaveren',
+    },
+};

@@ -3,22 +3,22 @@
 	Use: Static prerender entries for equipment detail pages.
 */
 import {
-	equipmentTypes,
-	getEquipmentTypeBySlug
+    equipmentTypes,
+    getEquipmentTypeBySlug,
 } from '#lib/typescript/data/internals/equipment-items.js';
 
 export function entries() {
-	return equipmentTypes.map((type) => ({
-		item: type.slug
-	}));
+    return equipmentTypes.map((type) => ({
+        item: type.slug,
+    }));
 }
 
 export function load({ params }) {
-	const equipmentType = getEquipmentTypeBySlug(params.item);
+    const equipmentType = getEquipmentTypeBySlug(params.item);
 
-	if (!equipmentType) {
-		return {};
-	}
+    if (!equipmentType) {
+        return {};
+    }
 
-	return {};
+    return {};
 }

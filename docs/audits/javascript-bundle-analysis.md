@@ -40,16 +40,16 @@ pnpm build  -> geslaagd; 1432 SSR-modules, 1519 client-modules
 
 Gemeten buildresultaat:
 
-| Onderdeel | Meting |
-|---|---:|
-| Grootste clientchunk | 3,777,383 bytes |
-| Grootste clientchunk gzip | 791.22 kB |
-| Tweede grote clientchunk (`gE5ykDF1.js`) | 713,666 bytes; 100.95 kB gzip |
-| `DVU4C2_M.js` (`search`) | 7,586 bytes |
-| `DMJx2w_d.js` (`canonicalPage`) | 77 bytes; het importeert de grote datachunk via routegrafiek |
-| Clientmodules | 1,519 |
-| SSR-modules | 1,432 |
-| Vite-waarschuwing | chunks groter dan 1,000 kB |
+| Onderdeel                                |                                                       Meting |
+| ---------------------------------------- | -----------------------------------------------------------: |
+| Grootste clientchunk                     |                                              3,777,383 bytes |
+| Grootste clientchunk gzip                |                                                    791.22 kB |
+| Tweede grote clientchunk (`gE5ykDF1.js`) |                                713,666 bytes; 100.95 kB gzip |
+| `DVU4C2_M.js` (`search`)                 |                                                  7,586 bytes |
+| `DMJx2w_d.js` (`canonicalPage`)          | 77 bytes; het importeert de grote datachunk via routegrafiek |
+| Clientmodules                            |                                                        1,519 |
+| SSR-modules                              |                                                        1,432 |
+| Vite-waarschuwing                        |                                   chunks groter dan 1,000 kB |
 
 De clientchunks in de build zijn samen circa 4,98 MB ongecomprimeerd. De 3,78 MB-chunk is daarmee ongeveer 75,8% van de gemeten clientchunkbytes.
 
@@ -84,28 +84,28 @@ De overige route-specifieke chunks zijn wel lazy op node-niveau, maar dat helpt 
 
 De volgende meting is gemaakt door de import/export-grafiek vanaf `src/lib/typescript/data/_index_.ts` te traverseren. Er zijn 1.105 bereikbare TypeScript-modules met samen 5,078,808 bronbytes. De tabel is aflopend op bronbestandsgrootte.
 
-| # | Module | Bronbytes | Waarschijnlijke rol in de chunk |
-|---:|---|---:|---|
-| 1 | `src/lib/typescript/data/internals/faq.ts` | 64,292 | FAQ-content/registratie |
-| 2 | `src/lib/typescript/data/internals/project.ts` | 60,151 | project-/sitecontent |
-| 3 | `src/lib/typescript/data/internals/classes/pugilist/page.ts` | 60,054 | volledige klassepagina |
-| 4 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/bloodhound-bruisers/page.ts` | 58,094 | subclass-content |
-| 5 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/arena-royale/page.ts` | 58,085 | subclass-content |
-| 6 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/piss-and-vinegar/page.ts` | 58,083 | subclass-content |
-| 7 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/squared-circle/page.ts` | 58,082 | subclass-content |
-| 8 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/dog-and-hound/page.ts` | 58,080 | subclass-content |
-| 9 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/sweet-science/page.ts` | 58,079 | subclass-content |
-| 10 | `src/lib/typescript/data/internals/classes/pugilist/progression.ts` | 57,891 | progression data |
-| 11 | `src/lib/typescript/data/internals/classes/shinobi/page.ts` | 51,794 | volledige klassepagina |
-| 12 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/medical/page.ts` | 49,304 | subclass-content |
-| 13 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/elemental-ninjutsu/page.ts` | 49,302 | subclass-content |
-| 14 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/bloodline/page.ts` | 49,292 | subclass-content |
-| 15 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/paths/page.ts` | 49,286 | subclass-content |
-| 16 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/taijutsu/page.ts` | 49,280 | subclass-content |
-| 17 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/sealing/page.ts` | 49,279 | subclass-content |
-| 18 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/genjutsu/page.ts` | 49,275 | subclass-content |
-| 19 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/fortune/page.ts` | 49,270 | subclass-content |
-| 20 | `src/lib/typescript/data/internals/classes/shinobi/progression.ts` | 49,131 | progression data |
+|   # | Module                                                                                      | Bronbytes | Waarschijnlijke rol in de chunk |
+| --: | ------------------------------------------------------------------------------------------- | --------: | ------------------------------- |
+|   1 | `src/lib/typescript/data/internals/faq.ts`                                                  |    64,292 | FAQ-content/registratie         |
+|   2 | `src/lib/typescript/data/internals/project.ts`                                              |    60,151 | project-/sitecontent            |
+|   3 | `src/lib/typescript/data/internals/classes/pugilist/page.ts`                                |    60,054 | volledige klassepagina          |
+|   4 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/bloodhound-bruisers/page.ts` |    58,094 | subclass-content                |
+|   5 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/arena-royale/page.ts`        |    58,085 | subclass-content                |
+|   6 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/piss-and-vinegar/page.ts`    |    58,083 | subclass-content                |
+|   7 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/squared-circle/page.ts`      |    58,082 | subclass-content                |
+|   8 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/dog-and-hound/page.ts`       |    58,080 | subclass-content                |
+|   9 | `src/lib/typescript/data/internals/classes/pugilist/subclasses/sweet-science/page.ts`       |    58,079 | subclass-content                |
+|  10 | `src/lib/typescript/data/internals/classes/pugilist/progression.ts`                         |    57,891 | progression data                |
+|  11 | `src/lib/typescript/data/internals/classes/shinobi/page.ts`                                 |    51,794 | volledige klassepagina          |
+|  12 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/medical/page.ts`              |    49,304 | subclass-content                |
+|  13 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/elemental-ninjutsu/page.ts`   |    49,302 | subclass-content                |
+|  14 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/bloodline/page.ts`            |    49,292 | subclass-content                |
+|  15 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/paths/page.ts`                |    49,286 | subclass-content                |
+|  16 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/taijutsu/page.ts`             |    49,280 | subclass-content                |
+|  17 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/sealing/page.ts`              |    49,279 | subclass-content                |
+|  18 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/genjutsu/page.ts`             |    49,275 | subclass-content                |
+|  19 | `src/lib/typescript/data/internals/classes/shinobi/subclasses/fortune/page.ts`              |    49,270 | subclass-content                |
+|  20 | `src/lib/typescript/data/internals/classes/shinobi/progression.ts`                          |    49,131 | progression data                |
 
 Deze top 20 bestaat vooral uit inhoudelijke records. Dat is precies het probleem: een clientmodule die alleen route- of popupmetadata nodig heeft, trekt complete renderdata en class registries mee.
 
@@ -119,13 +119,13 @@ Daarmee is de hypothese “PopupHost importeert zelf alle wiki-data eager” nie
 
 Gemeten bronbestanden:
 
-| Bestand | Bronbytes | Bevinding |
-|---|---:|---|
-| `spell-data.ts` | 957,993 | zeer groot; via `currentPage.ts` gedeeld in de hydration-keten |
-| `runtime/generated.ts` | 740,735 | grote gegenereerde runtime registry; functioneel nuttig voor links/navigation, maar moet niet automatisch gelijkstaan aan volledige page content |
-| `search.ts` | 16,403 | orchestration/indexgebruik; niet de grootste bytes zelf |
-| `faq.ts` | 64,292 | canonical FAQ-data; opgenomen in de canonical graph |
-| `data/_index_.ts` | 1,274 | kleine barrel, maar re-exporteert grote value trees |
+| Bestand                | Bronbytes | Bevinding                                                                                                                                        |
+| ---------------------- | --------: | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `spell-data.ts`        |   957,993 | zeer groot; via `currentPage.ts` gedeeld in de hydration-keten                                                                                   |
+| `runtime/generated.ts` |   740,735 | grote gegenereerde runtime registry; functioneel nuttig voor links/navigation, maar moet niet automatisch gelijkstaan aan volledige page content |
+| `search.ts`            |    16,403 | orchestration/indexgebruik; niet de grootste bytes zelf                                                                                          |
+| `faq.ts`               |    64,292 | canonical FAQ-data; opgenomen in de canonical graph                                                                                              |
+| `data/_index_.ts`      |     1,274 | kleine barrel, maar re-exporteert grote value trees                                                                                              |
 
 De meting bewijst dat `spell-data.ts` veel groter is dan de route-orchestratie zelf en dat de canonical barrel duizenden records bereikbaar maakt. Zonder sourcemap kan de exacte overlap tussen `runtime/generated.ts`, `spell-data.ts` en minified chunk niet per byte worden toegewezen. De importrelaties en de chunkliteral-verificatie bewijzen wel dat de browser een full registry krijgt voor een gedeelde route dependency.
 
@@ -195,16 +195,16 @@ Deze sectie is toegevoegd na de P0-wijziging en bevat opnieuw gemeten productieb
 
 ### Gemeten vergelijking
 
-| Meting | Voor P0 | Na P0 |
-|---|---:|---:|
-| Grootste clientchunk | 3,777,383 bytes; 791.22 kB gzip | 1,328,616 bytes; 219,798 bytes gzip |
-| Tweede grote clientchunk | 713,666 bytes; 100.95 kB gzip | 1,184,334 bytes; 275,842 bytes gzip |
-| Totale client-JS output | circa 4,982,834 bytes | 4,852,028 bytes |
-| Totale gzip van clientchunks | niet eerder totaal gemeten | 1,012,919 bytes |
-| Root layout transitieve JS | circa 4,98 MB closure door gedeelde data | 885,773 bytes |
-| Client nodes met canonical data-chunks | 54 van 63 | 37 van 64 |
-| HTML-bestanden/routes | 1,500 | 1,500 |
-| Totale HTML-output | 165.6 MB in eerdere audit | 90,064,364 bytes |
+| Meting                                 |                                  Voor P0 |                               Na P0 |
+| -------------------------------------- | ---------------------------------------: | ----------------------------------: |
+| Grootste clientchunk                   |          3,777,383 bytes; 791.22 kB gzip | 1,328,616 bytes; 219,798 bytes gzip |
+| Tweede grote clientchunk               |            713,666 bytes; 100.95 kB gzip | 1,184,334 bytes; 275,842 bytes gzip |
+| Totale client-JS output                |                    circa 4,982,834 bytes |                     4,852,028 bytes |
+| Totale gzip van clientchunks           |               niet eerder totaal gemeten |                     1,012,919 bytes |
+| Root layout transitieve JS             | circa 4,98 MB closure door gedeelde data |                       885,773 bytes |
+| Client nodes met canonical data-chunks |                                54 van 63 |                           37 van 64 |
+| HTML-bestanden/routes                  |                                    1,500 |                               1,500 |
+| Totale HTML-output                     |                165.6 MB in eerdere audit |                    90,064,364 bytes |
 
 De grootste chunk is daarmee 64.8% kleiner in minified bytes en 72.2% kleiner in gzip ten opzichte van de oorspronkelijke grootste chunk. De totale clientoutput daalde slechts circa 2.6%; dat is verwacht, omdat volledige data nog steeds nodig is op content- en searchroutes. De relevante winst is dat die data niet langer in de gedeelde root-layout initial dependency closure zit.
 

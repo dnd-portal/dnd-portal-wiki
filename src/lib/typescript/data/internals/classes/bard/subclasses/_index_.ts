@@ -7,4 +7,13 @@ import { page as swords } from './swords/_index_';
 import { page as valor } from './valor/_index_';
 import { page as whispers } from './whispers/_index_';
 
-export const subclasses = { creation, eloquence, glamour, lore, spirits, swords, valor, whispers } as const;
+export const subclasses = {
+    creation,
+    eloquence,
+    glamour,
+    lore,
+    spirits,
+    swords,
+    valor,
+    whispers,
+} as const;

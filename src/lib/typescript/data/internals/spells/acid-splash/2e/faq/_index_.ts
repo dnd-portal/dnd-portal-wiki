@@ -11,11 +11,11 @@ import doesAcidSplashUseGrenadeLikeMissileRulesIn2e from './does-acid-splash-use
 import canAcidSplashDamageItemsOrEquipmentIn2e from './can-acid-splash-damage-items-or-equipment-in-2e';
 
 export const acidSplash2eFaq = [
-	didAcidSplashExistInAdnd2e,
-	whyIsAcidSplashA1stLevelSpellIn2e,
-	doesAcidSplashRequireAnAttackRollIn2e,
-	doesAcidSplashUseGrenadeLikeMissileRulesIn2e,
-	canAcidSplashDamageItemsOrEquipmentIn2e
+    didAcidSplashExistInAdnd2e,
+    whyIsAcidSplashA1stLevelSpellIn2e,
+    doesAcidSplashRequireAnAttackRollIn2e,
+    doesAcidSplashUseGrenadeLikeMissileRulesIn2e,
+    canAcidSplashDamageItemsOrEquipmentIn2e,
 ] as const;
 
 export default acidSplash2eFaq;

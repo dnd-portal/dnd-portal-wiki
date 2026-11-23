@@ -12,4 +12,18 @@ import { page as orderOfScribes } from './order-of-scribes/_index_';
 import { page as transmutation } from './transmutation/_index_';
 import { page as warMagic } from './war-magic/_index_';
 
-export const subclasses = { abjuration, bladesinging, chronurgy, conjuration, divination, enchantment, evocation, graviturgy, illusion, necromancy, orderOfScribes, transmutation, warMagic } as const;
+export const subclasses = {
+    abjuration,
+    bladesinging,
+    chronurgy,
+    conjuration,
+    divination,
+    enchantment,
+    evocation,
+    graviturgy,
+    illusion,
+    necromancy,
+    orderOfScribes,
+    transmutation,
+    warMagic,
+} as const;

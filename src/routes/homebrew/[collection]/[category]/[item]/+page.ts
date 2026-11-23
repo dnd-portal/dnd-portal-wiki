@@ -3,5 +3,4 @@ import { homebrewMagicItemEntries } from '#lib/typescript/data/internals/homebre
 
 export const prerender = homebrewMagicItemEntries.length > 0;
 
-export const entries: EntryGenerator = () =>
-	homebrewMagicItemEntries;
+export const entries: EntryGenerator = () => homebrewMagicItemEntries;

@@ -4,4 +4,9 @@ import { question as q3 } from './how-do-you-build-and-play-a-path-of-genjutsu-s
 import { question as q4 } from './how-do-genjutsu-techniques-interact-with-persistent-illusion';
 import { question as q5 } from './how-does-world-of-illusion-work';
 
-export const pathOfGenjutsuFaq = { slug: 'path-of-genjutsu', title: "Path of Genjutsu", sourcePage: "internals.classes.shinobi.subclasses.genjutsu", questions: [q1, q2, q3, q4, q5] } as const;
+export const pathOfGenjutsuFaq = {
+    slug: 'path-of-genjutsu',
+    title: 'Path of Genjutsu',
+    sourcePage: 'internals.classes.shinobi.subclasses.genjutsu',
+    questions: [q1, q2, q3, q4, q5],
+} as const;

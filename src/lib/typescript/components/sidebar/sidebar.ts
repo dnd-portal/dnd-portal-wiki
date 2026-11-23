@@ -5,198 +5,188 @@
 
 import type { LinkData, LinkPath } from '#lib/typescript/data/_index_.js';
 import {
-	getRuntimeChildren,
-	getRuntimeData,
-	getRuntimeNavigationChildren
+    getRuntimeChildren,
+    getRuntimeData,
+    getRuntimeNavigationChildren,
 } from '#lib/typescript/data/runtime/index.js';
 
-import type {
-	SidebarDataType,
-	SidebarNode,
-	SidebarSection
-} from './sidebar-types';
+import type { SidebarDataType, SidebarNode, SidebarSection } from './sidebar-types';
 
 const sidebarSectionConfig = [
-	{
-		title: 'Browse Wiki',
-		roots: [
-			'internals.website.homepage',
-			'internals.utility.search'
-		]
-	},
-	{
-		title: 'Wiki Pages',
-		roots: [
-			'internals.species.page',
-			'internals.classes.page',
-			'internals.spells.page',
-			'internals.equipment.page',
-			'internals.companions.page',
-			'internals.npcs.page',
-			'internals.rules.page',
-			'internals.locations.page',
-		'internals.monsters.page',
-		'internals.magicItems.page',
-		'internals.organizations.page'
-		]
-	},
-	{
-		title: 'Homebrew',
-		roots: ['internals.homebrew.eldor.page']
-	},
-	{
-		title: 'Tools',
-		roots: [
-			'internals.utility.diceRoller',
-			'internals.utility.myCharacter',
-			'internals.utility.currencyConverter'
-		]
-	},
-	{
-		title: 'Community',
-		roots: [
-			'internals.community.discord.page',
-			'internals.community.issues',
-			'internals.community.roadmap'
-		]
-	},
-	{
-		title: 'Project',
-		roots: [
-			'internals.project.sources',
-			'internals.project.credits',
-			'internals.project.about',
-			'internals.project.aiTransparency',
-			'internals.project.accessibility',
-			'internals.project.changelog'
-		]
-	}
+    {
+        title: 'Browse Wiki',
+        roots: ['internals.website.homepage', 'internals.utility.search'],
+    },
+    {
+        title: 'Wiki Pages',
+        roots: [
+            'internals.species.page',
+            'internals.classes.page',
+            'internals.spells.page',
+            'internals.equipment.page',
+            'internals.companions.page',
+            'internals.npcs.page',
+            'internals.rules.page',
+            'internals.locations.page',
+            'internals.monsters.page',
+            'internals.magicItems.page',
+            'internals.organizations.page',
+        ],
+    },
+    {
+        title: 'Homebrew',
+        roots: ['internals.homebrew.eldor.page'],
+    },
+    {
+        title: 'Tools',
+        roots: [
+            'internals.utility.diceRoller',
+            'internals.utility.myCharacter',
+            'internals.utility.currencyConverter',
+        ],
+    },
+    {
+        title: 'Community',
+        roots: [
+            'internals.community.discord.page',
+            'internals.community.issues',
+            'internals.community.roadmap',
+        ],
+    },
+    {
+        title: 'Project',
+        roots: [
+            'internals.project.sources',
+            'internals.project.credits',
+            'internals.project.about',
+            'internals.project.aiTransparency',
+            'internals.project.accessibility',
+            'internals.project.changelog',
+        ],
+    },
 ] as const satisfies readonly {
-	title: string;
-	roots: readonly LinkPath[];
+    title: string;
+    roots: readonly LinkPath[];
 }[];
 
 function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
-	return typeof value === 'object' && value !== null && !Array.isArray(value);
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function hasStringProperty<
-	T extends Readonly<Record<string, unknown>>,
-	K extends string
->(value: T, key: K): value is T & Readonly<Record<K, string>> {
-	return typeof value[key] === 'string';
+function hasStringProperty<T extends Readonly<Record<string, unknown>>, K extends string>(
+    value: T,
+    key: K,
+): value is T & Readonly<Record<K, string>> {
+    return typeof value[key] === 'string';
 }
 
 function isLinkData(value: unknown): value is LinkData {
-	if (!isRecord(value)) {
-		return false;
-	}
+    if (!isRecord(value)) {
+        return false;
+    }
 
-	if (
-		!hasStringProperty(value, 'href') ||
-		typeof value.external !== 'boolean' ||
-		!hasStringProperty(value, 'title') ||
-		!hasStringProperty(value, 'subTitle') ||
-		!hasStringProperty(value, 'description') ||
-		!isRecord(value.img)
-	) {
-		return false;
-	}
+    if (
+        !hasStringProperty(value, 'href') ||
+        typeof value.external !== 'boolean' ||
+        !hasStringProperty(value, 'title') ||
+        !hasStringProperty(value, 'subTitle') ||
+        !hasStringProperty(value, 'description') ||
+        !isRecord(value.img)
+    ) {
+        return false;
+    }
 
-	return (
-		hasStringProperty(value.img, 'href') &&
-		hasStringProperty(value.img, 'alt')
-	);
+    return hasStringProperty(value.img, 'href') && hasStringProperty(value.img, 'alt');
 }
 
 function toLinkPath(path: string, value: unknown): LinkPath {
-	if (!isLinkData(value)) {
-		throw new Error(`Sidebar path "${path}" does not resolve to link data.`);
-	}
+    if (!isLinkData(value)) {
+        throw new Error(`Sidebar path "${path}" does not resolve to link data.`);
+    }
 
-	return path as LinkPath;
+    return path as LinkPath;
 }
 
 function getContainerPath(path: LinkPath): string {
-	return path.endsWith('.page') ? path.slice(0, -'.page'.length) : path;
+    return path.endsWith('.page') ? path.slice(0, -'.page'.length) : path;
 }
 
 function getNavigationLabel(link: LinkData): string | undefined {
-	if (!('navigation' in link) || !isRecord(link.navigation)) {
-		return undefined;
-	}
+    if (!('navigation' in link) || !isRecord(link.navigation)) {
+        return undefined;
+    }
 
-	return hasStringProperty(link.navigation, 'label')
-		? link.navigation.label
-		: undefined;
+    return hasStringProperty(link.navigation, 'label') ? link.navigation.label : undefined;
 }
 
 function isNavigationHidden(link: LinkData): boolean {
-	if (!('navigation' in link) || !isRecord(link.navigation)) {
-		return false;
-	}
+    if (!('navigation' in link) || !isRecord(link.navigation)) {
+        return false;
+    }
 
-	return 'hidden' in link.navigation && link.navigation.hidden === true;
+    return 'hidden' in link.navigation && link.navigation.hidden === true;
 }
 
 function getDisplayTitle(title: string): string {
-	return title
-		.replace(/^D&D Portal Wiki\s+-\s+/i, '')
-		.replace(/^D&D Portal\s+-\s+/i, '');
+    return title.replace(/^D&D Portal Wiki\s+-\s+/i, '').replace(/^D&D Portal\s+-\s+/i, '');
 }
 
 export function getSidebarLabel(path: LinkPath): string {
-	const link = getRuntimeData(path);
+    const link = getRuntimeData(path);
 
-	return getNavigationLabel(link) ?? getDisplayTitle(link.title);
+    return getNavigationLabel(link) ?? getDisplayTitle(link.title);
 }
 
 function sortNodes(nodes: readonly SidebarNode[]): readonly SidebarNode[] {
-	return [...nodes].sort((a, b) =>
-		getSidebarLabel(a.path).localeCompare(getSidebarLabel(b.path), 'en', {
-			sensitivity: 'base'
-		})
-	);
+    return [...nodes].sort((a, b) =>
+        getSidebarLabel(a.path).localeCompare(getSidebarLabel(b.path), 'en', {
+            sensitivity: 'base',
+        }),
+    );
 }
 
 function discoverChildNodes(containerPath: string): readonly SidebarNode[] {
-	const expectedParentPath = `${containerPath}.page`;
-	const childPaths = [
-		...getRuntimeChildren(containerPath),
-		...getRuntimeNavigationChildren(containerPath)
-	].filter((path, index, paths) => paths.indexOf(path) === index)
-		.filter((path) => {
-			const navigationParent = getRuntimeData(path).navigation?.parent;
+    const expectedParentPath = `${containerPath}.page`;
+    const childPaths = [
+        ...getRuntimeChildren(containerPath),
+        ...getRuntimeNavigationChildren(containerPath),
+    ]
+        .filter((path, index, paths) => paths.indexOf(path) === index)
+        .filter((path) => {
+            const navigationParent = getRuntimeData(path).navigation?.parent;
 
-			return !navigationParent || navigationParent === expectedParentPath;
-		});
-	const children = childPaths.flatMap<SidebarNode>((childPath) => {
-		const value = getRuntimeData(childPath);
+            return !navigationParent || navigationParent === expectedParentPath;
+        });
+    const children = childPaths.flatMap<SidebarNode>((childPath) => {
+        const value = getRuntimeData(childPath);
 
-		return isNavigationHidden(value)
-			? []
-			: [{ path: childPath as LinkPath, children: discoverChildNodes(childPath.replace(/\.page$/, '')) }];
-	});
+        return isNavigationHidden(value)
+            ? []
+            : [
+                  {
+                      path: childPath as LinkPath,
+                      children: discoverChildNodes(childPath.replace(/\.page$/, '')),
+                  },
+              ];
+    });
 
-	return sortNodes(children);
+    return sortNodes(children);
 }
 
 function createSidebarNode(path: LinkPath): SidebarNode {
-	return {
-		path,
-		children: discoverChildNodes(getContainerPath(path))
-	};
+    return {
+        path,
+        children: discoverChildNodes(getContainerPath(path)),
+    };
 }
 
-function createSidebarSection(
-	section: (typeof sidebarSectionConfig)[number]
-): SidebarSection {
-	return {
-		title: section.title,
-		roots: section.roots.map(createSidebarNode)
-	};
+function createSidebarSection(section: (typeof sidebarSectionConfig)[number]): SidebarSection {
+    return {
+        title: section.title,
+        roots: section.roots.map(createSidebarNode),
+    };
 }
 
 export const sidebarData: SidebarDataType = {
-	sections: sidebarSectionConfig.map(createSidebarSection)
+    sections: sidebarSectionConfig.map(createSidebarSection),
 };

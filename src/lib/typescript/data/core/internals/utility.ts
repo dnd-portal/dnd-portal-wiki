@@ -1,74 +1,74 @@
 export const utility = {
-	faq: {
-		name: {
-			normal: 'FAQ',
-			slug: 'faq'
-		},
-		href: '/faq'
-	},
-    
-	search: {
-		name: {
-			normal: 'Search',
-			slug: 'search'
-		},
-		logos: {
-			simple: {
-				href: '/icons/white/util/search.svg',
-				alt: `A stylized magnifying glass icon representing search, discovery,
-					and finding content within the wiki.`
-			}
-		},
-		
-		href: '/search'
-	},
+    faq: {
+        name: {
+            normal: 'FAQ',
+            slug: 'faq',
+        },
+        href: '/faq',
+    },
 
-	preferences: {
-		name: {
-			normal: 'Preferences',
-			slug: 'preferences'
-		},
-		logos: {
-			simple: {
-				href: '/icons/white/util/cog.svg',
-				alt: `A stylized cog icon representing website preferences
-					and settings.`
-			}
-		},
+    search: {
+        name: {
+            normal: 'Search',
+            slug: 'search',
+        },
+        logos: {
+            simple: {
+                href: '/icons/white/util/search.svg',
+                alt: `A stylized magnifying glass icon representing search, discovery,
+					and finding content within the wiki.`,
+            },
+        },
 
-		href: '/preferences'
-	},
+        href: '/search',
+    },
 
-	myCharacter: {
-		name: { normal: 'My Character', slug: 'my-character' },
-		logos: {
-			simple: {
-				href: '/icons/white/game/character.svg',
-				alt: 'A stylized character icon representing a personal character sheet.'
-			}
-		},
-		href: '/my-character/'
-	},
+    preferences: {
+        name: {
+            normal: 'Preferences',
+            slug: 'preferences',
+        },
+        logos: {
+            simple: {
+                href: '/icons/white/util/cog.svg',
+                alt: `A stylized cog icon representing website preferences
+					and settings.`,
+            },
+        },
 
-	diceRoller: {
-		name: { normal: 'Dice Roller', slug: 'dice-roller' },
-		logos: {
-			simple: {
-				href: '/icons/white/dice/d20.svg',
-				alt: 'A twenty-sided die icon representing the dice roller.'
-			}
-		},
-		href: '/dice-roller/'
-	},
+        href: '/preferences',
+    },
 
-	currencyConverter: {
-		name: { normal: 'Currency Converter', slug: 'currency-converter' },
-		logos: {
-			simple: {
-				href: '/icons/white/entity/magic-item.svg',
-				alt: 'A gold coin icon representing currency conversion.'
-			}
-		},
-		href: '/currency-converter/'
-	}
-}
+    myCharacter: {
+        name: { normal: 'My Character', slug: 'my-character' },
+        logos: {
+            simple: {
+                href: '/icons/white/game/character.svg',
+                alt: 'A stylized character icon representing a personal character sheet.',
+            },
+        },
+        href: '/my-character/',
+    },
+
+    diceRoller: {
+        name: { normal: 'Dice Roller', slug: 'dice-roller' },
+        logos: {
+            simple: {
+                href: '/icons/white/dice/d20.svg',
+                alt: 'A twenty-sided die icon representing the dice roller.',
+            },
+        },
+        href: '/dice-roller/',
+    },
+
+    currencyConverter: {
+        name: { normal: 'Currency Converter', slug: 'currency-converter' },
+        logos: {
+            simple: {
+                href: '/icons/white/entity/magic-item.svg',
+                alt: 'A gold coin icon representing currency conversion.',
+            },
+        },
+        href: '/currency-converter/',
+    },
+};

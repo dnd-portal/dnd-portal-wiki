@@ -8,8 +8,4 @@ export { getSidebarLabel, sidebarData } from './sidebar/sidebar';
 
 export type { NavbarAction, NavbarDataType } from './navbar/navbar-types';
 
-export type {
-	SidebarDataType,
-	SidebarNode,
-	SidebarSection
-} from './sidebar/sidebar-types';
+export type { SidebarDataType, SidebarNode, SidebarSection } from './sidebar/sidebar-types';

@@ -5,11 +5,11 @@ import doesAcidSplashDamageScale from '#lib/typescript/data/internals/rules/spel
 import canAcidSplashDamageObjects from './can-acid-splash-damage-objects-in-3-5e';
 
 export const acidSplash35eFaq = [
-	doesAcidSplashUseTouchAc,
-	doesAcidSplashAllowSavingThrow,
-	doesSpellResistanceApply,
-	doesAcidSplashDamageScale,
-	canAcidSplashDamageObjects
+    doesAcidSplashUseTouchAc,
+    doesAcidSplashAllowSavingThrow,
+    doesSpellResistanceApply,
+    doesAcidSplashDamageScale,
+    canAcidSplashDamageObjects,
 ] as const;
 
 export default acidSplash35eFaq;

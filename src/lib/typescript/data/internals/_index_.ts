@@ -20,24 +20,24 @@ export { editions } from './editions';
 export type { EditionId } from './editions';
 
 export const internals = {
-	website,
-	utility,
-	faq,
-	homebrew,
+    website,
+    utility,
+    faq,
+    homebrew,
 
-	classes,
-	spells,
-	species,
-	rules,
-	equipment,
-	magicItems,
-	npcs,
-	companions,
-	locations,
-	organizations,
-	monsters,
-	community,
+    classes,
+    spells,
+    species,
+    rules,
+    equipment,
+    magicItems,
+    npcs,
+    companions,
+    locations,
+    organizations,
+    monsters,
+    community,
 
-	project,
-	legal
+    project,
+    legal,
 } as const;

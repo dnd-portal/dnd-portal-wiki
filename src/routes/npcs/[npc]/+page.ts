@@ -3,26 +3,26 @@
 	Use: Static prerender entries for NPC detail pages.
 */
 import {
-	getPugilistNpcBySlug,
-	getPugilistNpcSlug,
-	pugilistNpcs
+    getPugilistNpcBySlug,
+    getPugilistNpcSlug,
+    pugilistNpcs,
 } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
 import { createNpcSeoMetadata } from '#lib/typescript/pages/seo.js';
 
 export function entries() {
-	return pugilistNpcs.map((npc) => ({
-		npc: getPugilistNpcSlug(npc)
-	}));
+    return pugilistNpcs.map((npc) => ({
+        npc: getPugilistNpcSlug(npc),
+    }));
 }
 
 export function load({ params }) {
-	const npc = getPugilistNpcBySlug(params.npc);
+    const npc = getPugilistNpcBySlug(params.npc);
 
-	if (!npc) {
-		return {};
-	}
+    if (!npc) {
+        return {};
+    }
 
-	return {
-		seo: createNpcSeoMetadata(npc)
-	};
+    return {
+        seo: createNpcSeoMetadata(npc),
+    };
 }

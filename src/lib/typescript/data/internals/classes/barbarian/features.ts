@@ -1,13 +1,12 @@
 import * as core from '#lib/typescript/data/core/_index_.js';
 import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type {
-	CoreTraitsData,
-	InlineContent,
-	PageContentBlock,
-	PageContentSection,
-	ProgressionData
+    CoreTraitsData,
+    InlineContent,
+    PageContentBlock,
+    PageContentSection,
+    ProgressionData,
 } from '#lib/typescript/pages/content-types.js';
-
 
 import * as page from './page';
 
@@ -20,11 +19,11 @@ export const features = [
                 content: [
                     {
                         type: 'text',
-                        text: 'As a barbarian, you gain the following class features.'
-                    }
-                ]
-            }
-        ]
+                        text: 'As a barbarian, you gain the following class features.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.hitPoints,
@@ -34,11 +33,11 @@ export const features = [
                 caption: 'Hit Points',
                 columns: {
                     label: 'Property',
-                    value: 'Value'
+                    value: 'Value',
                 },
-                rows: page.hitPointRows
-            }
-        ]
+                rows: page.hitPointRows,
+            },
+        ],
     },
     {
         ...page.sections.proficiencies,
@@ -48,11 +47,11 @@ export const features = [
                 caption: 'Proficiencies',
                 columns: {
                     label: 'Property',
-                    value: 'Value'
+                    value: 'Value',
                 },
-                rows: page.proficiencyRows
-            }
-        ]
+                rows: page.proficiencyRows,
+            },
+        ],
     },
     {
         ...page.sections.rage,
@@ -63,14 +62,14 @@ export const features = [
                     {
                         type: 'text',
                         text: `In battle, you fight with primal ferocity. On your
-							turn, you can enter a rage as a `
+							turn, you can enter a rage as a `,
                     },
                     page.actionLinks.bonusAction,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
+                        text: '.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -78,14 +77,14 @@ export const features = [
                     {
                         type: 'text',
                         text: `While raging, you gain the following benefits if
-							you aren't wearing `
+							you aren't wearing `,
                     },
                     page.equipmentLinks.heavyArmor,
                     {
                         type: 'text',
-                        text: ':'
-                    }
-                ]
+                        text: ':',
+                    },
+                ],
             },
             {
                 type: 'list',
@@ -93,93 +92,93 @@ export const features = [
                     [
                         {
                             type: 'text',
-                            text: 'You have advantage on '
+                            text: 'You have advantage on ',
                         },
                         page.abilityScoreLinks.strength,
                         {
                             type: 'text',
-                            text: ' '
+                            text: ' ',
                         },
                         page.d20TestLinks.abilityChecks,
                         {
                             type: 'text',
-                            text: ' and '
+                            text: ' and ',
                         },
                         page.abilityScoreLinks.strength,
                         {
                             type: 'text',
-                            text: ' '
+                            text: ' ',
                         },
                         page.d20TestLinks.savingThrows,
                         {
                             type: 'text',
-                            text: '.'
-                        }
+                            text: '.',
+                        },
                     ],
                     [
                         {
                             type: 'text',
-                            text: 'When you make a '
+                            text: 'When you make a ',
                         },
                         page.combatLinks.meleeWeaponAttack,
                         {
                             type: 'text',
-                            text: ' using '
+                            text: ' using ',
                         },
                         page.abilityScoreLinks.strength,
                         {
                             type: 'text',
-                            text: ', you gain a bonus to the '
+                            text: ', you gain a bonus to the ',
                         },
                         page.combatLinks.damageRoll,
                         {
                             type: 'text',
                             text: ` that increases as you gain levels as a
 								barbarian, as shown in the Rage Damage column of
-								the Barbarian table.`
-                        }
+								the Barbarian table.`,
+                        },
                     ],
                     [
                         {
                             type: 'text',
-                            text: 'You have resistance to '
+                            text: 'You have resistance to ',
                         },
                         page.damageTypeLinks.bludgeoning,
                         {
                             type: 'text',
-                            text: ', '
+                            text: ', ',
                         },
                         page.damageTypeLinks.piercing,
                         {
                             type: 'text',
-                            text: ', and '
+                            text: ', and ',
                         },
                         page.damageTypeLinks.slashing,
                         {
                             type: 'text',
-                            text: ' damage.'
-                        }
-                    ]
-                ]
+                            text: ' damage.',
+                        },
+                    ],
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: `If you are able to cast `
+                        text: `If you are able to cast `,
                     },
                     page.spellcastingLinks.spells,
                     {
                         type: 'text',
-                        text: `, you can't cast them or `
+                        text: `, you can't cast them or `,
                     },
                     page.spellcastingLinks.concentration,
                     {
                         type: 'text',
-                        text: ' on them while raging.'
-                    }
-                ]
+                        text: ' on them while raging.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -187,7 +186,7 @@ export const features = [
                     {
                         type: 'text',
                         text: `Your rage lasts for 1 minute. It ends early if you
-							are knocked `
+							are knocked `,
                     },
                     page.conditionLinks.unconscious,
                     {
@@ -195,14 +194,14 @@ export const features = [
                         text: ` or if your turn ends and you haven't attacked a
 							hostile creature since your last turn or taken damage
 							since then. You can also end your rage on your turn
-							as a `
+							as a `,
                     },
                     page.actionLinks.bonusAction,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
+                        text: '.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -211,16 +210,16 @@ export const features = [
                         type: 'text',
                         text: `Once you have raged the number of times shown for
 							your barbarian level in the Rages column of the
-							Barbarian table, you must finish a `
+							Barbarian table, you must finish a `,
                     },
                     page.restLinks.longRest,
                     {
                         type: 'text',
-                        text: ' before you can rage again.'
-                    }
-                ]
-            }
-        ]
+                        text: ' before you can rage again.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.unarmoredDefense,
@@ -230,49 +229,49 @@ export const features = [
                 content: [
                     {
                         type: 'text',
-                        text: `While you are not wearing any armor, your `
+                        text: `While you are not wearing any armor, your `,
                     },
                     page.combatLinks.armorClass,
                     {
                         type: 'text',
-                        text: ' equals:'
-                    }
-                ]
+                        text: ' equals:',
+                    },
+                ],
             },
             {
                 type: 'formula',
                 content: [
                     {
                         type: 'text',
-                        text: '10 + your '
+                        text: '10 + your ',
                     },
                     page.abilityScoreLinks.dexterity,
                     {
                         type: 'text',
-                        text: ' modifier + your '
+                        text: ' modifier + your ',
                     },
                     page.abilityScoreLinks.constitution,
                     {
                         type: 'text',
-                        text: ' modifier'
-                    }
-                ]
+                        text: ' modifier',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'You can use a '
+                        text: 'You can use a ',
                     },
                     page.equipmentLinks.shield,
                     {
                         type: 'text',
-                        text: ' and still gain this benefit.'
-                    }
-                ]
-            }
-        ]
+                        text: ' and still gain this benefit.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.weaponMastery,
@@ -282,11 +281,11 @@ export const features = [
                 content: [
                     {
                         type: 'text',
-                        text: 'At 1st level, you can use the mastery properties of two Simple or Martial melee weapon types. The number of weapon types you can use grows with the class progression.'
-                    }
-                ]
-            }
-        ]
+                        text: 'At 1st level, you can use the mastery properties of two Simple or Martial melee weapon types. The number of weapon types you can use grows with the class progression.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.dangerSense,
@@ -298,60 +297,60 @@ export const features = [
                         type: 'text',
                         text: `At 2nd level, you gain an uncanny sense of when
 							things nearby aren't as they should be, giving you
-							an edge when you dodge away from danger.`
-                    }
-                ]
+							an edge when you dodge away from danger.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'You have advantage on '
+                        text: 'You have advantage on ',
                     },
                     page.abilityScoreLinks.dexterity,
                     {
                         type: 'text',
-                        text: ' '
+                        text: ' ',
                     },
                     page.d20TestLinks.savingThrows,
                     {
                         type: 'text',
                         text: ` against effects that you can see, such as traps
-							and `
+							and `,
                     },
                     page.spellcastingLinks.spells,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
+                        text: '.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: `To gain this benefit, you can't be `
+                        text: `To gain this benefit, you can't be `,
                     },
                     page.conditionLinks.blinded,
                     {
                         type: 'text',
-                        text: ', '
+                        text: ', ',
                     },
                     page.conditionLinks.deafened,
                     {
                         type: 'text',
-                        text: ', or '
+                        text: ', or ',
                     },
                     page.conditionLinks.incapacitated,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
-            }
-        ]
+                        text: '.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.recklessAttack,
@@ -363,9 +362,9 @@ export const features = [
                         type: 'text',
                         text: `Starting at 2nd level, you can throw aside all
 							concern for defense to attack with fierce
-							desperation.`
-                    }
-                ]
+							desperation.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -373,40 +372,40 @@ export const features = [
                     {
                         type: 'text',
                         text: `When you make your first attack on your turn, you
-							can decide to attack recklessly.`
-                    }
-                ]
+							can decide to attack recklessly.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'Doing so gives you advantage on '
+                        text: 'Doing so gives you advantage on ',
                     },
                     page.combatLinks.meleeWeaponAttack,
                     {
                         type: 'text',
-                        text: ' '
+                        text: ' ',
                     },
                     page.combatLinks.attackRolls,
                     {
                         type: 'text',
-                        text: ' using '
+                        text: ' using ',
                     },
                     page.abilityScoreLinks.strength,
                     {
                         type: 'text',
-                        text: ' during this turn, but '
+                        text: ' during this turn, but ',
                     },
                     page.combatLinks.attackRolls,
                     {
                         type: 'text',
-                        text: ` against you have advantage until your next turn.`
-                    }
-                ]
-            }
-        ]
+                        text: ` against you have advantage until your next turn.`,
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.primalPath,
@@ -417,9 +416,9 @@ export const features = [
                     {
                         type: 'text',
                         text: `At 3rd level, you choose a path that shapes the
-							nature of your rage.`
-                    }
-                ]
+							nature of your rage.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -427,15 +426,15 @@ export const features = [
                     {
                         type: 'text',
                         text: `Your choice grants you features at 3rd level and
-							again at 6th, 10th, and 14th levels.`
-                    }
-                ]
+							again at 6th, 10th, and 14th levels.`,
+                    },
+                ],
             },
             {
                 type: 'card-grid',
-                groups: page.primalPathCardGroups
-            }
-        ]
+                groups: page.primalPathCardGroups,
+            },
+        ],
     },
     {
         ...page.sections.primalKnowledge,
@@ -449,11 +448,11 @@ export const features = [
                         text: `When you reach 3rd level and again at 10th level,
 							you gain proficiency in one skill of your choice
 							from the list of skills available to barbarians at
-							1st level.`
-                    }
-                ]
-            }
-        ]
+							1st level.`,
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.abilityScoreImprovement,
@@ -466,9 +465,9 @@ export const features = [
                         text: `When you reach 4th level, and again at 8th, 12th,
 							16th, and 19th level, you can increase one ability
 							score of your choice by 2, or you can increase two
-							ability scores of your choice by 1.`
-                    }
-                ]
+							ability scores of your choice by 1.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -476,11 +475,11 @@ export const features = [
                     {
                         type: 'text',
                         text: `As normal, you can't increase an ability score
-							above 20 using this feature.`
-                    }
-                ]
-            }
-        ]
+							above 20 using this feature.`,
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.extraAttack,
@@ -491,16 +490,16 @@ export const features = [
                     {
                         type: 'text',
                         text: `Beginning at 5th level, you can attack twice,
-							instead of once, whenever you take the `
+							instead of once, whenever you take the `,
                     },
                     page.actionLinks.attackAction,
                     {
                         type: 'text',
-                        text: ' on your turn.'
-                    }
-                ]
-            }
-        ]
+                        text: ' on your turn.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.fastMovement,
@@ -510,21 +509,21 @@ export const features = [
                 content: [
                     {
                         type: 'text',
-                        text: `Starting at 5th level, your `
+                        text: `Starting at 5th level, your `,
                     },
                     page.movementLinks.speed,
                     {
                         type: 'text',
-                        text: ` increases by 10 feet while you aren't wearing `
+                        text: ` increases by 10 feet while you aren't wearing `,
                     },
                     page.equipmentLinks.heavyArmor,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
-            }
-        ]
+                        text: '.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.feralInstinct,
@@ -535,14 +534,14 @@ export const features = [
                     {
                         type: 'text',
                         text: `By 7th level, your instincts are so honed that you
-							have advantage on `
+							have advantage on `,
                     },
                     page.combatLinks.initiativeRolls,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
+                        text: '.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -550,18 +549,18 @@ export const features = [
                     {
                         type: 'text',
                         text: `Additionally, if you are surprised at the
-							beginning of combat and aren't `
+							beginning of combat and aren't `,
                     },
                     page.conditionLinks.incapacitated,
                     {
                         type: 'text',
                         text: `, you can act normally on your first turn, but
 							only if you enter your rage before doing anything
-							else on that turn.`
-                    }
-                ]
-            }
-        ]
+							else on that turn.`,
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.instinctivePounce,
@@ -572,22 +571,22 @@ export const features = [
                 content: [
                     {
                         type: 'text',
-                        text: `At 7th level, as part of the `
+                        text: `At 7th level, as part of the `,
                     },
                     page.actionLinks.bonusAction,
                     {
                         type: 'text',
                         text: ` you take to enter your rage, you can move up to
-							half your `
+							half your `,
                     },
                     page.movementLinks.speed,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
-            }
-        ]
+                        text: '.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.brutalStrike,
@@ -599,19 +598,19 @@ export const features = [
                         type: 'text',
                         text: `Beginning at 9th level, you can roll one additional
 							weapon damage die when determining the extra damage
-							for a `
+							for a `,
                     },
                     page.combatLinks.criticalHit,
                     {
                         type: 'text',
-                        text: ' with a '
+                        text: ' with a ',
                     },
                     page.combatLinks.meleeAttack,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
+                        text: '.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -619,11 +618,11 @@ export const features = [
                     {
                         type: 'text',
                         text: `This increases to two additional dice at 13th level
-							and three additional dice at 17th level.`
-                    }
-                ]
-            }
-        ]
+							and three additional dice at 17th level.`,
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.relentlessRage,
@@ -634,48 +633,48 @@ export const features = [
                     {
                         type: 'text',
                         text: `Starting at 11th level, your rage can keep you
-							fighting despite grievous wounds.`
-                    }
-                ]
+							fighting despite grievous wounds.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: `If you drop to 0 `
+                        text: `If you drop to 0 `,
                     },
                     page.combatLinks.hitPoints,
                     {
                         type: 'text',
                         text: ` while you're raging and don't die outright, you
-							can make a `
+							can make a `,
                     },
                     page.d20TestLinks.difficultyClass,
                     {
                         type: 'text',
-                        text: ' 10 '
+                        text: ' 10 ',
                     },
                     page.abilityScoreLinks.constitution,
                     {
                         type: 'text',
-                        text: ' '
+                        text: ' ',
                     },
                     page.d20TestLinks.savingThrow,
                     {
                         type: 'text',
-                        text: '.'
-                    }
-                ]
+                        text: '.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'If you succeed, you drop to 1 hit point instead.'
-                    }
-                ]
+                        text: 'If you succeed, you drop to 1 hit point instead.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
@@ -683,30 +682,30 @@ export const features = [
                     {
                         type: 'text',
                         text: `Each time you use this feature after the first, the
-							DC increases by 5.`
-                    }
-                ]
+							DC increases by 5.`,
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'When you finish a '
+                        text: 'When you finish a ',
                     },
                     page.restLinks.shortRest,
                     {
                         type: 'text',
-                        text: ' or '
+                        text: ' or ',
                     },
                     page.restLinks.longRest,
                     {
                         type: 'text',
-                        text: ', the DC resets to 10.'
-                    }
-                ]
-            }
-        ]
+                        text: ', the DC resets to 10.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.persistentRage,
@@ -717,16 +716,16 @@ export const features = [
                     {
                         type: 'text',
                         text: `Beginning at 15th level, your rage is so fierce
-							that it ends early only if you fall `
+							that it ends early only if you fall `,
                     },
                     page.conditionLinks.unconscious,
                     {
                         type: 'text',
-                        text: ' or if you choose to end it.'
-                    }
-                ]
-            }
-        ]
+                        text: ' or if you choose to end it.',
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.indomitableMight,
@@ -737,22 +736,22 @@ export const features = [
                     {
                         type: 'text',
                         text: `Beginning at 18th level, if your total for a
-							`
+							`,
                     },
                     page.abilityScoreLinks.strength,
                     {
                         type: 'text',
-                        text: ' check is less than your '
+                        text: ' check is less than your ',
                     },
                     page.abilityScoreLinks.strength,
                     {
                         type: 'text',
                         text: ` score, you can use that score in place of the
-							total.`
-                    }
-                ]
-            }
-        ]
+							total.`,
+                    },
+                ],
+            },
+        ],
     },
     {
         ...page.sections.primalChampion,
@@ -762,38 +761,38 @@ export const features = [
                 content: [
                     {
                         type: 'text',
-                        text: 'At 20th level, you embody the power of the wilds.'
-                    }
-                ]
+                        text: 'At 20th level, you embody the power of the wilds.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'Your '
+                        text: 'Your ',
                     },
                     page.abilityScoreLinks.strength,
                     {
                         type: 'text',
-                        text: ' and '
+                        text: ' and ',
                     },
                     page.abilityScoreLinks.constitution,
                     {
                         type: 'text',
-                        text: ' scores increase by 4.'
-                    }
-                ]
+                        text: ' scores increase by 4.',
+                    },
+                ],
             },
             {
                 type: 'paragraph',
                 content: [
                     {
                         type: 'text',
-                        text: 'Your maximum for those scores is now 24.'
-                    }
-                ]
-            }
-        ]
-    }
+                        text: 'Your maximum for those scores is now 24.',
+                    },
+                ],
+            },
+        ],
+    },
 ] as const satisfies readonly PageContentSection[];

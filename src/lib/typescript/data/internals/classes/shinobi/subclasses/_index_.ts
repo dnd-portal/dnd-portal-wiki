@@ -7,4 +7,13 @@ import { page as taijutsu } from './taijutsu/_index_';
 import { page as bloodline } from './bloodline/_index_';
 import { page as medical } from './medical/_index_';
 
-export const subclasses = { paths, elementalNinjutsu, fortune, genjutsu, sealing, taijutsu, bloodline, medical } as const;
+export const subclasses = {
+    paths,
+    elementalNinjutsu,
+    fortune,
+    genjutsu,
+    sealing,
+    taijutsu,
+    bloodline,
+    medical,
+} as const;

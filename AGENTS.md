@@ -257,6 +257,19 @@ Do not add a repository-wide license unless the licensing of source code, writte
 - Avoid destructive Git operations unless explicitly requested.
 - Do not discard existing uncommitted user changes.
 
+## Formatting Standards
+
+Prettier is mandatory for supported tracked source files. Use the checked-in
+configuration: four-space indentation, single quotes where supported,
+semicolons, trailing commas, and LF line endings. Run `pnpm format` to apply
+formatting and `pnpm format:check` to validate it. CI runs the check without
+writing files, and VS Code format-on-save is enabled.
+
+Batch, PowerShell, and shell scripts are intentionally excluded from automatic
+formatting because no maintained formatter is available that safely preserves
+their control flow, quoting, expansion, and pipeline semantics. Review those
+files manually when changing them.
+
 ## Local Agent Instructions
 
 Optional user-specific agent instructions may exist in:

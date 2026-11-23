@@ -75,7 +75,7 @@
         &__information {
             width: min(500px, 100%);
             min-width: 0;
-            
+
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -93,7 +93,7 @@
 
                 &-img {
                     padding: 10px;
-                    
+
                     height: 70px;
                 }
                 &__text {
@@ -145,7 +145,7 @@
             &-title {
                 margin: 0 0 10px;
 
-                font-size: .8em;
+                font-size: 0.8em;
                 text-transform: uppercase;
                 color: colors.get-dark(text, tertiary);
             }
@@ -167,7 +167,7 @@
         max-width: var(--content-wide-max-width);
         padding: sizes.get(section);
         box-sizing: border-box;
-        
+
         display: flex;
         gap: 20px;
 
@@ -183,7 +183,7 @@
         &__disclaimer {
             min-width: 0;
             flex: 1 1 0;
-        
+
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -206,7 +206,7 @@
         &__body {
             display: block;
         }
-        
+
         &__content {
             --content-padding-block: #{sizes.get(spacing, xl)};
 

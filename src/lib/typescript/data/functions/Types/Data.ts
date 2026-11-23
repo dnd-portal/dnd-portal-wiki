@@ -1,3 +1,3 @@
-import type { data } from "../../_index_";
+import type { data } from '../../_index_';
 
 export type Data = typeof data;

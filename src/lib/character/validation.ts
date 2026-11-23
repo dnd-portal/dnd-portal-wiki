@@ -3,9 +3,7 @@ import type { Character } from './types';
 
 export function migrateCharacter(input: unknown): Character {
     if (!input || typeof input !== 'object') {
-        throw new Error(
-            "This doesn't look like a DND-Portal character file."
-        );
+        throw new Error("This doesn't look like a DND-Portal character file.");
     }
 
     const value = input as Partial<Character>;
@@ -22,12 +20,12 @@ export function migrateCharacter(input: unknown): Character {
 
         character: {
             ...defaults.character,
-            ...value.character
+            ...value.character,
         },
 
         abilities: {
             ...defaults.abilities,
-            ...value.abilities
+            ...value.abilities,
         },
 
         combat: {
@@ -36,20 +34,20 @@ export function migrateCharacter(input: unknown): Character {
 
             deathSaves: {
                 ...defaults.combat.deathSaves,
-                ...value.combat?.deathSaves
+                ...value.combat?.deathSaves,
             },
 
             hitDice: {
                 ...defaults.combat.hitDice,
-                ...value.combat?.hitDice
-            }
+                ...value.combat?.hitDice,
+            },
         },
 
         notes: {
             ...defaults.notes,
             ...value.notes,
-            sessionNotes: value.notes?.sessionNotes ?? []
-        }
+            sessionNotes: value.notes?.sessionNotes ?? [],
+        },
     } as Character;
 
     if (
@@ -62,15 +60,10 @@ export function migrateCharacter(input: unknown): Character {
 
     if (
         Object.values(merged.abilities).some(
-            score =>
-                typeof score !== 'number' ||
-                score < 1 ||
-                score > 30
+            (score) => typeof score !== 'number' || score < 1 || score > 30,
         )
     ) {
-        throw new Error(
-            'Ability scores must be numbers between 1 and 30.'
-        );
+        throw new Error('Ability scores must be numbers between 1 and 30.');
     }
 
     return merged;

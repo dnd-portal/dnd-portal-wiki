@@ -8,4 +8,4 @@ export const linkedin = {
         storytelling, and practical, well-crafted solutions.`,
 
     url: 'https://www.linkedin.com/in/toon-van-berkel-a9112628b/',
-}
+};

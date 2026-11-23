@@ -1,100 +1,100 @@
 export const project = {
-	about: {
-		name: {
-			normal: 'About',
-			slug: 'about'
-		},
+    about: {
+        name: {
+            normal: 'About',
+            slug: 'about',
+        },
 
-		logos: {
-			simple: {
-				href: '/icons/white/util/home.svg',
-				alt: 'A stylized home icon representing project information.'
-			}
-		},
+        logos: {
+            simple: {
+                href: '/icons/white/util/home.svg',
+                alt: 'A stylized home icon representing project information.',
+            },
+        },
 
-		href: '/about'
-	},
-    
-	credits: {
-		name: {
-			normal: 'Credits',
-			slug: 'credits'
-		},
+        href: '/about',
+    },
 
-		logos: {
-			simple: {
-				href: '/icons/white/entity/organization.svg',
-				alt: `A stylized organisation chart icon showing one parent node
-					connected to three subordinate nodes.`
-			}
-		},
+    credits: {
+        name: {
+            normal: 'Credits',
+            slug: 'credits',
+        },
 
-		href: '/credits'
-	},
+        logos: {
+            simple: {
+                href: '/icons/white/entity/organization.svg',
+                alt: `A stylized organisation chart icon showing one parent node
+					connected to three subordinate nodes.`,
+            },
+        },
 
-	sources: {
-		name: {
-			normal: 'Sources',
-			slug: 'sources'
-		},
+        href: '/credits',
+    },
 
-		logos: {
-			simple: {
-				href: '/icons/white/entity/archive.svg',
-				alt: `A stylized archive icon showing a row of upright books and
-					records representing stored information and historical material.`
-			}
-		},
-		
-		href: '/sources'
-	},
+    sources: {
+        name: {
+            normal: 'Sources',
+            slug: 'sources',
+        },
 
-	aiTransparency: {
-		name: {
-			normal: 'AI Transparency',
-			slug: 'ai-transparency'
-		},
+        logos: {
+            simple: {
+                href: '/icons/white/entity/archive.svg',
+                alt: `A stylized archive icon showing a row of upright books and
+					records representing stored information and historical material.`,
+            },
+        },
 
-		logos: {
-			simple: {
-				href: '/icons/white/util/eye.svg',
-				alt: 'A stylized eye icon representing transparency and review.'
-			}
-		},
+        href: '/sources',
+    },
 
-		href: '/ai'
-	},
+    aiTransparency: {
+        name: {
+            normal: 'AI Transparency',
+            slug: 'ai-transparency',
+        },
 
-	accessibility: {
-		name: {
-			normal: 'Accessibility',
-			slug: 'accessibility'
-		},
+        logos: {
+            simple: {
+                href: '/icons/white/util/eye.svg',
+                alt: 'A stylized eye icon representing transparency and review.',
+            },
+        },
 
-		logos: {
-			simple: {
-				href: '/icons/white/util/eye.svg',
-				alt: 'A stylized eye icon representing accessibility and readable design.'
-			}
-		},
+        href: '/ai',
+    },
 
-		href: '/accessibility'
-	},
+    accessibility: {
+        name: {
+            normal: 'Accessibility',
+            slug: 'accessibility',
+        },
 
-	changelog: {
-		name: {
-			normal: 'Changelog',
-			slug: 'changelog'
-		},
+        logos: {
+            simple: {
+                href: '/icons/white/util/eye.svg',
+                alt: 'A stylized eye icon representing accessibility and readable design.',
+            },
+        },
 
-		logos: {
-			simple: {
-				href: '/icons/white/entity/archive.svg',
-				alt: `A stylized archive icon showing a row of upright books and
-					records representing stored information and historical material.`
-			}
-		},
-		
-		href: '/changelog'
-	}
-}
+        href: '/accessibility',
+    },
+
+    changelog: {
+        name: {
+            normal: 'Changelog',
+            slug: 'changelog',
+        },
+
+        logos: {
+            simple: {
+                href: '/icons/white/entity/archive.svg',
+                alt: `A stylized archive icon showing a row of upright books and
+					records representing stored information and historical material.`,
+            },
+        },
+
+        href: '/changelog',
+    },
+};

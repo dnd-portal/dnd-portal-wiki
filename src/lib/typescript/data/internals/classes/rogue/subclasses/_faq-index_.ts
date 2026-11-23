@@ -9,13 +9,13 @@ import { swashbucklerFaq } from './swashbuckler/faq/_index_';
 import { thiefFaq } from './thief/faq/_index_';
 
 export const rogueSubclassFaqGroups = [
-	arcaneTricksterFaq,
-	assassinFaq,
-	inquisitiveFaq,
-	mastermindFaq,
-	phantomFaq,
-	scoutFaq,
-	soulknifeFaq,
-	swashbucklerFaq,
-	thiefFaq
+    arcaneTricksterFaq,
+    assassinFaq,
+    inquisitiveFaq,
+    mastermindFaq,
+    phantomFaq,
+    scoutFaq,
+    soulknifeFaq,
+    swashbucklerFaq,
+    thiefFaq,
 ] as const;

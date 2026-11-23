@@ -2,6 +2,46 @@
 
 D&D Portal Wiki is a static SvelteKit site. Most page content is defined in TypeScript data modules and rendered through reusable Svelte components.
 
+The current application uses SvelteKit `3.1.1` with Svelte `5.57.3`, Vite
+`8.3.5`, and TypeScript `6.0.3`. Node.js `25.9.0` and pnpm `11.10.0` are the
+repository runtime requirements. The versions are declared in `package.json`
+and resolved in `pnpm-lock.yaml`.
+
+### TypeScript compatibility
+
+The standard `pnpm check` path uses TypeScript `6.0.3`, which remains
+temporarily necessary for the compiler API used by the current Svelte tooling.
+TypeScript `7.0.2` is installed as `@typescript/native`; `pnpm check:tsgo`
+uses it through `svelte-check --tsgo`, and `pnpm check:tsgo:watch` provides the
+corresponding watch mode. Neither path weakens diagnostics.
+
+The intended end state is TypeScript 7 only. We are waiting for official
+support in `svelte-check` and the relevant SvelteKit integration. A new Svelte
+version or changed peer dependency alone is insufficient evidence. See the
+[svelte-check documentation](https://github.com/sveltejs/language-tools/blob/master/packages/svelte-check/README.md),
+[issue #3063](https://github.com/sveltejs/language-tools/issues/3063), and
+[PR #3111](https://github.com/sveltejs/language-tools/pull/3111). PR #3111 is
+focused on editor/content-mapper support, not proof of a full `svelte-check`
+migration, and no release date is promised. When stable support arrives,
+remove TS6 dependencies and scripts, regenerate the lockfile, then reverify
+editor support, watch mode, checks, tests, build, and crawl.
+
+## SvelteKit and build configuration
+
+The single Vite entry point is `vite.config.js`. It configures the SvelteKit 3
+Vite plugin with `@sveltejs/adapter-static`, the `404.html` fallback, and the
+project's Svelte runes compiler setting. It also retains the CSS browser targets
+(`chrome87`, `edge88`, `firefox78`, and `safari14`) and a
+`chunkSizeWarningLimit` of `1000`. `vite.config.ts` is not part of the project.
+
+TypeScript extends SvelteKit's generated configuration through
+`tsconfig.json` and `$app/tsconfig`. The `#lib` and `#lib/*` aliases are defined
+by the package import map and resolve to `src/lib` and its subpaths. Keep these
+aliases and the generated SvelteKit configuration in sync when changing build
+or import conventions. Browser-only UI checks currently use SvelteKit's
+`$app/env` `browser` export where needed; this is a runtime import and is
+separate from the `$app/tsconfig` TypeScript configuration extension.
+
 ## Main Areas
 
 ```text
@@ -136,6 +176,14 @@ infrastructure. Structured item rules use the generic PageContentSection and
 content-block model. Individual item pages are resolved by the generic
 collection/category/item route.
 
+Homebrew content intentionally has two navigation contexts. A page such as
+GlueCo or The Mimic Stick can be reached through the ordinary Wiki category and
+through `/homebrew/eldor/`. These are distinct URLs with route-specific
+breadcrumbs and canonical URLs, while rendering the same underlying content.
+Sidebar active state is an exact URL match, so exactly one context is active.
+Context-specific SEO titles distinguish the two pages; both routes remain
+available to search and sitemap generation.
+
 ## FAQ architecture
 
 FAQ content is structured TypeScript data aggregated by
@@ -234,6 +282,12 @@ The layout emits:
 
 Page-specific route data may override SEO values where needed, such as individual spell pages.
 
+Legacy Acid Splash URLs are prerendered redirect-only pages for static GitHub
+Pages hosting. They point directly to the current spell route. The pre-live
+crawl recognizes these pages as redirects, verifies that the target exists, and
+fails on missing targets, redirect chains, or loops; it does not skip checking
+the redirect destination.
+
 ## Styling
 
 The SCSS structure should remain component-oriented. Large page-level styles should be split into focused partials rather than being added back into one large file.
@@ -249,4 +303,8 @@ pnpm build
 pnpm audit:prelive:crawl
 ```
 
-The pre-live audit checks central data paths, route shapes, static assets, spell slugs, placeholder markers, and built static output.
+The pre-live audit checks central data paths, route shapes, static assets, spell
+slugs, placeholder markers, and built static output. The crawl variant also
+checks trailing-slash links, canonical URLs, unique titles, descriptions, H1s,
+JSON-LD, duplicate IDs, ARIA references, tooltip content, and redirect-only
+pages. Run it only after `pnpm build`.

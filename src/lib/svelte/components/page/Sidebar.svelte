@@ -3,322 +3,333 @@
     use:
 -->
 <script lang="ts">
-	const base: string = '';
-	import { page } from '$app/state';
-	import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
-	import { onMount } from 'svelte';
-	import {
-		getSidebarLabel,
-		type SidebarDataType,
-		type SidebarNode
-	} from '#lib/typescript/components/_index_.js';
+    const base: string = '';
+    import { page } from '$app/state';
+    import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
+    import { onMount } from 'svelte';
+    import {
+        getSidebarLabel,
+        type SidebarDataType,
+        type SidebarNode,
+    } from '#lib/typescript/components/_index_.js';
 
-	import Link from '#lib/svelte/components/Link.svelte';
+    import Link from '#lib/svelte/components/Link.svelte';
 
-	let { sections }: SidebarDataType = $props();
-	let mobileOpen = $state(false);
-	let isCollapsed = $state(false);
-	let isDesktop = $state(false);
-	let hasLoadedCollapsePreference = $state(false);
-	let expandedPaths = $state<ReadonlySet<string>>(new Set());
-	let collapsedPaths = $state<ReadonlySet<string>>(new Set());
-	let visibleChildCounts = $state<Record<string, number>>({});
-	const homebrewSidebarPaths = new Set([
-		'internals.companions.puddleSlime',
-		'internals.locations.brinehookHarbor.page',
-		'internals.locations.brinehookHarbor.shopping',
-		'internals.locations.gildersproutReach.page',
-		'internals.locations.gildersproutReach.shopping',
-		'internals.monsters.rotwoodSovereign',
-		'internals.organizations.page',
-		'internals.organizations.glueCo'
-	]);
-	let sidebarHidden = $derived(isDesktop && isCollapsed);
-	let sidebarAriaHidden = $derived(sidebarHidden || (!isDesktop && !mobileOpen));
-	const collapseStorageKey = 'dnd-portal-sidebar-collapsed';
+    let { sections }: SidebarDataType = $props();
+    let mobileOpen = $state(false);
+    let isCollapsed = $state(false);
+    let isDesktop = $state(false);
+    let hasLoadedCollapsePreference = $state(false);
+    let expandedPaths = $state<ReadonlySet<string>>(new Set());
+    let collapsedPaths = $state<ReadonlySet<string>>(new Set());
+    let visibleChildCounts = $state<Record<string, number>>({});
+    const homebrewSidebarPaths = new Set([
+        'internals.companions.puddleSlime',
+        'internals.locations.brinehookHarbor.page',
+        'internals.locations.brinehookHarbor.shopping',
+        'internals.locations.gildersproutReach.page',
+        'internals.locations.gildersproutReach.shopping',
+        'internals.monsters.rotwoodSovereign',
+        'internals.organizations.page',
+        'internals.organizations.glueCo',
+    ]);
+    let sidebarHidden = $derived(isDesktop && isCollapsed);
+    let sidebarAriaHidden = $derived(sidebarHidden || (!isDesktop && !mobileOpen));
+    const collapseStorageKey = 'dnd-portal-sidebar-collapsed';
 
-	onMount(() => {
-		const desktopQuery = window.matchMedia('(min-width: 701px)');
-		const handleNavbarToggle = (): void => {
-			if (!isDesktop) mobileOpen = !mobileOpen;
-		};
-		const updateDesktopState = (event: MediaQueryList | MediaQueryListEvent) => {
-			isDesktop = event.matches;
+    onMount(() => {
+        const desktopQuery = window.matchMedia('(min-width: 701px)');
+        const handleNavbarToggle = (): void => {
+            if (!isDesktop) mobileOpen = !mobileOpen;
+        };
+        const updateDesktopState = (event: MediaQueryList | MediaQueryListEvent) => {
+            isDesktop = event.matches;
 
-			if (event.matches) {
-				mobileOpen = false;
-			}
-		};
+            if (event.matches) {
+                mobileOpen = false;
+            }
+        };
 
-		updateDesktopState(desktopQuery);
-		isCollapsed = localStorage.getItem(collapseStorageKey) === 'true';
-		hasLoadedCollapsePreference = true;
+        updateDesktopState(desktopQuery);
+        isCollapsed = localStorage.getItem(collapseStorageKey) === 'true';
+        hasLoadedCollapsePreference = true;
 
-		desktopQuery.addEventListener('change', updateDesktopState);
-		window.addEventListener('dnd-portal:toggle-mobile-sidebar', handleNavbarToggle);
+        desktopQuery.addEventListener('change', updateDesktopState);
+        window.addEventListener('dnd-portal:toggle-mobile-sidebar', handleNavbarToggle);
 
-		return () => {
-			desktopQuery.removeEventListener('change', updateDesktopState);
-			window.removeEventListener('dnd-portal:toggle-mobile-sidebar', handleNavbarToggle);
-		};
-	});
+        return () => {
+            desktopQuery.removeEventListener('change', updateDesktopState);
+            window.removeEventListener('dnd-portal:toggle-mobile-sidebar', handleNavbarToggle);
+        };
+    });
 
-	$effect(() => {
-		if (typeof document === 'undefined') {
-			return;
-		}
+    $effect(() => {
+        if (typeof document === 'undefined') {
+            return;
+        }
 
-		const shouldLockPage = !isDesktop && mobileOpen;
-		document.body.classList.toggle('sidebar-mobile-open', shouldLockPage);
-		window.dispatchEvent(new CustomEvent('dnd-portal:mobile-sidebar-state', { detail: { open: mobileOpen } }));
+        const shouldLockPage = !isDesktop && mobileOpen;
+        document.body.classList.toggle('sidebar-mobile-open', shouldLockPage);
+        window.dispatchEvent(
+            new CustomEvent('dnd-portal:mobile-sidebar-state', { detail: { open: mobileOpen } }),
+        );
 
-		return () => {
-			document.body.classList.remove('sidebar-mobile-open');
-		};
-	});
+        return () => {
+            document.body.classList.remove('sidebar-mobile-open');
+        };
+    });
 
-	$effect(() => {
-		if (!hasLoadedCollapsePreference) {
-			return;
-		}
+    $effect(() => {
+        if (!hasLoadedCollapsePreference) {
+            return;
+        }
 
-		localStorage.setItem(collapseStorageKey, String(isCollapsed));
-	});
+        localStorage.setItem(collapseStorageKey, String(isCollapsed));
+    });
 
-	function normalizePath(path: string): string {
-		const pathname = path.split(/[?#]/, 1)[0] || '/';
-		const withoutBase =
-			base && pathname !== base && pathname.startsWith(`${base}/`)
-				? pathname.slice(base.length)
-				: pathname;
+    function normalizePath(path: string): string {
+        const pathname = path.split(/[?#]/, 1)[0] || '/';
+        const withoutBase =
+            base && pathname !== base && pathname.startsWith(`${base}/`)
+                ? pathname.slice(base.length)
+                : pathname;
 
-		if (withoutBase.length > 1 && withoutBase.endsWith('/')) {
-			return withoutBase.slice(0, -1);
-		}
+        if (withoutBase.length > 1 && withoutBase.endsWith('/')) {
+            return withoutBase.slice(0, -1);
+        }
 
-		return withoutBase;
-	}
+        return withoutBase;
+    }
 
-	function isCurrent(node: SidebarNode): boolean {
-		const currentPath = normalizePath(page.url.pathname);
-		const targetPath = normalizePath(getRuntimeData(node.path).href);
-		if (currentPath === targetPath) return true;
+    function isCurrent(node: SidebarNode): boolean {
+        const currentPath = normalizePath(page.url.pathname);
+        const targetPath = normalizePath(getRuntimeData(node.path).href);
+        if (currentPath === targetPath) return true;
 
-		const currentClassSlug = getBaseClassSlug(currentPath);
-		const targetClassSlug = getBaseClassSlug(targetPath);
-		const targetIsClassRoot = /^\/classes\/[^/]+\/?$/.test(targetPath);
+        const currentClassSlug = getBaseClassSlug(currentPath);
+        const targetClassSlug = getBaseClassSlug(targetPath);
+        const targetIsClassRoot = /^\/classes\/[^/]+\/?$/.test(targetPath);
 
-		if (targetIsClassRoot) {
-			const currentIsClassRoot = /^\/classes\/[^/]+\/?$/.test(currentPath);
-			return Boolean(
-				currentIsClassRoot &&
-				currentClassSlug &&
-				targetClassSlug &&
-				currentClassSlug === targetClassSlug
-			);
-		}
+        if (targetIsClassRoot) {
+            const currentIsClassRoot = /^\/classes\/[^/]+\/?$/.test(currentPath);
+            return Boolean(
+                currentIsClassRoot &&
+                currentClassSlug &&
+                targetClassSlug &&
+                currentClassSlug === targetClassSlug,
+            );
+        }
 
-		if (targetPath === '/' || targetPath === '/classes') {
-			return false;
-		}
+        if (targetPath === '/' || targetPath === '/classes') {
+            return false;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
+    function isHomebrew(node: SidebarNode): boolean {
+        return node.path.startsWith('internals.homebrew.') || homebrewSidebarPaths.has(node.path);
+    }
 
-	function isHomebrew(node: SidebarNode): boolean {
-		return node.path.startsWith('internals.homebrew.') || homebrewSidebarPaths.has(node.path);
-	}
+    function getBaseClassSlug(pathname: string): string | null {
+        const match = pathname.match(/^\/classes\/([^/]+)(?:\/[^/]+)?\/?$/);
 
-	function getBaseClassSlug(pathname: string): string | null {
-		const match = pathname.match(/^\/classes\/([^/]+)(?:\/[^/]+)?\/?$/);
+        if (!match) return null;
 
-		if (!match) return null;
+        return match[1].replace(/-(?:3-5e|5e|4e|3e)$/, '');
+    }
 
-		return match[1].replace(/-(?:3-5e|5e|4e|3e)$/, '');
-	}
+    function hasCurrentDescendant(node: SidebarNode): boolean {
+        return node.children.some((child) => isCurrent(child) || hasCurrentDescendant(child));
+    }
 
-	function hasCurrentDescendant(node: SidebarNode): boolean {
-		return node.children.some((child) => isCurrent(child) || hasCurrentDescendant(child));
-	}
+    function isExpanded(node: SidebarNode): boolean {
+        if (collapsedPaths.has(node.path)) {
+            return false;
+        }
 
-	function isExpanded(node: SidebarNode): boolean {
-		if (collapsedPaths.has(node.path)) {
-			return false;
-		}
+        return (
+            expandedPaths.has(node.path) ||
+            (isCurrent(node) && node.children.length > 0) ||
+            hasCurrentDescendant(node)
+        );
+    }
 
-		return (
-			expandedPaths.has(node.path) ||
-			(isCurrent(node) && node.children.length > 0) ||
-			hasCurrentDescendant(node)
-		);
-	}
+    function toggleNode(node: SidebarNode): void {
+        const nextExpandedPaths = new Set(expandedPaths);
+        const nextCollapsedPaths = new Set(collapsedPaths);
 
-	function toggleNode(node: SidebarNode): void {
-		const nextExpandedPaths = new Set(expandedPaths);
-		const nextCollapsedPaths = new Set(collapsedPaths);
+        if (isExpanded(node)) {
+            nextExpandedPaths.delete(node.path);
+            nextCollapsedPaths.add(node.path);
+        } else {
+            nextExpandedPaths.add(node.path);
+            nextCollapsedPaths.delete(node.path);
+        }
 
-		if (isExpanded(node)) {
-			nextExpandedPaths.delete(node.path);
-			nextCollapsedPaths.add(node.path);
-		} else {
-			nextExpandedPaths.add(node.path);
-			nextCollapsedPaths.delete(node.path);
-		}
+        expandedPaths = nextExpandedPaths;
+        collapsedPaths = nextCollapsedPaths;
+    }
 
-		expandedPaths = nextExpandedPaths;
-		collapsedPaths = nextCollapsedPaths;
-	}
+    function handleMobileLinkClick(event: MouseEvent): void {
+        if (!isDesktop && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+            mobileOpen = false;
+        }
+    }
 
-	function handleMobileLinkClick(event: MouseEvent): void {
-		if (!isDesktop && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
-			mobileOpen = false;
-		}
-	}
+    function handleKeydown(event: KeyboardEvent): void {
+        if (event.key === 'Escape' && mobileOpen) {
+            mobileOpen = false;
+        }
+    }
 
-	function handleKeydown(event: KeyboardEvent): void {
-		if (event.key === 'Escape' && mobileOpen) {
-			mobileOpen = false;
-		}
-	}
+    function toggleSidebarCollapse(): void {
+        isCollapsed = !isCollapsed;
+    }
 
-	function toggleSidebarCollapse(): void {
-		isCollapsed = !isCollapsed;
-	}
+    function getVisibleChildren(node: SidebarNode): readonly SidebarNode[] {
+        return node.children.slice(0, visibleChildCounts[node.path] ?? 10);
+    }
 
-	function getVisibleChildren(node: SidebarNode): readonly SidebarNode[] {
-		return node.children.slice(0, visibleChildCounts[node.path] ?? 10);
-	}
-
-	function showMoreChildren(node: SidebarNode): void {
-		visibleChildCounts = {
-			...visibleChildCounts,
-			[node.path]: (visibleChildCounts[node.path] ?? 10) + 10
-		};
-	}
+    function showMoreChildren(node: SidebarNode): void {
+        visibleChildCounts = {
+            ...visibleChildCounts,
+            [node.path]: (visibleChildCounts[node.path] ?? 10) + 10,
+        };
+    }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
 {#snippet renderNode(node: SidebarNode, depth: number)}
-	{@const childrenId = `sidebar-${node.path.replaceAll('.', '-')}`}
-	{@const childrenExpanded = isExpanded(node)}
-	{@const hasChildren = node.children.length > 0}
-	{@const active = isCurrent(node)}
+    {@const childrenId = `sidebar-${node.path.replaceAll('.', '-')}`}
+    {@const childrenExpanded = isExpanded(node)}
+    {@const hasChildren = node.children.length > 0}
+    {@const active = isCurrent(node)}
 
-	<li class="sidebar__item">
-		<div
-			class="sidebar__row"
-			class:sidebar__row--active={active}
-			class:sidebar__row--homebrew={isHomebrew(node)}
-			style={`--sidebar-depth: ${depth}`}
-		>
-			{#if hasChildren}
-				<button
-					class="sidebar__toggle"
-					type="button"
-					aria-label={`${childrenExpanded ? 'Collapse' : 'Expand'} ${getSidebarLabel(node.path)}`}
-					aria-expanded={childrenExpanded}
-					aria-controls={childrenId}
-					onclick={() => toggleNode(node)}
-				>
-					<span
-						class="sidebar__toggle-icon"
-						class:sidebar__toggle-icon--expanded={childrenExpanded}
-						aria-hidden="true"
-					>
-						&rsaquo;
-					</span>
-				</button>
-			{:else}
-				<span class="sidebar__toggle-spacer" aria-hidden="true"></span>
-			{/if}
+    <li class="sidebar__item">
+        <div
+            class="sidebar__row"
+            class:sidebar__row--active={active}
+            class:sidebar__row--homebrew={isHomebrew(node)}
+            style={`--sidebar-depth: ${depth}`}
+        >
+            {#if hasChildren}
+                <button
+                    class="sidebar__toggle"
+                    type="button"
+                    aria-label={`${childrenExpanded ? 'Collapse' : 'Expand'} ${getSidebarLabel(node.path)}`}
+                    aria-expanded={childrenExpanded}
+                    aria-controls={childrenId}
+                    onclick={() => toggleNode(node)}
+                >
+                    <span
+                        class="sidebar__toggle-icon"
+                        class:sidebar__toggle-icon--expanded={childrenExpanded}
+                        aria-hidden="true"
+                    >
+                        &rsaquo;
+                    </span>
+                </button>
+            {:else}
+                <span class="sidebar__toggle-spacer" aria-hidden="true"></span>
+            {/if}
 
-			<Link
-				goto={node.path}
-				placeholder={getSidebarLabel(node.path)}
-				popup="description"
-				current={active}
-				showIcon
-				onNavigate={handleMobileLinkClick}
-			/>
-		</div>
+            <Link
+                goto={node.path}
+                placeholder={getSidebarLabel(node.path)}
+                popup="description"
+                current={active}
+                showIcon
+                onNavigate={handleMobileLinkClick}
+            />
+        </div>
 
-		{#if hasChildren && childrenExpanded}
-			<ul id={childrenId} class="sidebar__list sidebar__list--nested">
-				{#each getVisibleChildren(node) as child (child.path)}
-					{@render renderNode(child, depth + 1)}
-				{/each}
-				{#if getVisibleChildren(node).length < node.children.length}
-					<li class="sidebar__item sidebar__item--show-more">
-						<button class="sidebar__show-more" type="button" onclick={() => showMoreChildren(node)}>
-							Show more…
-						</button>
-					</li>
-				{/if}
-			</ul>
-		{/if}
-	</li>
+        {#if hasChildren && childrenExpanded}
+            <ul id={childrenId} class="sidebar__list sidebar__list--nested">
+                {#each getVisibleChildren(node) as child (child.path)}
+                    {@render renderNode(child, depth + 1)}
+                {/each}
+                {#if getVisibleChildren(node).length < node.children.length}
+                    <li class="sidebar__item sidebar__item--show-more">
+                        <button
+                            class="sidebar__show-more"
+                            type="button"
+                            onclick={() => showMoreChildren(node)}
+                        >
+                            Show more…
+                        </button>
+                    </li>
+                {/if}
+            </ul>
+        {/if}
+    </li>
 {/snippet}
 
 <button
-	class="sidebar__backdrop"
-	class:sidebar__backdrop--visible={mobileOpen}
-	type="button"
-	aria-label="Close navigation"
-	tabindex={mobileOpen ? 0 : -1}
-	onclick={() => (mobileOpen = false)}
+    class="sidebar__backdrop"
+    class:sidebar__backdrop--visible={mobileOpen}
+    type="button"
+    aria-label="Close navigation"
+    tabindex={mobileOpen ? 0 : -1}
+    onclick={() => (mobileOpen = false)}
 ></button>
 
 <div
-	class="sidebar-shell"
-	class:sidebar-shell--collapsed={sidebarHidden}
-	class:sidebar-shell--mobile-open={mobileOpen}
+    class="sidebar-shell"
+    class:sidebar-shell--collapsed={sidebarHidden}
+    class:sidebar-shell--mobile-open={mobileOpen}
 >
-	<aside
-		id="wiki-sidebar"
-		class="sidebar"
-		class:sidebar--open={mobileOpen}
-		aria-label="Wiki navigation"
-		aria-hidden={sidebarAriaHidden}
-	>
-		{#if !sidebarHidden}
-			<button
-				class="sidebar__mobile-close"
-				type="button"
-				aria-label="Close navigation"
-				onclick={() => (mobileOpen = false)}
-			>
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<nav class="sidebar__nav">
-				{#each sections as section}
-					<section class="sidebar__section">
-						<p class="sidebar__section-title">{section.title}</p>
+    <aside
+        id="wiki-sidebar"
+        class="sidebar"
+        class:sidebar--open={mobileOpen}
+        aria-label="Wiki navigation"
+        aria-hidden={sidebarAriaHidden}
+    >
+        {#if !sidebarHidden}
+            <button
+                class="sidebar__mobile-close"
+                type="button"
+                aria-label="Close navigation"
+                onclick={() => (mobileOpen = false)}
+            >
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <nav class="sidebar__nav">
+                {#each sections as section}
+                    <section class="sidebar__section">
+                        <p class="sidebar__section-title">{section.title}</p>
 
-						<ul class="sidebar__list">
-							{#each section.roots as root (root.path)}
-								{@render renderNode(root, 0)}
-							{/each}
-						</ul>
-					</section>
-				{/each}
-			</nav>
-		{/if}
-	</aside>
+                        <ul class="sidebar__list">
+                            {#each section.roots as root (root.path)}
+                                {@render renderNode(root, 0)}
+                            {/each}
+                        </ul>
+                    </section>
+                {/each}
+            </nav>
+        {/if}
+    </aside>
 
-<button
-	class="sidebar-shell__toggle"
-		type="button"
-		aria-controls="wiki-sidebar"
-	aria-expanded={isDesktop ? !sidebarHidden : mobileOpen}
-	aria-label={isDesktop ? (sidebarHidden ? 'Open sidebar' : 'Close sidebar') : (mobileOpen ? 'Close navigation' : 'Open navigation')}
-	onclick={() => (isDesktop ? toggleSidebarCollapse() : (mobileOpen = !mobileOpen))}
-	>
-		<span
-			class="sidebar-shell__toggle-icon"
-			class:sidebar-shell__toggle-icon--collapsed={sidebarHidden}
-			aria-hidden="true"
-		></span>
-	</button>
+    <button
+        class="sidebar-shell__toggle"
+        type="button"
+        aria-controls="wiki-sidebar"
+        aria-expanded={isDesktop ? !sidebarHidden : mobileOpen}
+        aria-label={isDesktop
+            ? sidebarHidden
+                ? 'Open sidebar'
+                : 'Close sidebar'
+            : mobileOpen
+              ? 'Close navigation'
+              : 'Open navigation'}
+        onclick={() => (isDesktop ? toggleSidebarCollapse() : (mobileOpen = !mobileOpen))}
+    >
+        <span
+            class="sidebar-shell__toggle-icon"
+            class:sidebar-shell__toggle-icon--collapsed={sidebarHidden}
+            aria-hidden="true"
+        ></span>
+    </button>
 </div>

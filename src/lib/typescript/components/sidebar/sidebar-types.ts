@@ -6,15 +6,15 @@
 import type { LinkPath } from '#lib/typescript/data/_index_.js';
 
 export type SidebarNode = {
-	path: LinkPath;
-	children: readonly SidebarNode[];
+    path: LinkPath;
+    children: readonly SidebarNode[];
 };
 
 export type SidebarSection = {
-	title: string;
-	roots: readonly SidebarNode[];
+    title: string;
+    roots: readonly SidebarNode[];
 };
 
 export type SidebarDataType = {
-	sections: readonly SidebarSection[];
+    sections: readonly SidebarSection[];
 };

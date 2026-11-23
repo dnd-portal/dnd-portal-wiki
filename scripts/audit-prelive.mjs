@@ -12,793 +12,965 @@ const staticDir = join(root, 'static');
 const buildDir = join(root, 'build');
 const sourceExtensions = new Set(['.svelte', '.ts', '.js', '.scss']);
 const generatedTextExtensions = new Set([
-	'.css',
-	'.html',
-	'.js',
-	'.json',
-	'.map',
-	'.svg',
-	'.txt',
-	'.webmanifest',
-	'.xml'
+    '.css',
+    '.html',
+    '.js',
+    '.json',
+    '.map',
+    '.svg',
+    '.txt',
+    '.webmanifest',
+    '.xml',
 ]);
 const ignoredSourceParts = [
-	`${join('src', 'lib', 'typescript', 'data', 'internals', 'rules', 'spellcasting', 'spells', 'spell-data.ts')}`
+    `${join('src', 'lib', 'typescript', 'data', 'internals', 'rules', 'spellcasting', 'spells', 'spell-data.ts')}`,
 ];
 const ignoredPlaceholderLineParts = [
-	'&::placeholder',
-	'placeholder=',
-	'placeholder:',
-	'placeholder?',
-	'{placeholder',
-	'placeholder ??',
-	'temporary placeholders'
+    '&::placeholder',
+    'placeholder=',
+    'placeholder:',
+    'placeholder?',
+    '{placeholder',
+    'placeholder ??',
+    'temporary placeholders',
 ];
+const knownHistoricalRedirects = new Map([
+    ['/rules/damage/slashing/', '/rules/damage-types/slashing/'],
+    ['/spells-and-abilities/', '/spells/'],
+    ['/spells-and-abilities/spells/', '/spells/'],
+]);
 
 function isRecord(value) {
-	return typeof value === 'object' && value !== null && !Array.isArray(value);
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function isLinkData(value) {
-	return (
-		isRecord(value) &&
-		typeof value.href === 'string' &&
-		typeof value.external === 'boolean' &&
-		typeof value.title === 'string' &&
-		typeof value.subTitle === 'string' &&
-		typeof value.description === 'string' &&
-		isRecord(value.img) &&
-		typeof value.img.href === 'string' &&
-		typeof value.img.alt === 'string'
-	);
+    return (
+        isRecord(value) &&
+        typeof value.href === 'string' &&
+        typeof value.external === 'boolean' &&
+        typeof value.title === 'string' &&
+        typeof value.subTitle === 'string' &&
+        typeof value.description === 'string' &&
+        isRecord(value.img) &&
+        typeof value.img.href === 'string' &&
+        typeof value.img.alt === 'string'
+    );
 }
 
 function isPageData(value) {
-	return isLinkData(value) && value.external === false;
+    return isLinkData(value) && value.external === false;
 }
 
 function shouldRecurseInto(key, value) {
-	return (
-		isRecord(value) &&
-		key !== 'img' &&
-		key !== 'images' &&
-		key !== 'logos'
-	);
+    return isRecord(value) && key !== 'img' && key !== 'images' && key !== 'logos';
 }
 
 function collectFiles(dir) {
-	return readdirSync(dir)
-		.flatMap((name) => {
-			const path = join(dir, name);
-			const stats = statSync(path);
+    return readdirSync(dir).flatMap((name) => {
+        const path = join(dir, name);
+        const stats = statSync(path);
 
-			return stats.isDirectory() ? collectFiles(path) : [path];
-		});
+        return stats.isDirectory() ? collectFiles(path) : [path];
+    });
 }
 
 function toPosixPath(path) {
-	return path.replaceAll('\\', '/');
+    return path.replaceAll('\\', '/');
 }
 
 function getBuildFiles() {
-	if (!existsSync(buildDir)) {
-		return [];
-	}
+    if (!existsSync(buildDir)) {
+        return [];
+    }
 
-	return collectFiles(buildDir);
+    return collectFiles(buildDir);
 }
 
 function getBuildTextFiles() {
-	return getBuildFiles()
-		.filter((file) => generatedTextExtensions.has(extname(file)));
+    return getBuildFiles().filter((file) => generatedTextExtensions.has(extname(file)));
 }
 
 function getBuildHtmlFiles() {
-	return getBuildFiles()
-		.filter((file) => extname(file) === '.html')
-		.filter((file) => toPosixPath(file.slice(buildDir.length + 1)) !== '404.html');
+    return getBuildFiles()
+        .filter((file) => extname(file) === '.html')
+        .filter((file) => toPosixPath(file.slice(buildDir.length + 1)) !== '404.html');
 }
 
 function collectLinks(value, path = '') {
-	if (isLinkData(value) && path) {
-		return [{ path, value }];
-	}
+    if (isLinkData(value) && path) {
+        return [{ path, value }];
+    }
 
-	if (!isRecord(value)) {
-		return [];
-	}
+    if (!isRecord(value)) {
+        return [];
+    }
 
-	return Object.entries(value).flatMap(([key, child]) => {
-		if (!shouldRecurseInto(key, child)) {
-			return [];
-		}
+    return Object.entries(value).flatMap(([key, child]) => {
+        if (!shouldRecurseInto(key, child)) {
+            return [];
+        }
 
-		return collectLinks(child, path ? `${path}.${key}` : key);
-	});
+        return collectLinks(child, path ? `${path}.${key}` : key);
+    });
 }
 
 function collectInternalAssets(value, assets = new Set()) {
-	if (typeof value === 'string' && value.startsWith('/')) {
-		if (/\.(avif|gif|ico|jpg|jpeg|png|svg|webp)$/i.test(value)) {
-			assets.add(value);
-		}
+    if (typeof value === 'string' && value.startsWith('/')) {
+        if (/\.(avif|gif|ico|jpg|jpeg|png|svg|webp)$/i.test(value)) {
+            assets.add(value);
+        }
 
-		return assets;
-	}
+        return assets;
+    }
 
-	if (Array.isArray(value)) {
-		for (const item of value) {
-			collectInternalAssets(item, assets);
-		}
+    if (Array.isArray(value)) {
+        for (const item of value) {
+            collectInternalAssets(item, assets);
+        }
 
-		return assets;
-	}
+        return assets;
+    }
 
-	if (isRecord(value)) {
-		for (const child of Object.values(value)) {
-			collectInternalAssets(child, assets);
-		}
-	}
+    if (isRecord(value)) {
+        for (const child of Object.values(value)) {
+            collectInternalAssets(child, assets);
+        }
+    }
 
-	return assets;
+    return assets;
 }
 
 function normalizeHref(href) {
-	const clean = href.split(/[?#]/, 1)[0] || '/';
+    const clean = href.split(/[?#]/, 1)[0] || '/';
 
-	if (clean.length > 1 && clean.endsWith('/')) {
-		return clean.slice(0, -1);
-	}
+    if (clean.length > 1 && clean.endsWith('/')) {
+        return clean.slice(0, -1);
+    }
 
-	return clean;
+    return clean;
 }
 
 function withTrailingSlash(href) {
-	const [path, suffix = ''] = href.split(/([?#].*)/, 2);
+    const [path, suffix = ''] = href.split(/([?#].*)/, 2);
 
-	if (path === '/' || path.endsWith('/')) {
-		return href;
-	}
+    if (path === '/' || path.endsWith('/')) {
+        return href;
+    }
 
-	return `${path}/${suffix}`;
+    return `${path}/${suffix}`;
 }
 
 function getOutputFileForRoute(href) {
-	const cleanUrl = normalizeHref(withTrailingSlash(href));
-	const routePath = cleanUrl === '/' ? 'index.html' : join(cleanUrl.slice(1), 'index.html');
+    const cleanUrl = normalizeHref(withTrailingSlash(href));
+    const routePath = cleanUrl === '/' ? 'index.html' : join(cleanUrl.slice(1), 'index.html');
 
-	return join(buildDir, routePath);
+    return join(buildDir, routePath);
 }
 
 function isKnownInternalRoute(href) {
-	const clean = normalizeHref(href);
+    const clean = normalizeHref(href);
 
-	if (!clean.startsWith('/')) {
-		return true;
-	}
+    if (!clean.startsWith('/')) {
+        return true;
+    }
 
-	return (
-		clean === '/' ||
-		clean === '/search' ||
-		/^\/faq(?:\/[a-z0-9-]+){0,2}$/.test(clean) ||
-		clean === '/classes' ||
-		clean === '/spells' ||
-		clean === '/discord' ||
-		clean === '/rules/spellcasting/cantrips' ||
-		clean === '/rules/spellcasting/spells' ||
-		/^\/classes\/[^/]+(?:\/[^/]+)?$/.test(clean) ||
-		/^\/homebrew\/[a-z0-9-]+(?:\/[a-z0-9-]+){0,2}$/.test(clean) ||
-		/^\/discord\/[^/]+$/.test(clean) ||
-		/^\/equipment\/[^/]+$/.test(clean) ||
-		/^\/equipment\/[^/]+\/[^/]+$/.test(clean) ||
-		/^\/npcs\/[^/]+$/.test(clean) ||
-		/^\/rules\/.+$/.test(clean) ||
-		/^\/spells\/[^/]+$/.test(clean) ||
-		/^\/(?:companions|locations|magic-items|monsters|organizations)\/[^/]+(?:\/shopping)?$/.test(clean) ||
-		/^\/homebrew\/[a-z0-9-]+\/(?:companions|magic-items|monsters|organizations)\/[^/]+$/.test(clean) ||
-		/^\/homebrew\/[a-z0-9-]+\/locations\/[^/]+(?:\/shopping)?$/.test(clean) ||
-		/^\/[a-z0-9-]+$/.test(clean)
-	);
+    return (
+        clean === '/' ||
+        clean === '/search' ||
+        /^\/faq(?:\/[a-z0-9-]+){0,2}$/.test(clean) ||
+        clean === '/classes' ||
+        clean === '/spells' ||
+        clean === '/discord' ||
+        clean === '/rules/spellcasting/cantrips' ||
+        clean === '/rules/spellcasting/spells' ||
+        /^\/classes\/[^/]+(?:\/[^/]+)?$/.test(clean) ||
+        /^\/homebrew\/[a-z0-9-]+(?:\/[a-z0-9-]+){0,2}$/.test(clean) ||
+        /^\/discord\/[^/]+$/.test(clean) ||
+        /^\/equipment\/[^/]+$/.test(clean) ||
+        /^\/equipment\/[^/]+\/[^/]+$/.test(clean) ||
+        /^\/npcs\/[^/]+$/.test(clean) ||
+        /^\/rules\/.+$/.test(clean) ||
+        /^\/spells\/[^/]+$/.test(clean) ||
+        /^\/(?:companions|locations|magic-items|monsters|organizations)\/[^/]+(?:\/shopping)?$/.test(
+            clean,
+        ) ||
+        /^\/homebrew\/[a-z0-9-]+\/(?:companions|magic-items|monsters|organizations)\/[^/]+$/.test(
+            clean,
+        ) ||
+        /^\/homebrew\/[a-z0-9-]+\/locations\/[^/]+(?:\/shopping)?$/.test(clean) ||
+        /^\/[a-z0-9-]+$/.test(clean)
+    );
 }
 
 function fileExistsForAsset(assetHref) {
-	return existsSync(join(staticDir, assetHref.replace(/^\//, '')));
+    return existsSync(join(staticDir, assetHref.replace(/^\//, '')));
 }
 
 function buildFileExistsForAsset(assetHref) {
-	return existsSync(join(buildDir, assetHref.replace(/^\//, '')));
+    return existsSync(join(buildDir, assetHref.replace(/^\//, '')));
 }
 
 function getDataValue(data, path) {
-	return path
-		.split('.')
-		.reduce((current, key) => isRecord(current) ? current[key] : undefined, data);
+    return path
+        .split('.')
+        .reduce((current, key) => (isRecord(current) ? current[key] : undefined), data);
 }
 
 function collectQuotedDataPaths() {
-	const paths = new Set();
-	const regex = /['"`]((?:internals|externals|socials)(?:\.[A-Za-z0-9_-]+)+)['"`]/g;
+    const paths = new Set();
+    const regex = /['"`]((?:internals|externals|socials)(?:\.[A-Za-z0-9_-]+)+)['"`]/g;
 
-	for (const file of collectFiles(srcDir)) {
-		const relative = file.slice(root.length + 1);
+    for (const file of collectFiles(srcDir)) {
+        const relative = file.slice(root.length + 1);
 
-		if (!sourceExtensions.has(extname(file)) || ignoredSourceParts.includes(relative)) {
-			continue;
-		}
+        if (!sourceExtensions.has(extname(file)) || ignoredSourceParts.includes(relative)) {
+            continue;
+        }
 
-		const content = readFileSync(file, 'utf8');
-		let match;
+        const content = readFileSync(file, 'utf8');
+        let match;
 
-		while ((match = regex.exec(content))) {
-			paths.add(match[1]);
-		}
-	}
+        while ((match = regex.exec(content))) {
+            paths.add(match[1]);
+        }
+    }
 
-	return [...paths].sort();
+    return [...paths].sort();
 }
 
 function collectSourceAssetUrls() {
-	const assets = new Set();
-	const regex = /url\(['"]?(\/[^'")]+)['"]?\)|src=['"](\.\/[^'"]+)['"]/g;
+    const assets = new Set();
+    const regex = /url\(['"]?(\/[^'")]+)['"]?\)|src=['"](\.\/[^'"]+)['"]/g;
 
-	for (const file of collectFiles(srcDir)) {
-		if (!sourceExtensions.has(extname(file))) {
-			continue;
-		}
+    for (const file of collectFiles(srcDir)) {
+        if (!sourceExtensions.has(extname(file))) {
+            continue;
+        }
 
-		const content = readFileSync(file, 'utf8');
-		let match;
+        const content = readFileSync(file, 'utf8');
+        let match;
 
-		while ((match = regex.exec(content))) {
-			if (match[1] && /\.(avif|gif|ico|jpg|jpeg|png|svg|webp)$/i.test(match[1])) {
-				assets.add(match[1]);
-			}
-		}
-	}
+        while ((match = regex.exec(content))) {
+            if (match[1] && /\.(avif|gif|ico|jpg|jpeg|png|svg|webp)$/i.test(match[1])) {
+                assets.add(match[1]);
+            }
+        }
+    }
 
-	return [...assets].sort();
+    return [...assets].sort();
 }
 
 function collectPlaceholderFindings() {
-	const patterns = [
-		/TODO/i,
-		/FIXME/i,
-		/needs to be added/i,
-		/still needs(?: to be)? (?:added|implemented|content|data|description)/i,
-		/Use the equipment package/i,
-		/No .*description is available yet/i,
-		/No .*data has been added/i
-	];
-	const findings = [];
+    const patterns = [
+        /TODO/i,
+        /FIXME/i,
+        /needs to be added/i,
+        /still needs(?: to be)? (?:added|implemented|content|data|description)/i,
+        /Use the equipment package/i,
+        /No .*description is available yet/i,
+        /No .*data has been added/i,
+    ];
+    const findings = [];
 
-	for (const file of collectFiles(srcDir)) {
-		if (!sourceExtensions.has(extname(file))) {
-			continue;
-		}
+    for (const file of collectFiles(srcDir)) {
+        if (!sourceExtensions.has(extname(file))) {
+            continue;
+        }
 
-		const lines = readFileSync(file, 'utf8').split(/\r?\n/);
+        const lines = readFileSync(file, 'utf8').split(/\r?\n/);
 
-		lines.forEach((line, index) => {
-			if (ignoredPlaceholderLineParts.some((part) => line.includes(part))) {
-				return;
-			}
+        lines.forEach((line, index) => {
+            if (ignoredPlaceholderLineParts.some((part) => line.includes(part))) {
+                return;
+            }
 
-			if (patterns.some((pattern) => pattern.test(line))) {
-				findings.push({
-					file: file.slice(root.length + 1),
-					line: index + 1,
-					text: line.trim()
-				});
-			}
-		});
-	}
+            if (patterns.some((pattern) => pattern.test(line))) {
+                findings.push({
+                    file: file.slice(root.length + 1),
+                    line: index + 1,
+                    text: line.trim(),
+                });
+            }
+        });
+    }
 
-	return findings;
+    return findings;
 }
 
 function report(title, findings) {
-	if (!findings.length) {
-		console.log(`PASS ${title}`);
-		return false;
-	}
+    if (!findings.length) {
+        console.log(`PASS ${title}`);
+        return false;
+    }
 
-	console.log(`FAIL ${title}`);
+    console.log(`FAIL ${title}`);
 
-	for (const finding of findings.slice(0, 80)) {
-		console.log(`  - ${finding}`);
-	}
+    for (const finding of findings.slice(0, 80)) {
+        console.log(`  - ${finding}`);
+    }
 
-	if (findings.length > 80) {
-		console.log(`  ... ${findings.length - 80} more`);
-	}
+    if (findings.length > 80) {
+        console.log(`  ... ${findings.length - 80} more`);
+    }
 
-	return true;
+    return true;
 }
 
 const htmlEntityReplacements = {
-	quot: '"',
-	'#34': '"',
-	amp: '&',
-	lt: '<',
-	gt: '>'
+    quot: '"',
+    '#34': '"',
+    amp: '&',
+    lt: '<',
+    gt: '>',
 };
 
 function decodeHtmlEntities(value) {
-	return value.replace(/&(quot|#34|amp|lt|gt);/g, (_, entity) => htmlEntityReplacements[entity]);
+    return value.replace(/&(quot|#34|amp|lt|gt);/g, (_, entity) => htmlEntityReplacements[entity]);
 }
 
 function getAttributeMap(tag) {
-	const attributes = new Map();
-	const regex = /([A-Za-z_:][-A-Za-z0-9_:.]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
-	let match;
+    const attributes = new Map();
+    const regex = /([A-Za-z_:][-A-Za-z0-9_:.]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+    let match;
 
-	while ((match = regex.exec(tag))) {
-		const [, name, doubleQuoted, singleQuoted, unquoted] = match;
+    while ((match = regex.exec(tag))) {
+        const [, name, doubleQuoted, singleQuoted, unquoted] = match;
 
-		if (name === tag.match(/^<\s*([^\s/>]+)/)?.[1]) {
-			continue;
-		}
+        if (name === tag.match(/^<\s*([^\s/>]+)/)?.[1]) {
+            continue;
+        }
 
-		attributes.set(name.toLowerCase(), decodeHtmlEntities(doubleQuoted ?? singleQuoted ?? unquoted ?? ''));
-	}
+        attributes.set(
+            name.toLowerCase(),
+            decodeHtmlEntities(doubleQuoted ?? singleQuoted ?? unquoted ?? ''),
+        );
+    }
 
-	return attributes;
+    return attributes;
 }
 
 function getCurrentRouteFromHtmlFile(file) {
-	const relative = toPosixPath(file.slice(buildDir.length + 1));
+    const relative = toPosixPath(file.slice(buildDir.length + 1));
 
-	if (relative === 'index.html') {
-		return '/';
-	}
+    if (relative === 'index.html') {
+        return '/';
+    }
 
-	return `/${relative.replace(/\/index\.html$/, '/')}`;
+    return `/${relative.replace(/\/index\.html$/, '/')}`;
 }
 
 function isSameSiteAbsoluteUrl(value, productionOrigin) {
-	try {
-		const url = new URL(value);
+    try {
+        const url = new URL(value);
 
-		return url.origin === productionOrigin || url.origin === 'http://sveltekit-prerender';
-	} catch {
-		return false;
-	}
+        return url.origin === productionOrigin || url.origin === 'http://sveltekit-prerender';
+    } catch {
+        return false;
+    }
 }
 
 function toInternalBuildPath(value, htmlFile, productionOrigin) {
-	if (!value || value.startsWith('#')) {
-		return null;
-	}
+    if (!value || value.startsWith('#')) {
+        return null;
+    }
 
-	if (/^(mailto|tel|javascript):/i.test(value)) {
-		return null;
-	}
+    if (/^(mailto|tel|javascript):/i.test(value)) {
+        return null;
+    }
 
-	const baseUrl = `${productionOrigin}${getCurrentRouteFromHtmlFile(htmlFile)}`;
+    const baseUrl = `${productionOrigin}${getCurrentRouteFromHtmlFile(htmlFile)}`;
 
-	try {
-		const url = new URL(value, baseUrl);
+    try {
+        const url = new URL(value, baseUrl);
 
-		if (url.origin !== productionOrigin && url.origin !== 'http://sveltekit-prerender') {
-			return null;
-		}
+        if (url.origin !== productionOrigin && url.origin !== 'http://sveltekit-prerender') {
+            return null;
+        }
 
-		return url.pathname || '/';
-	} catch {
-		return null;
-	}
+        return url.pathname || '/';
+    } catch {
+        return null;
+    }
 }
 
 function getTagAttributes(content, tagName) {
-	const regex = new RegExp(`<${tagName}\\b[^>]*>`, 'gi');
-	const tags = [];
-	let match;
+    const regex = new RegExp(`<${tagName}\\b[^>]*>`, 'gi');
+    const tags = [];
+    let match;
 
-	while ((match = regex.exec(content))) {
-		tags.push(getAttributeMap(match[0]));
-	}
+    while ((match = regex.exec(content))) {
+        tags.push(getAttributeMap(match[0]));
+    }
 
-	return tags;
+    return tags;
 }
 
 function isAssetPath(pathname) {
-	return /\.(avif|css|gif|ico|jpg|jpeg|js|json|png|svg|txt|webmanifest|webp|xml)$/i.test(pathname);
+    return /\.(avif|css|gif|ico|jpg|jpeg|js|json|png|svg|txt|webmanifest|webp|xml)$/i.test(
+        pathname,
+    );
 }
 
 function getRedirectTarget(content) {
-	const scriptTarget = content.match(/location(?:\.href)?\s*=\s*["']([^"']+)["']/i)?.[1];
-	const metaTarget = content.match(/<meta\b[^>]*http-equiv=["']refresh["'][^>]*content=["'][^"']*url=([^"']+)["'][^>]*>/i)?.[1];
-	return scriptTarget ?? metaTarget ?? null;
+    const scriptTarget = content.match(/location(?:\.href)?\s*=\s*["']([^"']+)["']/i)?.[1];
+    const metaTarget = content.match(
+        /<meta\b[^>]*http-equiv=["']refresh["'][^>]*content=["'][^"']*url=([^"']+)["'][^>]*>/i,
+    )?.[1];
+    return scriptTarget ?? metaTarget ?? null;
 }
 
 function collectPrerenderOriginFindings() {
-	return getBuildTextFiles()
-		.flatMap((file) => {
-			const content = readFileSync(file, 'utf8');
+    return getBuildTextFiles().flatMap((file) => {
+        const content = readFileSync(file, 'utf8');
 
-			if (!content.includes('sveltekit-prerender')) {
-				return [];
-			}
+        if (!content.includes('sveltekit-prerender')) {
+            return [];
+        }
 
-			return [`${toPosixPath(file.slice(root.length + 1))} contains sveltekit-prerender`];
-		});
+        return [`${toPosixPath(file.slice(root.length + 1))} contains sveltekit-prerender`];
+    });
 }
 
-function collectGeneratedHtmlSeoFindings(productionOrigin) {
-	const titleCounts = new Map();
-	const titleFiles = new Map();
-	const findings = {
-		badCanonicals: [],
-		missingTitles: [],
-		duplicateTitles: [],
-		missingDescriptions: [],
-		h1Counts: [],
-		missingCanonicals: [],
-		internalLinksMarkedExternal: [],
-		brokenInternalLinks: [],
-		internalLinksMissingTrailingSlash: [],
-		duplicateIds: [],
-		invalidAriaDescribedby: [],
-		interactiveTooltipContent: [],
-		missingSeoAssets: [],
-		invalidJsonLd: [],
-		redirects: []
-	};
+function collectGeneratedHtmlSeoFindings(productionOrigin, spellLevelCounts) {
+    const titleCounts = new Map();
+    const titleFiles = new Map();
+    const findings = {
+        badCanonicals: [],
+        missingTitles: [],
+        duplicateTitles: [],
+        missingDescriptions: [],
+        robots: [],
+        malformedResourceUrls: [],
+        ssrFilteredContent: [],
+        knownHistoricalRedirects: [],
+        h1Counts: [],
+        missingCanonicals: [],
+        internalLinksMarkedExternal: [],
+        brokenInternalLinks: [],
+        internalLinksMissingTrailingSlash: [],
+        duplicateIds: [],
+        invalidAriaDescribedby: [],
+        interactiveTooltipContent: [],
+        missingSeoAssets: [],
+        invalidJsonLd: [],
+        redirects: [],
+    };
 
-	for (const file of getBuildHtmlFiles()) {
-		const relative = toPosixPath(file.slice(root.length + 1));
-		const content = readFileSync(file, 'utf8');
-		const redirectTarget = getRedirectTarget(content);
+    for (const file of getBuildHtmlFiles()) {
+        const relative = toPosixPath(file.slice(root.length + 1));
+        const content = readFileSync(file, 'utf8');
+        const redirectTarget = getRedirectTarget(content);
 
-		if (redirectTarget) {
-			const targetPath = normalizeHref(new URL(redirectTarget, `${productionOrigin}/`).pathname);
-			const targetFile = getOutputFileForRoute(targetPath);
+        if (redirectTarget) {
+            const targetPath = normalizeHref(
+                new URL(redirectTarget, `${productionOrigin}/`).pathname,
+            );
+            const targetFile = getOutputFileForRoute(targetPath);
 
-			if (!targetPath.startsWith('/') || !existsSync(targetFile)) {
-				findings.redirects.push(`${relative} redirects to missing target ${redirectTarget}`);
-			} else if (targetFile !== file && getRedirectTarget(readFileSync(targetFile, 'utf8'))) {
-				findings.redirects.push(`${relative} redirects through another redirect: ${targetPath}`);
-			} else if (targetFile === file) {
-				findings.redirects.push(`${relative} redirects to itself`);
-			}
+            if (!targetPath.startsWith('/') || !existsSync(targetFile)) {
+                findings.redirects.push(
+                    `${relative} redirects to missing target ${redirectTarget}`,
+                );
+            } else if (targetFile !== file && getRedirectTarget(readFileSync(targetFile, 'utf8'))) {
+                findings.redirects.push(
+                    `${relative} redirects through another redirect: ${targetPath}`,
+                );
+            } else if (targetFile === file) {
+                findings.redirects.push(`${relative} redirects to itself`);
+            }
 
-			continue;
-		}
-		const titles = [...content.matchAll(/<title>([\s\S]*?)<\/title>/gi)]
-			.map((match) => decodeHtmlEntities(match[1].replace(/\s+/g, ' ').trim()))
-			.filter(Boolean);
+            continue;
+        }
 
-		if (titles.length !== 1) {
-			findings.missingTitles.push(`${relative} has ${titles.length} title tags`);
-		} else {
-			titleCounts.set(titles[0], (titleCounts.get(titles[0]) ?? 0) + 1);
-			titleFiles.set(titles[0], [...(titleFiles.get(titles[0]) ?? []), relative]);
-		}
+        const robots = getTagAttributes(content, 'meta')
+            .filter((attributes) => attributes.get('name')?.toLowerCase() === 'robots')
+            .map((attributes) => attributes.get('content')?.trim().toLowerCase() ?? '')
+            .filter(Boolean);
 
-		const descriptions = getTagAttributes(content, 'meta')
-			.filter((attributes) => attributes.get('name')?.toLowerCase() === 'description')
-			.map((attributes) => attributes.get('content')?.trim() ?? '')
-			.filter(Boolean);
+        if (robots.length !== 1 || robots[0] !== 'index, follow') {
+            findings.robots.push(
+                `${relative} has robots directives: ${robots.join(' | ') || 'none'}`,
+            );
+        }
 
-		if (descriptions.length !== 1) {
-			findings.missingDescriptions.push(`${relative} has ${descriptions.length} meta descriptions`);
-		}
+        for (const tagName of ['a', 'link', 'script', 'img', 'source']) {
+            for (const attributes of getTagAttributes(content, tagName)) {
+                for (const attributeName of ['href', 'src']) {
+                    const value = attributes.get(attributeName) ?? '';
 
-		const canonicals = getTagAttributes(content, 'link')
-			.filter((attributes) => attributes.get('rel')?.toLowerCase() === 'canonical')
-			.map((attributes) => attributes.get('href') ?? '')
-			.filter(Boolean);
+                    if (/\.(?:js|ts|svelte):\d+(?=$|[?#])/i.test(value)) {
+                        findings.malformedResourceUrls.push(
+                            `${relative} has malformed ${attributeName} ${value}`,
+                        );
+                    }
+                }
+            }
+        }
+        const titles = [...content.matchAll(/<title>([\s\S]*?)<\/title>/gi)]
+            .map((match) => decodeHtmlEntities(match[1].replace(/\s+/g, ' ').trim()))
+            .filter(Boolean);
 
-		if (canonicals.length !== 1) {
-			findings.missingCanonicals.push(`${relative} has ${canonicals.length} canonical links`);
-		} else if (!canonicals[0].startsWith(`${productionOrigin}/`)) {
-			findings.badCanonicals.push(`${relative} canonical is ${canonicals[0]}`);
-		}
+        if (titles.length !== 1) {
+            findings.missingTitles.push(`${relative} has ${titles.length} title tags`);
+        } else {
+            titleCounts.set(titles[0], (titleCounts.get(titles[0]) ?? 0) + 1);
+            titleFiles.set(titles[0], [...(titleFiles.get(titles[0]) ?? []), relative]);
+        }
 
-		const h1Count = (content.match(/<h1\b/gi) ?? []).length;
+        const descriptions = getTagAttributes(content, 'meta')
+            .filter((attributes) => attributes.get('name')?.toLowerCase() === 'description')
+            .map((attributes) => attributes.get('content')?.trim() ?? '')
+            .filter(Boolean);
 
-		if (h1Count !== 1) {
-			findings.h1Counts.push(`${relative} has ${h1Count} H1 elements`);
-		}
+        if (descriptions.length !== 1) {
+            findings.missingDescriptions.push(
+                `${relative} has ${descriptions.length} meta descriptions`,
+            );
+        }
 
-		const idCounts = new Map();
+        const canonicals = getTagAttributes(content, 'link')
+            .filter((attributes) => attributes.get('rel')?.toLowerCase() === 'canonical')
+            .map((attributes) => attributes.get('href') ?? '')
+            .filter(Boolean);
 
-		for (const tag of [...content.matchAll(/<[^/!][^>]*\sid=(?:"([^"]+)"|'([^']+)'|([^\s"'=<>`]+))[^>]*>/gi)]) {
-			const id = decodeHtmlEntities(tag[1] ?? tag[2] ?? tag[3] ?? '');
+        if (canonicals.length !== 1) {
+            findings.missingCanonicals.push(`${relative} has ${canonicals.length} canonical links`);
+        } else if (!canonicals[0].startsWith(`${productionOrigin}/`)) {
+            findings.badCanonicals.push(`${relative} canonical is ${canonicals[0]}`);
+        }
 
-			if (id) {
-				idCounts.set(id, (idCounts.get(id) ?? 0) + 1);
-			}
-		}
+        const h1Count = (content.match(/<h1\b/gi) ?? []).length;
 
-		for (const [id, count] of idCounts.entries()) {
-			if (count > 1) {
-				findings.duplicateIds.push(`${relative} has duplicate id "${id}" ${count} times`);
-			}
-		}
+        if (h1Count !== 1) {
+            findings.h1Counts.push(`${relative} has ${h1Count} H1 elements`);
+        }
 
-		for (const tag of getTagAttributes(content, 'a')) {
-			const describedBy = tag.get('aria-describedby');
+        const spellLevelSlug = relative.match(
+            /^build\/rules\/spellcasting\/spells\/([^/]+)\/index\.html$/,
+        )?.[1];
 
-			if (!describedBy) {
-				continue;
-			}
+        if (spellLevelSlug && spellLevelCounts.has(spellLevelSlug)) {
+            const expectedCount = spellLevelCounts.get(spellLevelSlug);
+            const renderedCount = Number(
+                content.match(/Showing 1-30 of (\d+)/)?.[1] ??
+                    (content.match(/<h3\b/gi) ?? []).length,
+            );
 
-			for (const id of describedBy.split(/\s+/).filter(Boolean)) {
-				if (!idCounts.has(id)) {
-					findings.invalidAriaDescribedby.push(`${relative} aria-describedby references missing id "${id}"`);
-				}
-			}
-		}
+            if (renderedCount !== expectedCount) {
+                findings.ssrFilteredContent.push(
+                    `${relative} renders ${renderedCount} spells; expected ${expectedCount}`,
+                );
+            }
+        }
 
-		const tooltipRegex = /<(?<tag>[A-Za-z][A-Za-z0-9:-]*)\b(?<attrs>[^>]*)\brole=["']tooltip["'][^>]*>(?<body>[\s\S]*?)<\/\k<tag>>/gi;
-		let tooltipMatch;
+        const idCounts = new Map();
 
-		while ((tooltipMatch = tooltipRegex.exec(content))) {
-			if (/<(?:a|button|input|select|textarea)\b/i.test(tooltipMatch.groups?.body ?? '')) {
-				findings.interactiveTooltipContent.push(`${relative} has interactive content inside role="tooltip"`);
-			}
-		}
+        for (const tag of [
+            ...content.matchAll(/<[^/!][^>]*\sid=(?:"([^"]+)"|'([^']+)'|([^\s"'=<>`]+))[^>]*>/gi),
+        ]) {
+            const id = decodeHtmlEntities(tag[1] ?? tag[2] ?? tag[3] ?? '');
 
-		for (const tag of getTagAttributes(content, 'a')) {
-			const href = tag.get('href') ?? '';
-			const internalPath = toInternalBuildPath(href, file, productionOrigin);
+            if (id) {
+                idCounts.set(id, (idCounts.get(id) ?? 0) + 1);
+            }
+        }
 
-			if (!internalPath) {
-				continue;
-			}
+        for (const [id, count] of idCounts.entries()) {
+            if (count > 1) {
+                findings.duplicateIds.push(`${relative} has duplicate id "${id}" ${count} times`);
+            }
+        }
 
-			if (tag.get('target') === '_blank' || /\bnoopener\b|\bnoreferrer\b/i.test(tag.get('rel') ?? '')) {
-				findings.internalLinksMarkedExternal.push(`${relative} links internally to ${href} with external-link attributes`);
-			}
+        for (const tag of getTagAttributes(content, 'a')) {
+            const describedBy = tag.get('aria-describedby');
 
-			const outputFile = isAssetPath(internalPath)
-				? join(buildDir, internalPath.replace(/^\//, ''))
-				: getOutputFileForRoute(internalPath);
+            if (!describedBy) {
+                continue;
+            }
 
-			if (!existsSync(outputFile)) {
-				findings.brokenInternalLinks.push(`${relative} links to missing ${href}`);
-			}
+            for (const id of describedBy.split(/\s+/).filter(Boolean)) {
+                if (!idCounts.has(id)) {
+                    findings.invalidAriaDescribedby.push(
+                        `${relative} aria-describedby references missing id "${id}"`,
+                    );
+                }
+            }
+        }
 
-			if (
-				internalPath !== '/' &&
-				!isAssetPath(internalPath) &&
-				!/[?#]/.test(href) &&
-				existsSync(getOutputFileForRoute(internalPath)) &&
-				!new URL(href, `${productionOrigin}${getCurrentRouteFromHtmlFile(file)}`).pathname.endsWith('/')
-			) {
-				findings.internalLinksMissingTrailingSlash.push(`${relative} links to ${href} without trailing slash`);
-			}
-		}
+        const tooltipRegex =
+            /<(?<tag>[A-Za-z][A-Za-z0-9:-]*)\b(?<attrs>[^>]*)\brole=["']tooltip["'][^>]*>(?<body>[\s\S]*?)<\/\k<tag>>/gi;
+        let tooltipMatch;
 
-		const seoAssetCandidates = [
-			...getTagAttributes(content, 'link')
-				.filter((attributes) => {
-					const rel = attributes.get('rel')?.toLowerCase() ?? '';
-					return rel === 'icon' || rel === 'apple-touch-icon' || rel === 'manifest';
-				})
-				.map((attributes) => attributes.get('href') ?? ''),
-			...getTagAttributes(content, 'meta')
-				.filter((attributes) => {
-					const property = attributes.get('property')?.toLowerCase() ?? '';
-					const name = attributes.get('name')?.toLowerCase() ?? '';
-					return property === 'og:image' || name === 'twitter:image';
-				})
-				.map((attributes) => attributes.get('content') ?? '')
-		];
+        while ((tooltipMatch = tooltipRegex.exec(content))) {
+            if (/<(?:a|button|input|select|textarea)\b/i.test(tooltipMatch.groups?.body ?? '')) {
+                findings.interactiveTooltipContent.push(
+                    `${relative} has interactive content inside role="tooltip"`,
+                );
+            }
+        }
 
-		for (const asset of seoAssetCandidates) {
-			const internalPath = toInternalBuildPath(asset, file, productionOrigin);
+        for (const tag of getTagAttributes(content, 'a')) {
+            const href = tag.get('href') ?? '';
+            const internalPath = toInternalBuildPath(href, file, productionOrigin);
 
-			if (internalPath && !buildFileExistsForAsset(internalPath)) {
-				findings.missingSeoAssets.push(`${relative} references missing SEO asset ${asset}`);
-			}
-		}
+            if (!internalPath) {
+                continue;
+            }
 
-		const jsonLdRegex = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-		let jsonLdMatch;
+            if (
+                tag.get('target') === '_blank' ||
+                /\bnoopener\b|\bnoreferrer\b/i.test(tag.get('rel') ?? '')
+            ) {
+                findings.internalLinksMarkedExternal.push(
+                    `${relative} links internally to ${href} with external-link attributes`,
+                );
+            }
 
-		while ((jsonLdMatch = jsonLdRegex.exec(content))) {
-			try {
-				// JSON-LD is script raw text, not an HTML attribute. Decoding entities here
-				// can turn valid JSON string values such as `&amp;` into a different payload.
-				JSON.parse(jsonLdMatch[1].trim());
-			} catch (error) {
-				findings.invalidJsonLd.push(`${relative} has invalid JSON-LD: ${error.message}`);
-			}
-		}
-	}
+            const outputFile = isAssetPath(internalPath)
+                ? join(buildDir, internalPath.replace(/^\//, ''))
+                : getOutputFileForRoute(internalPath);
 
-	findings.duplicateTitles = [...titleCounts.entries()]
-		.filter(([, count]) => count > 1)
-		.map(([title, count]) => `${title} appears ${count} times: ${titleFiles.get(title).join(', ')}`);
+            if (!existsSync(outputFile)) {
+                findings.brokenInternalLinks.push(`${relative} links to missing ${href}`);
+            }
 
-	return findings;
+            if (
+                internalPath !== '/' &&
+                !isAssetPath(internalPath) &&
+                !/[?#]/.test(href) &&
+                existsSync(getOutputFileForRoute(internalPath)) &&
+                !new URL(
+                    href,
+                    `${productionOrigin}${getCurrentRouteFromHtmlFile(file)}`,
+                ).pathname.endsWith('/')
+            ) {
+                findings.internalLinksMissingTrailingSlash.push(
+                    `${relative} links to ${href} without trailing slash`,
+                );
+            }
+        }
+
+        const seoAssetCandidates = [
+            ...getTagAttributes(content, 'link')
+                .filter((attributes) => {
+                    const rel = attributes.get('rel')?.toLowerCase() ?? '';
+                    return rel === 'icon' || rel === 'apple-touch-icon' || rel === 'manifest';
+                })
+                .map((attributes) => attributes.get('href') ?? ''),
+            ...getTagAttributes(content, 'meta')
+                .filter((attributes) => {
+                    const property = attributes.get('property')?.toLowerCase() ?? '';
+                    const name = attributes.get('name')?.toLowerCase() ?? '';
+                    return property === 'og:image' || name === 'twitter:image';
+                })
+                .map((attributes) => attributes.get('content') ?? ''),
+        ];
+
+        for (const asset of seoAssetCandidates) {
+            const internalPath = toInternalBuildPath(asset, file, productionOrigin);
+
+            if (internalPath && !buildFileExistsForAsset(internalPath)) {
+                findings.missingSeoAssets.push(`${relative} references missing SEO asset ${asset}`);
+            }
+        }
+
+        const jsonLdRegex =
+            /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+        let jsonLdMatch;
+
+        while ((jsonLdMatch = jsonLdRegex.exec(content))) {
+            try {
+                // JSON-LD is script raw text, not an HTML attribute. Decoding entities here
+                // can turn valid JSON string values such as `&amp;` into a different payload.
+                JSON.parse(jsonLdMatch[1].trim());
+            } catch (error) {
+                findings.invalidJsonLd.push(`${relative} has invalid JSON-LD: ${error.message}`);
+            }
+        }
+    }
+
+    for (const [sourcePath, targetPath] of knownHistoricalRedirects) {
+        const sourceFile = getOutputFileForRoute(sourcePath);
+        const target = existsSync(sourceFile)
+            ? getRedirectTarget(readFileSync(sourceFile, 'utf8'))
+            : null;
+
+        if (target !== targetPath) {
+            findings.knownHistoricalRedirects.push(
+                `${sourcePath} redirects to ${target ?? 'nothing'}, expected ${targetPath}`,
+            );
+        }
+    }
+
+    for (const file of getBuildHtmlFiles().filter((candidate) =>
+        toPosixPath(candidate.slice(buildDir.length + 1)).startsWith(
+            'spells-and-abilities/spells/',
+        ),
+    )) {
+        const relative = toPosixPath(file.slice(root.length + 1));
+        const slug = relative.match(
+            /^build\/spells-and-abilities\/spells\/([^/]+)\/index\.html$/,
+        )?.[1];
+        const target = getRedirectTarget(readFileSync(file, 'utf8'));
+
+        if (slug && target !== `/spells/${slug}/`) {
+            findings.knownHistoricalRedirects.push(
+                `${relative} redirects to ${target ?? 'nothing'}, expected /spells/${slug}/`,
+            );
+        }
+    }
+
+    findings.duplicateTitles = [...titleCounts.entries()]
+        .filter(([, count]) => count > 1)
+        .map(
+            ([title, count]) =>
+                `${title} appears ${count} times: ${titleFiles.get(title).join(', ')}`,
+        );
+
+    return findings;
 }
 
 function getCrawlBaseUrl() {
-	const arg = process.argv.find((item) => item.startsWith('--crawl='));
+    const arg = process.argv.find((item) => item.startsWith('--crawl='));
 
-	return arg?.slice('--crawl='.length) ?? process.env.CRAWL_BASE_URL ?? '';
+    return arg?.slice('--crawl='.length) ?? process.env.CRAWL_BASE_URL ?? '';
 }
 
 function shouldCrawlBuiltOutput() {
-	return process.argv.includes('--crawl-built') || process.env.CRAWL_BUILT === 'true';
+    return process.argv.includes('--crawl-built') || process.env.CRAWL_BUILT === 'true';
 }
 
 async function crawlUrls(baseUrl, urls) {
-	if (!baseUrl) {
-		return [];
-	}
+    if (!baseUrl) {
+        return [];
+    }
 
-	const failures = [];
-	const uniqueUrls = [...new Set(urls)].sort();
-	const concurrency = 20;
-	let index = 0;
+    const failures = [];
+    const uniqueUrls = [...new Set(urls)].sort();
+    const concurrency = 20;
+    let index = 0;
 
-	async function worker() {
-		while (index < uniqueUrls.length) {
-			const url = uniqueUrls[index++];
-			const target = new URL(url, baseUrl).href;
+    async function worker() {
+        while (index < uniqueUrls.length) {
+            const url = uniqueUrls[index++];
+            const target = new URL(url, baseUrl).href;
 
-			try {
-				const response = await fetch(target, {
-					redirect: 'manual'
-				});
+            try {
+                const response = await fetch(target, {
+                    redirect: 'manual',
+                });
 
-				if (response.status < 200 || response.status >= 400) {
-					failures.push(`${url} returned ${response.status}`);
-				}
-			} catch (error) {
-				failures.push(`${url} failed: ${error.message}`);
-			}
-		}
-	}
+                if (response.status < 200 || response.status >= 400) {
+                    failures.push(`${url} returned ${response.status}`);
+                }
+            } catch (error) {
+                failures.push(`${url} failed: ${error.message}`);
+            }
+        }
+    }
 
-	await Promise.all(Array.from({ length: concurrency }, () => worker()));
+    await Promise.all(Array.from({ length: concurrency }, () => worker()));
 
-	return failures;
+    return failures;
 }
 
 async function crawlBuiltOutput(urls) {
-	if (!existsSync(buildDir)) {
-		return ['Static build output is missing. Run pnpm build first.'];
-	}
+    if (!existsSync(buildDir)) {
+        return ['Static build output is missing. Run pnpm build first.'];
+    }
 
-	const failures = [];
-	const uniqueUrls = [...new Set(urls)].sort();
+    const failures = [];
+    const uniqueUrls = [...new Set(urls)].sort();
 
-	for (const url of uniqueUrls) {
-		const cleanUrl = normalizeHref(withTrailingSlash(url));
-		const routePath = cleanUrl === '/' ? 'index.html' : join(cleanUrl.slice(1), 'index.html');
-		const outputFile = join(buildDir, routePath);
+    for (const url of uniqueUrls) {
+        const cleanUrl = normalizeHref(withTrailingSlash(url));
+        const routePath = cleanUrl === '/' ? 'index.html' : join(cleanUrl.slice(1), 'index.html');
+        const outputFile = join(buildDir, routePath);
 
-		if (!existsSync(outputFile)) {
-			failures.push(`${url} missing ${routePath}`);
-		}
-	}
+        if (!existsSync(outputFile)) {
+            failures.push(`${url} missing ${routePath}`);
+        }
+    }
 
-	return failures;
+    return failures;
 }
 
 const server = await createServer({
-	appType: 'custom',
-	server: {
-		middlewareMode: true
-	}
+    appType: 'custom',
+    server: {
+        middlewareMode: true,
+    },
 });
 
 try {
-	const { data } = await server.ssrLoadModule('/src/lib/typescript/data/_index_.ts');
-	const { base } = await server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts');
-	const { spells } = await server.ssrLoadModule(
-		'/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts'
-	);
-	const productionOrigin = base.siteLink.replace(/\/$/, '');
-	const links = collectLinks(data);
-	const pages = links.filter(({ value }) => isPageData(value));
-	const hrefCounts = new Map();
+    const { data } = await server.ssrLoadModule('/src/lib/typescript/data/_index_.ts');
+    const { base } = await server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts');
+    const { spells } = await server.ssrLoadModule(
+        '/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts',
+    );
+    const spellLevelCounts = new Map();
 
-	for (const { value } of pages) {
-		const href = normalizeHref(value.href);
-		hrefCounts.set(href, (hrefCounts.get(href) ?? 0) + 1);
-	}
+    for (const spell of spells) {
+        const level = spell.levelLabel.toLowerCase().replaceAll(' ', '-');
+        spellLevelCounts.set(level, (spellLevelCounts.get(level) ?? 0) + 1);
+    }
+    const productionOrigin = base.siteLink.replace(/\/$/, '');
+    const links = collectLinks(data);
+    const pages = links.filter(({ value }) => isPageData(value));
+    const hrefCounts = new Map();
 
-	const duplicateHrefs = [...hrefCounts.entries()]
-		.filter(([, count]) => count > 1)
-		.map(([href, count]) => `${href} appears ${count} times`);
-	const badRoutes = pages
-		.filter(({ value }) => !isKnownInternalRoute(value.href))
-		.map(({ path, value }) => `${path} -> ${value.href}`);
-	const badDataPaths = collectQuotedDataPaths()
-		.filter((path) => getDataValue(data, path) === undefined);
-	const missingAssets = [
-		...collectInternalAssets(data),
-		...collectSourceAssetUrls()
-	]
-		.filter((asset, index, all) => all.indexOf(asset) === index)
-		.filter((asset) => !fileExistsForAsset(asset));
-	const invalidSpellRoutes = spells
-		.filter((spell) => !/^[-a-z0-9]+$/.test(spell.slug))
-		.map((spell) => spell.slug);
-	const duplicateSpellRoutes = [...spells.reduce((counts, spell) => {
-		counts.set(spell.slug, (counts.get(spell.slug) ?? 0) + 1);
-		return counts;
-	}, new Map()).entries()]
-		.filter(([, count]) => count > 1)
-		.map(([slug, count]) => `/spells/${slug} appears ${count} times`);
-	const crawlBaseUrl = getCrawlBaseUrl();
-	const routeUrls = [
-		...pages
-			.map(({ value }) => value.href)
-			.filter((href) => href.startsWith('/')),
-		...spells.map((spell) => `/spells/${spell.slug}`)
-	];
-	const crawlBuilt = shouldCrawlBuiltOutput();
-	const crawlFailures = crawlBuilt
-		? await crawlBuiltOutput(routeUrls)
-		: await crawlUrls(crawlBaseUrl, routeUrls);
-	const prerenderOriginFindings = collectPrerenderOriginFindings();
-	const generatedHtmlSeoFindings = crawlBuilt
-		? collectGeneratedHtmlSeoFindings(productionOrigin)
-		: {
-				badCanonicals: [],
-				missingTitles: [],
-				duplicateTitles: [],
-				missingDescriptions: [],
-				h1Counts: [],
-				missingCanonicals: [],
-				internalLinksMarkedExternal: [],
-				brokenInternalLinks: [],
-				internalLinksMissingTrailingSlash: [],
-				duplicateIds: [],
-				invalidAriaDescribedby: [],
-				interactiveTooltipContent: [],
-				missingSeoAssets: [],
-				invalidJsonLd: [],
-				redirects: []
-			};
-	const placeholderFindings = collectPlaceholderFindings()
-		.map((finding) => `${finding.file}:${finding.line} ${finding.text}`);
+    for (const { value } of pages) {
+        const href = normalizeHref(value.href);
+        hrefCounts.set(href, (hrefCounts.get(href) ?? 0) + 1);
+    }
 
-	console.log(`Indexed link entries: ${links.length}`);
-	console.log(`Indexed page entries: ${pages.length}`);
-	console.log(`Indexed spell routes: ${spells.length}`);
-	if (crawlBaseUrl) {
-		console.log(`Crawled local base URL: ${crawlBaseUrl}`);
-	}
-	if (crawlBuilt) {
-		console.log('Crawled built SvelteKit output');
-	}
+    const duplicateHrefs = [...hrefCounts.entries()]
+        .filter(([, count]) => count > 1)
+        .map(([href, count]) => `${href} appears ${count} times`);
+    const badRoutes = pages
+        .filter(({ value }) => !isKnownInternalRoute(value.href))
+        .map(({ path, value }) => `${path} -> ${value.href}`);
+    const badDataPaths = collectQuotedDataPaths().filter(
+        (path) => getDataValue(data, path) === undefined,
+    );
+    const missingAssets = [...collectInternalAssets(data), ...collectSourceAssetUrls()]
+        .filter((asset, index, all) => all.indexOf(asset) === index)
+        .filter((asset) => !fileExistsForAsset(asset));
+    const invalidSpellRoutes = spells
+        .filter((spell) => !/^[-a-z0-9]+$/.test(spell.slug))
+        .map((spell) => spell.slug);
+    const duplicateSpellRoutes = [
+        ...spells
+            .reduce((counts, spell) => {
+                counts.set(spell.slug, (counts.get(spell.slug) ?? 0) + 1);
+                return counts;
+            }, new Map())
+            .entries(),
+    ]
+        .filter(([, count]) => count > 1)
+        .map(([slug, count]) => `/spells/${slug} appears ${count} times`);
+    const crawlBaseUrl = getCrawlBaseUrl();
+    const routeUrls = [
+        ...pages.map(({ value }) => value.href).filter((href) => href.startsWith('/')),
+        ...spells.map((spell) => `/spells/${spell.slug}`),
+    ];
+    const crawlBuilt = shouldCrawlBuiltOutput();
+    const crawlFailures = crawlBuilt
+        ? await crawlBuiltOutput(routeUrls)
+        : await crawlUrls(crawlBaseUrl, routeUrls);
+    const prerenderOriginFindings = collectPrerenderOriginFindings();
+    const generatedHtmlSeoFindings = crawlBuilt
+        ? collectGeneratedHtmlSeoFindings(productionOrigin, spellLevelCounts)
+        : {
+              badCanonicals: [],
+              missingTitles: [],
+              duplicateTitles: [],
+              missingDescriptions: [],
+              robots: [],
+              malformedResourceUrls: [],
+              ssrFilteredContent: [],
+              knownHistoricalRedirects: [],
+              h1Counts: [],
+              missingCanonicals: [],
+              internalLinksMarkedExternal: [],
+              brokenInternalLinks: [],
+              internalLinksMissingTrailingSlash: [],
+              duplicateIds: [],
+              invalidAriaDescribedby: [],
+              interactiveTooltipContent: [],
+              missingSeoAssets: [],
+              invalidJsonLd: [],
+              redirects: [],
+          };
+    const placeholderFindings = collectPlaceholderFindings().map(
+        (finding) => `${finding.file}:${finding.line} ${finding.text}`,
+    );
 
-	const failed = [
-		report('duplicate internal hrefs', duplicateHrefs),
-		report('unknown internal route shapes', badRoutes),
-		report('missing central data paths used in source', badDataPaths),
-		report('missing internal static assets', missingAssets),
-		report('invalid spell route slugs', invalidSpellRoutes),
-		report('duplicate spell route slugs', duplicateSpellRoutes),
-		report('local HTTP route crawl', crawlFailures),
-		report('generated public files without sveltekit-prerender origin', prerenderOriginFindings),
-		report('generated canonical URLs use HTTPS production URLs', generatedHtmlSeoFindings.badCanonicals),
-		report('generated pages have titles', generatedHtmlSeoFindings.missingTitles),
-		report('generated page titles are unique', generatedHtmlSeoFindings.duplicateTitles),
-		report('generated pages have meta descriptions', generatedHtmlSeoFindings.missingDescriptions),
-		report('generated pages have exactly one H1', generatedHtmlSeoFindings.h1Counts),
-		report('generated pages have canonical links', generatedHtmlSeoFindings.missingCanonicals),
-		report('internal links are not marked as external', generatedHtmlSeoFindings.internalLinksMarkedExternal),
-		report('generated internal links resolve', generatedHtmlSeoFindings.brokenInternalLinks),
-		report('generated internal page links use trailing slashes', generatedHtmlSeoFindings.internalLinksMissingTrailingSlash),
-		report('generated pages do not contain duplicate IDs', generatedHtmlSeoFindings.duplicateIds),
-		report('aria-describedby references existing IDs', generatedHtmlSeoFindings.invalidAriaDescribedby),
-		report('tooltip popups do not contain interactive content', generatedHtmlSeoFindings.interactiveTooltipContent),
-		report('referenced SEO assets exist in build output', generatedHtmlSeoFindings.missingSeoAssets),
-		report('generated JSON-LD syntax', generatedHtmlSeoFindings.invalidJsonLd),
-		report('redirect-only pages resolve directly to valid content', generatedHtmlSeoFindings.redirects),
-		report('placeholder or unfinished content markers', placeholderFindings)
-	].some(Boolean);
+    console.log(`Indexed link entries: ${links.length}`);
+    console.log(`Indexed page entries: ${pages.length}`);
+    console.log(`Indexed spell routes: ${spells.length}`);
+    if (crawlBaseUrl) {
+        console.log(`Crawled local base URL: ${crawlBaseUrl}`);
+    }
+    if (crawlBuilt) {
+        console.log('Crawled built SvelteKit output');
+    }
 
-	process.exitCode = failed ? 1 : 0;
+    const failed = [
+        report('duplicate internal hrefs', duplicateHrefs),
+        report('unknown internal route shapes', badRoutes),
+        report('missing central data paths used in source', badDataPaths),
+        report('missing internal static assets', missingAssets),
+        report('invalid spell route slugs', invalidSpellRoutes),
+        report('duplicate spell route slugs', duplicateSpellRoutes),
+        report('local HTTP route crawl', crawlFailures),
+        report(
+            'generated public files without sveltekit-prerender origin',
+            prerenderOriginFindings,
+        ),
+        report(
+            'generated canonical URLs use HTTPS production URLs',
+            generatedHtmlSeoFindings.badCanonicals,
+        ),
+        report('generated pages have titles', generatedHtmlSeoFindings.missingTitles),
+        report('generated page titles are unique', generatedHtmlSeoFindings.duplicateTitles),
+        report(
+            'generated pages have meta descriptions',
+            generatedHtmlSeoFindings.missingDescriptions,
+        ),
+        report(
+            'generated pages have expected production robots directives',
+            generatedHtmlSeoFindings.robots,
+        ),
+        report(
+            'generated resource URLs are not malformed source references',
+            generatedHtmlSeoFindings.malformedResourceUrls,
+        ),
+        report(
+            'parameterized pages contain SSR-filtered content',
+            generatedHtmlSeoFindings.ssrFilteredContent,
+        ),
+        report(
+            'known historical URLs redirect to their replacements',
+            generatedHtmlSeoFindings.knownHistoricalRedirects,
+        ),
+        report('generated pages have exactly one H1', generatedHtmlSeoFindings.h1Counts),
+        report('generated pages have canonical links', generatedHtmlSeoFindings.missingCanonicals),
+        report(
+            'internal links are not marked as external',
+            generatedHtmlSeoFindings.internalLinksMarkedExternal,
+        ),
+        report('generated internal links resolve', generatedHtmlSeoFindings.brokenInternalLinks),
+        report(
+            'generated internal page links use trailing slashes',
+            generatedHtmlSeoFindings.internalLinksMissingTrailingSlash,
+        ),
+        report(
+            'generated pages do not contain duplicate IDs',
+            generatedHtmlSeoFindings.duplicateIds,
+        ),
+        report(
+            'aria-describedby references existing IDs',
+            generatedHtmlSeoFindings.invalidAriaDescribedby,
+        ),
+        report(
+            'tooltip popups do not contain interactive content',
+            generatedHtmlSeoFindings.interactiveTooltipContent,
+        ),
+        report(
+            'referenced SEO assets exist in build output',
+            generatedHtmlSeoFindings.missingSeoAssets,
+        ),
+        report('generated JSON-LD syntax', generatedHtmlSeoFindings.invalidJsonLd),
+        report(
+            'redirect-only pages resolve directly to valid content',
+            generatedHtmlSeoFindings.redirects,
+        ),
+        report('placeholder or unfinished content markers', placeholderFindings),
+    ].some(Boolean);
+
+    process.exitCode = failed ? 1 : 0;
 } finally {
-	await server.close();
+    await server.close();
 }

@@ -7,4 +7,13 @@ import { page as shadowMagic } from './shadow-magic/_index_';
 import { page as stormSorcery } from './storm-sorcery/_index_';
 import { page as wildMagic } from './wild-magic/_index_';
 
-export const subclasses = { aberrantMind, clockworkSoul, draconicBloodline, divineSoul, lunarSorcery, shadowMagic, stormSorcery, wildMagic } as const;
+export const subclasses = {
+    aberrantMind,
+    clockworkSoul,
+    draconicBloodline,
+    divineSoul,
+    lunarSorcery,
+    shadowMagic,
+    stormSorcery,
+    wildMagic,
+} as const;

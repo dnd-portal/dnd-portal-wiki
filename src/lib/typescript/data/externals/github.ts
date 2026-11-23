@@ -4,75 +4,75 @@ const current = core.externals.github;
 
 export const github = {
     profile: {
-		href: `${current.baseUrl}/${current.name.user}`,
-		external: true,
+        href: `${current.baseUrl}/${current.name.user}`,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${current.name.normal} - Profile`,
-		subTitle: current.name.display,
-		description: `View ${current.name.display}'s public repositories, 
-            projects, contributions, and development activity on 
-            ${current.name.normal}.`
-	},
-    
+        title: `${current.name.normal} - Profile`,
+        subTitle: current.name.display,
+        description: `View ${current.name.display}'s public repositories,\x20
+            projects, contributions, and development activity on\x20
+            ${current.name.normal}.`,
+    },
+
     dndPortalWiki: {
-		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}`,
-		external: true,
+        href: `${current.baseUrl}/${current.name.user}/${current.name.repo}`,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${current.name.normal} - D&D Portal Wiki`,
-		subTitle: `Project repository`,
-		description: `View the source code, development history, issues,
-			and contributions for the D&D Portal Wiki project on GitHub.`
-	},
+        title: `${current.name.normal} - D&D Portal Wiki`,
+        subTitle: `Project repository`,
+        description: `View the source code, development history, issues,
+			and contributions for the D&D Portal Wiki project on GitHub.`,
+    },
 
-	issues: {
-		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues`,
-		external: true,
+    issues: {
+        href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues`,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${current.name.normal} - D&D Portal Wiki Issues`,
-		subTitle: 'Public issue tracker',
-		description: `View public issue reports, content suggestions,
-			bug reports, and planned work for the D&D Portal Wiki repository.`
-	},
+        title: `${current.name.normal} - D&D Portal Wiki Issues`,
+        subTitle: 'Public issue tracker',
+        description: `View public issue reports, content suggestions,
+			bug reports, and planned work for the D&D Portal Wiki repository.`,
+    },
 
-	releases: {
-		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/releases`,
-		external: true,
+    releases: {
+        href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/releases`,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${current.name.normal} - D&D Portal Wiki Releases`,
-		subTitle: 'Technical releases',
-		description: `View technical release summaries and versioned
-			repository releases for D&D Portal Wiki.`
-	},
+        title: `${current.name.normal} - D&D Portal Wiki Releases`,
+        subTitle: 'Technical releases',
+        description: `View technical release summaries and versioned
+			repository releases for D&D Portal Wiki.`,
+    },
 
-	reportProblem: {
-		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues/new`,
-		external: true,
+    reportProblem: {
+        href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues/new`,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${current.name.normal} - Report a Problem`,
-		subTitle: 'Create a new issue',
-		description: `Report a technical problem, incorrect page, broken
-			feature, or other issue with the D&D Portal Wiki.`
-	},
+        title: `${current.name.normal} - Report a Problem`,
+        subTitle: 'Create a new issue',
+        description: `Report a technical problem, incorrect page, broken
+			feature, or other issue with the D&D Portal Wiki.`,
+    },
 
-	suggestContent: {
-		href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues/new?labels=content`,
-		external: true,
+    suggestContent: {
+        href: `${current.baseUrl}/${current.name.user}/${current.name.repo}/issues/new?labels=content`,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${current.name.normal} - Suggest Content`,
-		subTitle: 'Submit a content suggestion',
-		description: `Suggest new pages, corrections, additions, or other
-			content improvements for the D&D Portal Wiki.`
-	}
-}
+        title: `${current.name.normal} - Suggest Content`,
+        subTitle: 'Submit a content suggestion',
+        description: `Suggest new pages, corrections, additions, or other
+			content improvements for the D&D Portal Wiki.`,
+    },
+};

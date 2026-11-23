@@ -8,15 +8,25 @@ import { page as totemWarrior } from './totem-warrior/_index_';
 import { page as wildMagic } from './wild-magic/_index_';
 import { page as zealot } from './zealot/_index_';
 
-export const subclasses = { ancestralGuardian, battlerager, beast, berserker, giant, stormHerald, totemWarrior, wildMagic, zealot } as const;
+export const subclasses = {
+    ancestralGuardian,
+    battlerager,
+    beast,
+    berserker,
+    giant,
+    stormHerald,
+    totemWarrior,
+    wildMagic,
+    zealot,
+} as const;
 export const subclassSlugs = [
-  "ancestral-guardian",
-  "battlerager",
-  "beast",
-  "berserker",
-  "giant",
-  "storm-herald",
-  "totem-warrior",
-  "wild-magic",
-  "zealot"
+    'ancestral-guardian',
+    'battlerager',
+    'beast',
+    'berserker',
+    'giant',
+    'storm-herald',
+    'totem-warrior',
+    'wild-magic',
+    'zealot',
 ] as const;

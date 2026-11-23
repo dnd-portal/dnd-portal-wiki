@@ -1,16 +1,16 @@
 export const equipment = {
-	name: {
-		normal: 'Equipment',
-		singular: 'Equipment',
-		slug: 'equipment'
-	},
+    name: {
+        normal: 'Equipment',
+        singular: 'Equipment',
+        slug: 'equipment',
+    },
 
-	logos: {
-		simple: {
-			href: '/icons/white/entity/tool.svg',
-			alt: 'A stylized tool icon representing equipment and carried gear.'
-		}
-	},
+    logos: {
+        simple: {
+            href: '/icons/white/entity/tool.svg',
+            alt: 'A stylized tool icon representing equipment and carried gear.',
+        },
+    },
 
-	baseUrl: '/equipment'
+    baseUrl: '/equipment',
 } as const;

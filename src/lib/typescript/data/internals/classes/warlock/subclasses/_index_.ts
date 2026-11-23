@@ -8,4 +8,14 @@ import { page as hexblade } from './hexblade/_index_';
 import { page as undead } from './undead/_index_';
 import { page as undying } from './undying/_index_';
 
-export const subclasses = { archfey, celestial, fathomless, fiend, genie, greatOldOne, hexblade, undead, undying } as const;
+export const subclasses = {
+    archfey,
+    celestial,
+    fathomless,
+    fiend,
+    genie,
+    greatOldOne,
+    hexblade,
+    undead,
+    undying,
+} as const;

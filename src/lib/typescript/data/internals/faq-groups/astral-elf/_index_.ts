@@ -4,4 +4,9 @@ import { question as q3 } from './how-does-starlight-step-work';
 import { question as q4 } from './how-do-astral-fire-and-astral-trance-work';
 import { question as q5 } from './can-astral-elf-be-used-in-every-dnd-portal-campaign';
 
-export const astralElfFaq = { slug: 'astral-elf', title: 'Astral Elf', sourcePage: '/species/elf/astral-elf/', questions: [q1, q2, q3, q4, q5] } as const;
+export const astralElfFaq = {
+    slug: 'astral-elf',
+    title: 'Astral Elf',
+    sourcePage: '/species/elf/astral-elf/',
+    questions: [q1, q2, q3, q4, q5],
+} as const;

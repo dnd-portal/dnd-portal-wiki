@@ -17,13 +17,13 @@ live content or deployment was changed by this audit.
 The supplied HAR contains 71 requests and approximately 1.16 MiB transferred.
 It contains 35 JavaScript requests. The largest five JavaScript responses are:
 
-| Response | Transfer | Uncompressed | Build identity / role |
-| --- | ---: | ---: | --- |
-| `DFA4sPz8.js` | 279 KiB | 1,184,334 B | spell-data registry |
-| `DoGUmbMH.js` | 215 KiB | 1,299,067 B | canonical data registry |
-| `GzbqIaku.js` | 167 KiB | 788,232 B | spell-data registry in the current build naming |
-| `B0xy1BMz.js` | 108 KiB | 742,551 B | current-page/runtime registry |
-| `BBeAVfbe.js` | 48 KiB | 174,072 B | shared metadata/content helper |
+| Response      | Transfer | Uncompressed | Build identity / role                           |
+| ------------- | -------: | -----------: | ----------------------------------------------- |
+| `DFA4sPz8.js` |  279 KiB |  1,184,334 B | spell-data registry                             |
+| `DoGUmbMH.js` |  215 KiB |  1,299,067 B | canonical data registry                         |
+| `GzbqIaku.js` |  167 KiB |    788,232 B | spell-data registry in the current build naming |
+| `B0xy1BMz.js` |  108 KiB |    742,551 B | current-page/runtime registry                   |
+| `BBeAVfbe.js` |   48 KiB |    174,072 B | shared metadata/content helper                  |
 
 The HAR names are content hashes and do not match the fresh local build hashes.
 The module identities were verified against the local Vite manifest rather than
@@ -33,30 +33,30 @@ inferred from the names alone.
 
 Measured after `pnpm build` in the current worktree:
 
-| Measure | Result |
-| --- | ---: |
-| Generated HTML files | 1,500 |
-| Total HTML | 89,998,758 B |
-| Total client JavaScript | 5,023,704 B |
-| Total client JavaScript gzip | 1,081,177 B |
-| Root-layout dependency closure | 885,801 B |
-| Client nodes with canonical data | 42 / 64 |
-| Homepage HTML-declared JS requests | 23 |
-| Homepage HTML-declared JS | 913,917 B |
-| Homepage HTML-declared resource tags | 43 |
+| Measure                              |       Result |
+| ------------------------------------ | -----------: |
+| Generated HTML files                 |        1,500 |
+| Total HTML                           | 89,998,758 B |
+| Total client JavaScript              |  5,023,704 B |
+| Total client JavaScript gzip         |  1,081,177 B |
+| Root-layout dependency closure       |    885,801 B |
+| Client nodes with canonical data     |      42 / 64 |
+| Homepage HTML-declared JS requests   |           23 |
+| Homepage HTML-declared JS            |    913,917 B |
+| Homepage HTML-declared resource tags |           43 |
 
 The root closure still contains `D_aPLMlF.js` (`currentPage`, 750,093 B), which
 is the dominant homepage-specific shared dependency. The full canonical,
 FAQ and spell chunks are not in the homepage HTML preload list, but remain
 available to route nodes that need them:
 
-| Chunk | Module identity | Bytes | Gzip |
-| --- | --- | ---: | ---: |
-| `Br4yLITJ.js` | canonical `data/_index_` | 1,328,616 | 219,798 |
-| `CuVyoXwu.js` | `faq` | 1,184,334 | 275,842 |
-| `GzbqIaku.js` | `spell-data` | 788,232 | 164,156 |
-| `D_aPLMlF.js` | `currentPage` / runtime metadata | 750,093 | 109,396 |
-| `CCA_3FkA.js` | canonical page data helper | 179,392 | 50,433 |
+| Chunk         | Module identity                  |     Bytes |    Gzip |
+| ------------- | -------------------------------- | --------: | ------: |
+| `Br4yLITJ.js` | canonical `data/_index_`         | 1,328,616 | 219,798 |
+| `CuVyoXwu.js` | `faq`                            | 1,184,334 | 275,842 |
+| `GzbqIaku.js` | `spell-data`                     |   788,232 | 164,156 |
+| `D_aPLMlF.js` | `currentPage` / runtime metadata |   750,093 | 109,396 |
+| `CCA_3FkA.js` | canonical page data helper       |   179,392 |  50,433 |
 
 ### Dependency and loading classification
 
@@ -93,14 +93,14 @@ results do not guarantee production results.
 A fresh Lighthouse run against the current local preview produced the
 following laboratory values:
 
-| Metric | Mobile emulation | Desktop emulation |
-| --- | ---: | ---: |
-| FCP | 0.9 s | 0.9 s |
-| LCP | 8.3 s | 8.3 s |
-| TBT | 910 ms | 830 ms |
-| CLS | 0 | 0 |
-| Speed Index | 1.2 s | 1.2 s |
-| Main-thread work | 2.1 s | 2.0 s |
+| Metric           | Mobile emulation | Desktop emulation |
+| ---------------- | ---------------: | ----------------: |
+| FCP              |            0.9 s |             0.9 s |
+| LCP              |            8.3 s |             8.3 s |
+| TBT              |           910 ms |            830 ms |
+| CLS              |                0 |                 0 |
+| Speed Index      |            1.2 s |             1.2 s |
+| Main-thread work |            2.1 s |             2.0 s |
 
 These local results are materially worse than the earlier local WebP run and
 must not be presented as production results. The current worktree includes
@@ -184,25 +184,25 @@ implementation change.
 
 Times are milliseconds. Scores are Lighthouse performance scores.
 
-| GTM | Run | Score | FCP | LCP | TBT | Speed Index | Main-thread | Script evaluation |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| on | 1 | 55 | 909 | 8,302 | 875 | 1,356 | 1,978 | 901 |
-| on | 2 | 56 | 907 | 8,295 | 831 | 1,221 | 2,086 | 836 |
-| on | 3 | 57 | 908 | 8,298 | 747 | 1,229 | 1,907 | 772 |
-| on | 4 | 57 | 908 | 8,296 | 733 | 1,301 | 1,743 | 770 |
-| on | 5 | 56 | 908 | 8,299 | 817 | 1,358 | 1,992 | 803 |
-| off | 1 | 58 | 906 | 9,039 | 705 | 1,273 | 1,608 | 623 |
-| off | 2 | 59 | 907 | 9,043 | 655 | 1,297 | 1,681 | 573 |
-| off | 3 | 55 | 908 | 9,047 | 874 | 1,420 | 1,892 | 753 |
-| off | 4 | 52 | 910 | 9,062 | 1,149 | 1,489 | 2,399 | 881 |
-| off | 5 | 56 | 908 | 9,048 | 794 | 1,269 | 1,773 | 685 |
+| GTM | Run | Score | FCP |   LCP |   TBT | Speed Index | Main-thread | Script evaluation |
+| --- | --: | ----: | --: | ----: | ----: | ----------: | ----------: | ----------------: |
+| on  |   1 |    55 | 909 | 8,302 |   875 |       1,356 |       1,978 |               901 |
+| on  |   2 |    56 | 907 | 8,295 |   831 |       1,221 |       2,086 |               836 |
+| on  |   3 |    57 | 908 | 8,298 |   747 |       1,229 |       1,907 |               772 |
+| on  |   4 |    57 | 908 | 8,296 |   733 |       1,301 |       1,743 |               770 |
+| on  |   5 |    56 | 908 | 8,299 |   817 |       1,358 |       1,992 |               803 |
+| off |   1 |    58 | 906 | 9,039 |   705 |       1,273 |       1,608 |               623 |
+| off |   2 |    59 | 907 | 9,043 |   655 |       1,297 |       1,681 |               573 |
+| off |   3 |    55 | 908 | 9,047 |   874 |       1,420 |       1,892 |               753 |
+| off |   4 |    52 | 910 | 9,062 | 1,149 |       1,489 |       2,399 |               881 |
+| off |   5 |    56 | 908 | 9,048 |   794 |       1,269 |       1,773 |               685 |
 
 Medians:
 
-| Condition | Score | FCP | LCP | TBT | Speed Index | Main-thread | Script evaluation |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| GTM enabled | 56 | 908 ms | 8,298 ms | 817 ms | 1,301 ms | 1,978 ms | 803 ms |
-| GTM blocked | 56 | 908 ms | 9,047 ms | 794 ms | 1,297 ms | 1,773 ms | 685 ms |
+| Condition   | Score |    FCP |      LCP |    TBT | Speed Index | Main-thread | Script evaluation |
+| ----------- | ----: | -----: | -------: | -----: | ----------: | ----------: | ----------------: |
+| GTM enabled |    56 | 908 ms | 8,298 ms | 817 ms |    1,301 ms |    1,978 ms |            803 ms |
+| GTM blocked |    56 | 908 ms | 9,047 ms | 794 ms |    1,297 ms |    1,773 ms |            685 ms |
 
 The experiment attributes roughly 118 ms median script-evaluation reduction
 and 23 ms median TBT reduction to removing GTM from this run. It does not
@@ -239,14 +239,14 @@ download.
 The Lighthouse script treemap and Vite manifest map the homepage's large
 resources as follows:
 
-| Resource | Source/module | Homepage status |
-| --- | --- | --- |
-| `D_aPLMlF.js` (750,093 B) | `currentPage.ts` and generated runtime metadata | in root closure and homepage preload |
-| `Br4yLITJ.js` (1,328,616 B) | canonical `data/_index_` | fetched in the captured browser trace |
-| `GzbqIaku.js` (788,232 B) | `spell-data` | fetched in the captured browser trace |
-| `CuVyoXwu.js` (1,184,334 B) | FAQ registry | fetched in the captured browser trace |
-| `CCA_3FkA.js` (179,392 B) | canonical page helper | fetched through search/lazy dependency graph |
-| GTM | external `gtag.js` | third-party, 545,333 resource bytes in the trace |
+| Resource                    | Source/module                                   | Homepage status                                  |
+| --------------------------- | ----------------------------------------------- | ------------------------------------------------ |
+| `D_aPLMlF.js` (750,093 B)   | `currentPage.ts` and generated runtime metadata | in root closure and homepage preload             |
+| `Br4yLITJ.js` (1,328,616 B) | canonical `data/_index_`                        | fetched in the captured browser trace            |
+| `GzbqIaku.js` (788,232 B)   | `spell-data`                                    | fetched in the captured browser trace            |
+| `CuVyoXwu.js` (1,184,334 B) | FAQ registry                                    | fetched in the captured browser trace            |
+| `CCA_3FkA.js` (179,392 B)   | canonical page helper                           | fetched through search/lazy dependency graph     |
+| GTM                         | external `gtag.js`                              | third-party, 545,333 resource bytes in the trace |
 
 The first row is proven eager by the root closure. The other registry rows are
 not in the static homepage HTML preload list, but Lighthouse's actual browser
@@ -309,13 +309,13 @@ of initial browser requests.
 Five comparable mobile Lighthouse 13.6.0 runs against the same local
 production preview produced:
 
-| Run | Score | FCP | LCP | TBT | Speed Index | Requests | Total bytes |
-| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 82 | 1,545 ms | 4,949 ms | 44 ms | 1,545 ms | 62 | 688,452 |
-| 2 | 88 | 1,548 ms | 3,857 ms | 43 ms | 1,548 ms | 62 | 688,452 |
-| 3 | 88 | 1,549 ms | 3,851 ms | 40 ms | 1,549 ms | 62 | 688,461 |
-| 4 | 88 | 1,549 ms | 3,851 ms | 41 ms | 1,549 ms | 62 | 688,452 |
-| 5 | 82 | 1,547 ms | 4,866 ms | 40 ms | 1,547 ms | 62 | 688,452 |
+| Run | Score |      FCP |      LCP |   TBT | Speed Index | Requests | Total bytes |
+| --: | ----: | -------: | -------: | ----: | ----------: | -------: | ----------: |
+|   1 |    82 | 1,545 ms | 4,949 ms | 44 ms |    1,545 ms |       62 |     688,452 |
+|   2 |    88 | 1,548 ms | 3,857 ms | 43 ms |    1,548 ms |       62 |     688,452 |
+|   3 |    88 | 1,549 ms | 3,851 ms | 40 ms |    1,549 ms |       62 |     688,461 |
+|   4 |    88 | 1,549 ms | 3,851 ms | 41 ms |    1,549 ms |       62 |     688,452 |
+|   5 |    82 | 1,547 ms | 4,866 ms | 40 ms |    1,547 ms |       62 |     688,452 |
 
 Median: score 88, FCP 1,548 ms, LCP 3,857 ms, TBT 41 ms, Speed Index
 1,548 ms. A comparable desktop run scored 70 with FCP 1,547 ms, LCP 5,387

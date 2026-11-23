@@ -4,19 +4,19 @@ import { incapacitated } from './incapacitated';
 import { unconscious } from './unconscious';
 
 function createConditionReference(name: string, slug: string) {
-	return {
-		name: {
-			normal: name,
-			slug
-		},
+    return {
+        name: {
+            normal: name,
+            slug,
+        },
 
-		logos: {
-			simple: {
-				href: `/icons/white/condition/${slug}.svg`,
-				alt: `A stylized condition icon representing ${name.toLowerCase()}.`
-			}
-		}
-	} as const;
+        logos: {
+            simple: {
+                href: `/icons/white/condition/${slug}.svg`,
+                alt: `A stylized condition icon representing ${name.toLowerCase()}.`,
+            },
+        },
+    } as const;
 }
 
 const charmed = createConditionReference('Charmed', 'charmed');
@@ -32,34 +32,34 @@ const restrained = createConditionReference('Restrained', 'restrained');
 const stunned = createConditionReference('Stunned', 'stunned');
 
 export const conditions = {
-	name: {
-		normal: 'Conditions',
-		singular: 'Condition',
-		slug: 'conditions'
-	},
+    name: {
+        normal: 'Conditions',
+        singular: 'Condition',
+        slug: 'conditions',
+    },
 
-	logos: {
-		simple: {
-			href: '/icons/white/condition/incapacitated.svg',
-			alt: 'A stylized condition icon representing a status effect.'
-		}
-	},
+    logos: {
+        simple: {
+            href: '/icons/white/condition/incapacitated.svg',
+            alt: 'A stylized condition icon representing a status effect.',
+        },
+    },
 
-	baseUrl: '/rules/conditions',
+    baseUrl: '/rules/conditions',
 
-	blinded,
-	charmed,
-	deafened,
-	exhaustion,
-	frightened,
-	grappled,
-	incapacitated,
-	invisible,
-	paralyzed,
-	petrified,
-	poisoned,
-	prone,
-	restrained,
-	stunned,
-	unconscious
+    blinded,
+    charmed,
+    deafened,
+    exhaustion,
+    frightened,
+    grappled,
+    incapacitated,
+    invisible,
+    paralyzed,
+    petrified,
+    poisoned,
+    prone,
+    restrained,
+    stunned,
+    unconscious,
 } as const;

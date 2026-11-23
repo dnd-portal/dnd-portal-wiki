@@ -1,2 +1,7 @@
 import { getData } from '#lib/typescript/data/_index_.js';
-export function load() { return { path: 'internals.homebrew.eldor.monsters.page', pageData: getData('internals.homebrew.eldor.monsters.page') }; }
+export function load() {
+    return {
+        path: 'internals.homebrew.eldor.monsters.page',
+        pageData: getData('internals.homebrew.eldor.monsters.page'),
+    };
+}

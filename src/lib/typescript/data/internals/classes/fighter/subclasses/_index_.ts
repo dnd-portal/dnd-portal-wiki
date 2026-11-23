@@ -9,4 +9,15 @@ import { page as psiWarrior } from './psi-warrior/_index_';
 import { page as runeKnight } from './rune-knight/_index_';
 import { page as samurai } from './samurai/_index_';
 
-export const subclasses = { arcaneArcher, banneret, battleMaster, cavalier, champion, echoKnight, eldritchKnight, psiWarrior, runeKnight, samurai } as const;
+export const subclasses = {
+    arcaneArcher,
+    banneret,
+    battleMaster,
+    cavalier,
+    champion,
+    echoKnight,
+    eldritchKnight,
+    psiWarrior,
+    runeKnight,
+    samurai,
+} as const;

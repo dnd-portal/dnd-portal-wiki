@@ -7,115 +7,114 @@
 @use '../../core/sizes' as sizes;
 
 .trait-table {
-	width: 100%;
-	max-width: sizes.get(content, trait-table-max-width);
-	border-collapse: collapse;
-	overflow: hidden;
+    width: 100%;
+    max-width: sizes.get(content, trait-table-max-width);
+    border-collapse: collapse;
+    overflow: hidden;
 
-	caption {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip: rect(0 0 0 0);
-		white-space: nowrap;
+    caption {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
 
-		&.trait-table__caption--visible {
-			width: auto;
-			height: auto;
-			margin-bottom: sizes.get(spacing, sm);
-			position: static;
-			overflow: visible;
-			clip: auto;
-			white-space: normal;
+        &.trait-table__caption--visible {
+            width: auto;
+            height: auto;
+            margin-bottom: sizes.get(spacing, sm);
+            position: static;
+            overflow: visible;
+            clip: auto;
+            white-space: normal;
 
-			color: colors.get-dark(text, headings);
-			font-size: 1rem;
-			font-weight: 700;
-			text-align: left;
-		}
-	}
+            color: colors.get-dark(text, headings);
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: left;
+        }
+    }
 
-	th,
-	td {
-		padding: 15px sizes.get(spacing, lg);
-		vertical-align: top;
-		border: 1px solid colors.get-dark(border, subtle);
-	}
+    th,
+    td {
+        padding: 15px sizes.get(spacing, lg);
+        vertical-align: top;
+        border: 1px solid colors.get-dark(border, subtle);
+    }
 
-	th {
-		color: colors.get-dark(text, headings);
-		background: colors.get-dark(background, secondary);
-		text-align: left;
-	}
+    th {
+        color: colors.get-dark(text, headings);
+        background: colors.get-dark(background, secondary);
+        text-align: left;
+    }
 
-	thead th {
-		font-size: 0.82rem;
-		text-transform: uppercase;
-	}
+    thead th {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+    }
 
-	tbody th {
-		width: 1%;
-		white-space: nowrap;
-	}
+    tbody th {
+        width: 1%;
+        white-space: nowrap;
+    }
 
-	td {
-		color: colors.get-dark(text, secondary);
-		background: colors.get-dark(background, primary);
-		line-height: 1.55;
-	}
+    td {
+        color: colors.get-dark(text, secondary);
+        background: colors.get-dark(background, primary);
+        line-height: 1.55;
+    }
 }
 
 @media (max-width: 600px) {
-	.trait-table--responsive-cards,
-	.trait-table--responsive-cards tbody,
-	.trait-table--responsive-cards tr,
-	.trait-table--responsive-cards th,
-	.trait-table--responsive-cards td {
-		display: block;
-	}
+    .trait-table--responsive-cards,
+    .trait-table--responsive-cards tbody,
+    .trait-table--responsive-cards tr,
+    .trait-table--responsive-cards th,
+    .trait-table--responsive-cards td {
+        display: block;
+    }
 
-	.trait-table--responsive-cards thead {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip: rect(0 0 0 0);
-	}
+    .trait-table--responsive-cards thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
 
-	.trait-table--responsive-cards tbody {
-		display: grid;
-		gap: sizes.get(spacing, sm);
-	}
+    .trait-table--responsive-cards tbody {
+        display: grid;
+        gap: sizes.get(spacing, sm);
+    }
 
-	.trait-table--responsive-cards tbody tr {
-		width: 100%;
-		box-sizing: border-box;
-		padding: sizes.get(spacing, md);
-		border: 1px solid colors.get-dark(border, subtle);
-		border-radius: sizes.get(radius, sm);
-		background: colors.get-dark(background, primary);
-	}
+    .trait-table--responsive-cards tbody tr {
+        width: 100%;
+        box-sizing: border-box;
+        padding: sizes.get(spacing, md);
+        border: 1px solid colors.get-dark(border, subtle);
+        border-radius: sizes.get(radius, sm);
+        background: colors.get-dark(background, primary);
+    }
 
-	.trait-table--responsive-cards tbody th {
-		width: auto;
-		padding: 0;
-		border: 0;
-		background: transparent;
-		font-size: 1rem;
-		white-space: normal;
-	}
+    .trait-table--responsive-cards tbody th {
+        width: auto;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font-size: 1rem;
+        white-space: normal;
+    }
 
-	.trait-table--responsive-cards tbody td {
-		padding: .35rem 0 0;
-		border: 0;
-		background: transparent;
-	}
+    .trait-table--responsive-cards tbody td {
+        padding: 0.35rem 0 0;
+        border: 0;
+        background: transparent;
+    }
 
-	.trait-table--responsive-cards tbody td::before {
-		content: attr(data-label) ': ';
-		color: colors.get-dark(text, headings);
-		font-weight: 700;
-	}
+    .trait-table--responsive-cards tbody td::before {
+        content: attr(data-label) ': ';
+        color: colors.get-dark(text, headings);
+        font-weight: 700;
+    }
 }
-

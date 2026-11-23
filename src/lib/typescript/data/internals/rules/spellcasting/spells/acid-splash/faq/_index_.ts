@@ -5,19 +5,19 @@ import doesAcidSplashUseTouchAc from './does-acid-splash-use-touch-ac-in-3-5e';
 import doesSpellResistanceApply from './does-spell-resistance-apply-to-acid-splash-in-3-5e';
 
 export {
-	canAcidSplashDamageObjects,
-	doesAcidSplashAllowSavingThrow,
-	doesAcidSplashDamageScale,
-	doesAcidSplashUseTouchAc,
-	doesSpellResistanceApply
+    canAcidSplashDamageObjects,
+    doesAcidSplashAllowSavingThrow,
+    doesAcidSplashDamageScale,
+    doesAcidSplashUseTouchAc,
+    doesSpellResistanceApply,
 };
 
 export const acidSplashFaq = [
-	doesAcidSplashUseTouchAc,
-	doesAcidSplashAllowSavingThrow,
-	doesSpellResistanceApply,
-	doesAcidSplashDamageScale,
-	canAcidSplashDamageObjects
+    doesAcidSplashUseTouchAc,
+    doesAcidSplashAllowSavingThrow,
+    doesSpellResistanceApply,
+    doesAcidSplashDamageScale,
+    canAcidSplashDamageObjects,
 ] as const;
 
 export default acidSplashFaq;

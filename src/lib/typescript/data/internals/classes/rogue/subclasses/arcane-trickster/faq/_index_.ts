@@ -4,4 +4,9 @@ import { question as q3 } from './how-do-you-build-and-play-a-arcane-trickster-r
 import { question as q4 } from './how-does-arcane-trickster-interact-with-sneak-attack';
 import { question as q5 } from './how-does-arcane-trickster-spellcasting-work';
 
-export const arcaneTricksterFaq = { slug: 'arcane-trickster', title: "Arcane Trickster", sourcePage: "internals.classes.rogue.subclasses.arcaneTrickster", questions: [q1, q2, q3, q4, q5] } as const;
+export const arcaneTricksterFaq = {
+    slug: 'arcane-trickster',
+    title: 'Arcane Trickster',
+    sourcePage: 'internals.classes.rogue.subclasses.arcaneTrickster',
+    questions: [q1, q2, q3, q4, q5],
+} as const;

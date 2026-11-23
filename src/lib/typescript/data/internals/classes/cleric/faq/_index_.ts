@@ -4,4 +4,9 @@ import { question as q3 } from './what-ability-scores-are-best-for-a-cleric';
 import { question as q4 } from './what-are-the-main-cleric-class-features';
 import { question as q5 } from './what-subclasses-can-a-cleric-choose';
 
-export const clericFaq = { slug: 'cleric', title: 'Cleric', sourcePage: '/classes/cleric/', questions: [q1, q2, q3, q4, q5] } as const;
+export const clericFaq = {
+    slug: 'cleric',
+    title: 'Cleric',
+    sourcePage: '/classes/cleric/',
+    questions: [q1, q2, q3, q4, q5],
+} as const;

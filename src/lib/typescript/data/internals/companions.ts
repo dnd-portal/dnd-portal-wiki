@@ -3,31 +3,281 @@ import { createInternalPage } from './_helpers_';
 import type { InlineContentBlock } from '#lib/typescript/data/_index_.js';
 
 export type CompanionAction = {
-	readonly name: string;
-	readonly icon?: string;
-	readonly usage?: string;
-	readonly attackBonus?: string;
-	readonly attackType?: string;
-	readonly range?: string;
-	readonly target?: string;
-	readonly savingThrow?: string;
-	readonly damage?: string;
-	readonly recharge?: string;
-	readonly limitedUse?: string;
-	readonly description: readonly string[];
-	readonly onHit?: string;
-	readonly onSave?: string;
+    readonly name: string;
+    readonly icon?: string;
+    readonly usage?: string;
+    readonly attackBonus?: string;
+    readonly attackType?: string;
+    readonly range?: string;
+    readonly target?: string;
+    readonly savingThrow?: string;
+    readonly damage?: string;
+    readonly recharge?: string;
+    readonly limitedUse?: string;
+    readonly description: readonly string[];
+    readonly onHit?: string;
+    readonly onSave?: string;
 };
 
-export type Companion = { readonly slug: string; readonly pagePath: string; readonly name: string; readonly description: string; readonly type: string; readonly size: string; readonly alignment: string; readonly proficiencyBonus: string; readonly role: string; readonly armorClass: string; readonly hitPoints: string; readonly speed: string; readonly abilities: readonly { name: string; score: number; modifier: string }[]; readonly resistances: string; readonly immunities: string; readonly senses: string; readonly languages: string; readonly traits: readonly { name: string; description: string }[]; readonly actions?: readonly CompanionAction[]; readonly combatBehavior?: readonly string[]; readonly source: string; readonly notes: string };
-const cardDescription = 'A cheerful, water-loving ooze with a curious personality. Able to slip through narrow spaces, sense nearby water, and blend into its surroundings, the Puddle Slime makes an unusual but surprisingly useful adventuring companion.';
-const fullDescription = 'The Puddle Slime is a small, amorphous ooze with a cheerful disposition and an almost endless curiosity about the world around it. Its translucent, water-like body allows it to blend naturally into shallow pools, streams, and other aquatic environments.\n\nDespite its harmless appearance, the Puddle Slime possesses several unusual abilities. It can squeeze through remarkably narrow openings, detect nearby sources of water, and use its fluid body to interfere with hostile creatures.\n\nAlthough not particularly powerful in direct combat, its adaptability and inquisitive behavior make it a valuable companion during exploration. A bonded Puddle Slime often develops a strong attachment to its chosen adventurer, responding to familiar voices, movement, and changes in its surroundings.';
-const puddleSlime: Companion = { slug: 'puddle-slime', pagePath: 'internals.companions.puddleSlime', name: 'Puddle Slime', description: fullDescription, type: 'Ooze', size: 'Small', alignment: 'Unaligned', proficiencyBonus: '+2', role: 'Companion (Utility)', armorClass: '12', hitPoints: '22 (5d6 + 5)', speed: '30 ft., swim 30 ft.', abilities: [{ name: 'STR', score: 8, modifier: '-1' }, { name: 'DEX', score: 14, modifier: '+2' }, { name: 'CON', score: 12, modifier: '+1' }, { name: 'INT', score: 3, modifier: '-4' }, { name: 'WIS', score: 10, modifier: '+0' }, { name: 'CHA', score: 6, modifier: '-2' }], resistances: 'Bludgeoning, piercing, and slashing from nonmagical attacks.', immunities: 'Blinded, deafened, exhaustion, grappled, prone.', senses: 'Blindsight 60 ft. (blind beyond this radius), passive Perception 10.', languages: 'Understands the creature it has bonded with, but cannot speak.', traits: [{ name: 'Amorphous', description: 'The puddle can move through a space as narrow as 1 inch without squeezing.' }, { name: 'Water Form', description: "The puddle can enter another creature's space and stop there. Its space counts as difficult terrain for hostile creatures.\n\nWhen a hostile creature first enters the puddle's space on a turn or ends its turn there, it must succeed on a DC 11 Dexterity saving throw or fall prone." }, { name: 'False Appearance', description: "When the puddle is motionless in water, it appears to be a normal puddle. A creature that hasn't seen it move must succeed on a DC 15 Intelligence (Investigation) check to realize it is alive." }], source: 'Homebrew (Campaign)', notes: 'A small utility companion with an affinity for water and exploration.' };
-const puddleSlimeActions: readonly CompanionAction[] = [{ name: 'Pseudopod', attackType: 'Melee Weapon Attack', attackBonus: '+4 to hit', range: 'reach 5 ft.', target: 'one target', damage: '5 (1d6 + 2) Bludgeoning damage', description: ['The Puddle Slime extends a small, water-like pseudopod to strike a nearby creature.'] }, { name: 'Splash!', usage: 'Recharge 5–6', range: '15 feet', target: 'one creature', savingThrow: 'DC 12 Dexterity saving throw', damage: '1d4 Bludgeoning damage', recharge: 'Recharge 5–6', description: ['The Puddle Slime launches a concentrated burst of water at one creature within 15 feet.', 'The target is pushed 5 feet directly away from the Puddle Slime.', 'The next 5 feet of movement it uses before the end of its next turn costs 10 feet of movement instead.'], onSave: 'The target takes no damage and suffers no additional effects.', onHit: 'On a failed save, the target takes the listed damage and suffers the listed effects.' }, { name: 'Absorb Water', usage: '1/Short Rest', limitedUse: 'Once per Short Rest', description: ['The Puddle Slime absorbs at least 1 liter of clean water, temporarily increasing its volume.', 'The Puddle Slime gains 5 Temporary Hit Points. These Temporary Hit Points follow the normal D&D 5e rules and do not stack with other Temporary Hit Points.', 'The ability requires access to sufficient clean water.'] }];
-const puddleSlimeCombatBehavior = ['The Puddle Slime acts on its owner\'s initiative, immediately after the owner\'s turn.', 'The owner can use a Bonus Action to command the Puddle Slime to take one of its listed actions.', 'Without a command, the Puddle Slime takes the Dodge action, unless it is incapacitated.', 'The Puddle Slime cannot use Multiattack.', 'The Puddle Slime is intended as a utility/support companion rather than a full additional player character.'] as const;
-const companionExtensions: Record<string, Pick<Companion, 'actions' | 'combatBehavior'>> = { 'puddle-slime': { actions: puddleSlimeActions, combatBehavior: puddleSlimeCombatBehavior } };
-export const companionItems: readonly Companion[] = [puddleSlime].map((companion) => ({ ...companion, ...companionExtensions[companion.slug] }));
-export function getCompanionBySlug(slug: string): Companion | undefined { return companionItems.find((companion) => companion.slug === slug); }
-const website = core.internals.website; const current = core.internals.companions;
-const paragraphs = fullDescription.split('\n\n').map((text) => [{ type: 'text' as const, text }]) as InlineContentBlock;
-export const companions = { page: createInternalPage({ href: current.baseUrl, img: current.logos.simple, title: `${website.name.short} - ${current.name.normal}`, subTitle: 'BONDED ALLIES & UTILITY COMPANIONS', descriptions: { short: cardDescription, long: [[{ type: 'text', text: 'Not every creature encountered during an adventure is an enemy. Some become trusted allies, loyal protectors, curious followers, or unexpected friends who accompany adventurers on their journeys.' }], [{ type: 'text', text: "Companions can take many forms, from ordinary animals and magical familiars to unusual creatures with abilities of their own. Whether they assist in exploration, provide support during combat, or simply add personality to a party, companions can become an important part of a character's story." }]] }, description: cardDescription, content: { sections: [{ id: 'about-companions', title: 'About Companions', blocks: [{ type: 'paragraph', content: [{ type: 'text', text: 'Companions are creatures that maintain a connection with a character or adventuring party. Unlike typical monsters encountered in the world, companions often have an ongoing role in the campaign.' }] }, { type: 'paragraph', content: [{ type: 'text', text: 'Some companions are obtained through class features or spells, while others may be befriended, rescued, trained, or introduced through the story. Their abilities, behavior, and level of independence depend on their nature and the rules established by the Dungeon Master.' }] }, { type: 'paragraph', content: [{ type: 'text', text: 'A companion does not necessarily function as an additional player character. Some participate in combat, while others primarily assist with exploration, communication, observation, or roleplaying.' }] }] }, { id: 'companion-references', title: 'Companion References', blocks: [{ type: 'paragraph', content: [{ type: 'text', text: "Each companion reference provides information about the creature's characteristics, abilities, and potential role within an adventuring party." }] }, { type: 'paragraph', content: [{ type: 'text', text: 'Depending on the companion, a reference may include its ability scores, movement speeds, senses, resistances, special traits, actions, and other relevant mechanics.' }] }, { type: 'paragraph', content: [{ type: 'text', text: 'Some entries may also contain campaign-specific information or homebrew rules. These are identified where appropriate and may differ from officially published material.' }] }] }], tableOfContents: [{ id: 'about-companions', title: 'About Companions' }, { id: 'companion-references', title: 'Companion References' }, { id: 'companion-browser', title: 'Companion Browser' }] }, tags: ['companions', 'allies', 'creatures'] }), puddleSlime: createInternalPage({ href: `${current.baseUrl}/puddle-slime/`, img: { href: '/icons/white/util/water-drop.svg', alt: 'A stylized water drop icon representing Puddle Slime.' }, title: `${website.name.short} - Puddle Slime`, subTitle: 'Companion', label: 'Puddle Slime', descriptions: { short: cardDescription, long: paragraphs }, description: fullDescription, navigation: { parent: 'internals.companions.page' }, tags: ['homebrew', 'Small Ooze', 'Utility Companion'], images: { card: { female: { alt: 'Puddle Slime resting in a sunlit wetland pond.', sources: { s: '/images/homebrew/companions/puddle-slime.webp', m: '/images/homebrew/companions/puddle-slime.webp', l: '/images/homebrew/companions/puddle-slime.webp' } } } } }) } as const;
+export type Companion = {
+    readonly slug: string;
+    readonly pagePath: string;
+    readonly name: string;
+    readonly description: string;
+    readonly type: string;
+    readonly size: string;
+    readonly alignment: string;
+    readonly proficiencyBonus: string;
+    readonly role: string;
+    readonly armorClass: string;
+    readonly hitPoints: string;
+    readonly speed: string;
+    readonly abilities: readonly { name: string; score: number; modifier: string }[];
+    readonly resistances: string;
+    readonly immunities: string;
+    readonly senses: string;
+    readonly languages: string;
+    readonly traits: readonly { name: string; description: string }[];
+    readonly actions?: readonly CompanionAction[];
+    readonly combatBehavior?: readonly string[];
+    readonly source: string;
+    readonly notes: string;
+};
+const cardDescription =
+    'A cheerful, water-loving ooze with a curious personality. Able to slip through narrow spaces, sense nearby water, and blend into its surroundings, the Puddle Slime makes an unusual but surprisingly useful adventuring companion.';
+const fullDescription =
+    'The Puddle Slime is a small, amorphous ooze with a cheerful disposition and an almost endless curiosity about the world around it. Its translucent, water-like body allows it to blend naturally into shallow pools, streams, and other aquatic environments.\n\nDespite its harmless appearance, the Puddle Slime possesses several unusual abilities. It can squeeze through remarkably narrow openings, detect nearby sources of water, and use its fluid body to interfere with hostile creatures.\n\nAlthough not particularly powerful in direct combat, its adaptability and inquisitive behavior make it a valuable companion during exploration. A bonded Puddle Slime often develops a strong attachment to its chosen adventurer, responding to familiar voices, movement, and changes in its surroundings.';
+const puddleSlime: Companion = {
+    slug: 'puddle-slime',
+    pagePath: 'internals.companions.puddleSlime',
+    name: 'Puddle Slime',
+    description: fullDescription,
+    type: 'Ooze',
+    size: 'Small',
+    alignment: 'Unaligned',
+    proficiencyBonus: '+2',
+    role: 'Companion (Utility)',
+    armorClass: '12',
+    hitPoints: '22 (5d6 + 5)',
+    speed: '30 ft., swim 30 ft.',
+    abilities: [
+        { name: 'STR', score: 8, modifier: '-1' },
+        { name: 'DEX', score: 14, modifier: '+2' },
+        { name: 'CON', score: 12, modifier: '+1' },
+        { name: 'INT', score: 3, modifier: '-4' },
+        { name: 'WIS', score: 10, modifier: '+0' },
+        { name: 'CHA', score: 6, modifier: '-2' },
+    ],
+    resistances: 'Bludgeoning, piercing, and slashing from nonmagical attacks.',
+    immunities: 'Blinded, deafened, exhaustion, grappled, prone.',
+    senses: 'Blindsight 60 ft. (blind beyond this radius), passive Perception 10.',
+    languages: 'Understands the creature it has bonded with, but cannot speak.',
+    traits: [
+        {
+            name: 'Amorphous',
+            description:
+                'The puddle can move through a space as narrow as 1 inch without squeezing.',
+        },
+        {
+            name: 'Water Form',
+            description:
+                "The puddle can enter another creature's space and stop there. Its space counts as difficult terrain for hostile creatures.\n\nWhen a hostile creature first enters the puddle's space on a turn or ends its turn there, it must succeed on a DC 11 Dexterity saving throw or fall prone.",
+        },
+        {
+            name: 'False Appearance',
+            description:
+                "When the puddle is motionless in water, it appears to be a normal puddle. A creature that hasn't seen it move must succeed on a DC 15 Intelligence (Investigation) check to realize it is alive.",
+        },
+    ],
+    source: 'Homebrew (Campaign)',
+    notes: 'A small utility companion with an affinity for water and exploration.',
+};
+const puddleSlimeActions: readonly CompanionAction[] = [
+    {
+        name: 'Pseudopod',
+        attackType: 'Melee Weapon Attack',
+        attackBonus: '+4 to hit',
+        range: 'reach 5 ft.',
+        target: 'one target',
+        damage: '5 (1d6 + 2) Bludgeoning damage',
+        description: [
+            'The Puddle Slime extends a small, water-like pseudopod to strike a nearby creature.',
+        ],
+    },
+    {
+        name: 'Splash!',
+        usage: 'Recharge 5–6',
+        range: '15 feet',
+        target: 'one creature',
+        savingThrow: 'DC 12 Dexterity saving throw',
+        damage: '1d4 Bludgeoning damage',
+        recharge: 'Recharge 5–6',
+        description: [
+            'The Puddle Slime launches a concentrated burst of water at one creature within 15 feet.',
+            'The target is pushed 5 feet directly away from the Puddle Slime.',
+            'The next 5 feet of movement it uses before the end of its next turn costs 10 feet of movement instead.',
+        ],
+        onSave: 'The target takes no damage and suffers no additional effects.',
+        onHit: 'On a failed save, the target takes the listed damage and suffers the listed effects.',
+    },
+    {
+        name: 'Absorb Water',
+        usage: '1/Short Rest',
+        limitedUse: 'Once per Short Rest',
+        description: [
+            'The Puddle Slime absorbs at least 1 liter of clean water, temporarily increasing its volume.',
+            'The Puddle Slime gains 5 Temporary Hit Points. These Temporary Hit Points follow the normal D&D 5e rules and do not stack with other Temporary Hit Points.',
+            'The ability requires access to sufficient clean water.',
+        ],
+    },
+];
+const puddleSlimeCombatBehavior = [
+    "The Puddle Slime acts on its owner's initiative, immediately after the owner's turn.",
+    'The owner can use a Bonus Action to command the Puddle Slime to take one of its listed actions.',
+    'Without a command, the Puddle Slime takes the Dodge action, unless it is incapacitated.',
+    'The Puddle Slime cannot use Multiattack.',
+    'The Puddle Slime is intended as a utility/support companion rather than a full additional player character.',
+] as const;
+const companionExtensions: Record<string, Pick<Companion, 'actions' | 'combatBehavior'>> = {
+    'puddle-slime': { actions: puddleSlimeActions, combatBehavior: puddleSlimeCombatBehavior },
+};
+export const companionItems: readonly Companion[] = [puddleSlime].map((companion) => ({
+    ...companion,
+    ...companionExtensions[companion.slug],
+}));
+export function getCompanionBySlug(slug: string): Companion | undefined {
+    return companionItems.find((companion) => companion.slug === slug);
+}
+const website = core.internals.website;
+const current = core.internals.companions;
+const paragraphs = fullDescription
+    .split('\n\n')
+    .map((text) => [{ type: 'text' as const, text }]) as InlineContentBlock;
+export const companions = {
+    page: createInternalPage({
+        href: current.baseUrl,
+        img: current.logos.simple,
+        title: `${website.name.short} - ${current.name.normal}`,
+        subTitle: 'BONDED ALLIES & UTILITY COMPANIONS',
+        descriptions: {
+            short: cardDescription,
+            long: [
+                [
+                    {
+                        type: 'text',
+                        text: 'Not every creature encountered during an adventure is an enemy. Some become trusted allies, loyal protectors, curious followers, or unexpected friends who accompany adventurers on their journeys.',
+                    },
+                ],
+                [
+                    {
+                        type: 'text',
+                        text: "Companions can take many forms, from ordinary animals and magical familiars to unusual creatures with abilities of their own. Whether they assist in exploration, provide support during combat, or simply add personality to a party, companions can become an important part of a character's story.",
+                    },
+                ],
+            ],
+        },
+        description: cardDescription,
+        content: {
+            sections: [
+                {
+                    id: 'about-companions',
+                    title: 'About Companions',
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: 'Companions are creatures that maintain a connection with a character or adventuring party. Unlike typical monsters encountered in the world, companions often have an ongoing role in the campaign.',
+                                },
+                            ],
+                        },
+                        {
+                            type: 'paragraph',
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: 'Some companions are obtained through class features or spells, while others may be befriended, rescued, trained, or introduced through the story. Their abilities, behavior, and level of independence depend on their nature and the rules established by the Dungeon Master.',
+                                },
+                            ],
+                        },
+                        {
+                            type: 'paragraph',
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: 'A companion does not necessarily function as an additional player character. Some participate in combat, while others primarily assist with exploration, communication, observation, or roleplaying.',
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    id: 'companion-references',
+                    title: 'Companion References',
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: "Each companion reference provides information about the creature's characteristics, abilities, and potential role within an adventuring party.",
+                                },
+                            ],
+                        },
+                        {
+                            type: 'paragraph',
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: 'Depending on the companion, a reference may include its ability scores, movement speeds, senses, resistances, special traits, actions, and other relevant mechanics.',
+                                },
+                            ],
+                        },
+                        {
+                            type: 'paragraph',
+                            content: [
+                                {
+                                    type: 'text',
+                                    text: 'Some entries may also contain campaign-specific information or homebrew rules. These are identified where appropriate and may differ from officially published material.',
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            tableOfContents: [
+                { id: 'about-companions', title: 'About Companions' },
+                { id: 'companion-references', title: 'Companion References' },
+                { id: 'companion-browser', title: 'Companion Browser' },
+            ],
+        },
+        tags: ['companions', 'allies', 'creatures'],
+    }),
+    puddleSlime: createInternalPage({
+        href: `${current.baseUrl}/puddle-slime/`,
+        img: {
+            href: '/icons/white/util/water-drop.svg',
+            alt: 'A stylized water drop icon representing Puddle Slime.',
+        },
+        title: `${website.name.short} - Puddle Slime`,
+        subTitle: 'Companion',
+        label: 'Puddle Slime',
+        descriptions: { short: cardDescription, long: paragraphs },
+        description: fullDescription,
+        navigation: { parent: 'internals.companions.page' },
+        tags: ['homebrew', 'Small Ooze', 'Utility Companion'],
+        images: {
+            card: {
+                female: {
+                    alt: 'Puddle Slime resting in a sunlit wetland pond.',
+                    sources: {
+                        s: '/images/homebrew/companions/puddle-slime.webp',
+                        m: '/images/homebrew/companions/puddle-slime.webp',
+                        l: '/images/homebrew/companions/puddle-slime.webp',
+                    },
+                },
+            },
+        },
+    }),
+} as const;

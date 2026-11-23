@@ -1,13 +1,12 @@
 import * as core from '#lib/typescript/data/core/_index_.js';
 import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type {
-	CoreTraitsData,
-	InlineContent,
-	PageContentBlock,
-	PageContentSection,
-	ProgressionData
+    CoreTraitsData,
+    InlineContent,
+    PageContentBlock,
+    PageContentSection,
+    ProgressionData,
 } from '#lib/typescript/pages/content-types.js';
-
 
 import * as page from './page';
 
@@ -18,28 +17,28 @@ export const progression = {
         {
             key: 'level',
             label: 'Level',
-            format: 'ordinal'
+            format: 'ordinal',
         },
         {
             key: 'proficiencyBonus',
             label: 'Proficiency Bonus',
             shortLabel: 'PB',
             path: 'internals.rules.abbreviations.pb',
-            format: 'signed'
+            format: 'signed',
         },
         {
             key: 'features',
-            label: 'Features'
+            label: 'Features',
         },
         {
             key: 'rages',
-            label: 'Rages'
+            label: 'Rages',
         },
         {
             key: 'rageDamage',
             label: 'Rage Damage',
-            format: 'signed'
-        }
+            format: 'signed',
+        },
     ],
     rows: [
         {
@@ -47,24 +46,24 @@ export const progression = {
             proficiencyBonus: 2,
             features: [
                 { label: 'Rage', sectionId: page.sections.rage.id },
-                { label: 'Unarmored Defense', sectionId: page.sections.unarmoredDefense.id }
+                { label: 'Unarmored Defense', sectionId: page.sections.unarmoredDefense.id },
             ],
             values: {
                 rages: 2,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 2,
             proficiencyBonus: 2,
             features: [
                 { label: 'Reckless Attack', sectionId: page.sections.recklessAttack.id },
-                { label: 'Danger Sense', sectionId: page.sections.dangerSense.id }
+                { label: 'Danger Sense', sectionId: page.sections.dangerSense.id },
             ],
             values: {
                 rages: 2,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 3,
@@ -74,13 +73,13 @@ export const progression = {
                 {
                     label: 'Primal Knowledge',
                     sectionId: page.sections.primalKnowledge.id,
-                    optional: true
-                }
+                    optional: true,
+                },
             ],
             values: {
                 rages: 3,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 4,
@@ -88,25 +87,25 @@ export const progression = {
             features: [
                 {
                     label: 'Ability Score Improvement',
-                    sectionId: page.sections.abilityScoreImprovement.id
-                }
+                    sectionId: page.sections.abilityScoreImprovement.id,
+                },
             ],
             values: {
                 rages: 3,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 5,
             proficiencyBonus: 3,
             features: [
                 { label: 'Extra Attack', sectionId: page.sections.extraAttack.id },
-                { label: 'Fast Movement', sectionId: page.sections.fastMovement.id }
+                { label: 'Fast Movement', sectionId: page.sections.fastMovement.id },
             ],
             values: {
                 rages: 3,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 6,
@@ -114,8 +113,8 @@ export const progression = {
             features: [{ label: 'Path Feature' }],
             values: {
                 rages: 4,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 7,
@@ -125,13 +124,13 @@ export const progression = {
                 {
                     label: 'Instinctive Pounce',
                     sectionId: page.sections.instinctivePounce.id,
-                    optional: true
-                }
+                    optional: true,
+                },
             ],
             values: {
                 rages: 4,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 8,
@@ -139,13 +138,13 @@ export const progression = {
             features: [
                 {
                     label: 'Ability Score Improvement',
-                    sectionId: page.sections.abilityScoreImprovement.id
-                }
+                    sectionId: page.sections.abilityScoreImprovement.id,
+                },
             ],
             values: {
                 rages: 4,
-                rageDamage: 2
-            }
+                rageDamage: 2,
+            },
         },
         {
             level: 9,
@@ -153,13 +152,13 @@ export const progression = {
             features: [
                 {
                     label: 'Brutal Strike',
-                    sectionId: page.sections.brutalStrike.id
-                }
+                    sectionId: page.sections.brutalStrike.id,
+                },
             ],
             values: {
                 rages: 4,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 10,
@@ -169,24 +168,22 @@ export const progression = {
                 {
                     label: 'Primal Knowledge',
                     sectionId: page.sections.primalKnowledge.id,
-                    optional: true
-                }
+                    optional: true,
+                },
             ],
             values: {
                 rages: 4,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 11,
             proficiencyBonus: 4,
-            features: [
-                { label: 'Relentless Rage', sectionId: page.sections.relentlessRage.id }
-            ],
+            features: [{ label: 'Relentless Rage', sectionId: page.sections.relentlessRage.id }],
             values: {
                 rages: 4,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 12,
@@ -194,13 +191,13 @@ export const progression = {
             features: [
                 {
                     label: 'Ability Score Improvement',
-                    sectionId: page.sections.abilityScoreImprovement.id
-                }
+                    sectionId: page.sections.abilityScoreImprovement.id,
+                },
             ],
             values: {
                 rages: 5,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 13,
@@ -208,13 +205,13 @@ export const progression = {
             features: [
                 {
                     label: 'Improved Brutal Strike',
-                    sectionId: page.sections.brutalStrike.id
-                }
+                    sectionId: page.sections.brutalStrike.id,
+                },
             ],
             values: {
                 rages: 5,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 14,
@@ -222,19 +219,17 @@ export const progression = {
             features: [{ label: 'Path Feature' }],
             values: {
                 rages: 5,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 15,
             proficiencyBonus: 5,
-            features: [
-                { label: 'Persistent Rage', sectionId: page.sections.persistentRage.id }
-            ],
+            features: [{ label: 'Persistent Rage', sectionId: page.sections.persistentRage.id }],
             values: {
                 rages: 5,
-                rageDamage: 3
-            }
+                rageDamage: 3,
+            },
         },
         {
             level: 16,
@@ -242,13 +237,13 @@ export const progression = {
             features: [
                 {
                     label: 'Ability Score Improvement',
-                    sectionId: page.sections.abilityScoreImprovement.id
-                }
+                    sectionId: page.sections.abilityScoreImprovement.id,
+                },
             ],
             values: {
                 rages: 5,
-                rageDamage: 4
-            }
+                rageDamage: 4,
+            },
         },
         {
             level: 17,
@@ -256,24 +251,24 @@ export const progression = {
             features: [
                 {
                     label: 'Improved Brutal Strike',
-                    sectionId: page.sections.brutalStrike.id
-                }
+                    sectionId: page.sections.brutalStrike.id,
+                },
             ],
             values: {
                 rages: 6,
-                rageDamage: 4
-            }
+                rageDamage: 4,
+            },
         },
         {
             level: 18,
             proficiencyBonus: 6,
             features: [
-                { label: 'Indomitable Might', sectionId: page.sections.indomitableMight.id }
+                { label: 'Indomitable Might', sectionId: page.sections.indomitableMight.id },
             ],
             values: {
                 rages: 6,
-                rageDamage: 4
-            }
+                rageDamage: 4,
+            },
         },
         {
             level: 19,
@@ -281,24 +276,22 @@ export const progression = {
             features: [
                 {
                     label: 'Ability Score Improvement',
-                    sectionId: page.sections.abilityScoreImprovement.id
-                }
+                    sectionId: page.sections.abilityScoreImprovement.id,
+                },
             ],
             values: {
                 rages: 6,
-                rageDamage: 4
-            }
+                rageDamage: 4,
+            },
         },
         {
             level: 20,
             proficiencyBonus: 6,
-            features: [
-                { label: 'Primal Champion', sectionId: page.sections.primalChampion.id }
-            ],
+            features: [{ label: 'Primal Champion', sectionId: page.sections.primalChampion.id }],
             values: {
                 rages: 'Unlimited',
-                rageDamage: 4
-            }
-        }
-    ]
+                rageDamage: 4,
+            },
+        },
+    ],
 } as const satisfies ProgressionData;

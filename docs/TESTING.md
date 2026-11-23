@@ -2,14 +2,14 @@
 
 ## Test categories
 
-| Category | Location/command | Purpose |
-| --- | --- | --- |
-| Unit | `src/lib/tests/`, `pnpm test` | Pure data, breadcrumb and SEO behavior |
-| Architecture/boundary | `scripts/*boundary*.test.mjs`, `pnpm test` | Import boundaries that protect shared client code |
-| Production output | `scripts/audit-production-output.mjs`, `pnpm audit:production` | Real prerendered HTML, Vite manifest and bundle budgets |
-| Integration/static crawl | `scripts/audit-prelive.mjs`, `pnpm audit:prelive:crawl` | Routes, links, SEO, IDs, ARIA references and generated assets |
-| Browser/E2E | `tests/e2e/`, `pnpm test:browser` | Production preview navigation, hydration and lazy behavior |
-| Accessibility | Playwright tests with `axe-core` | Critical axe violations, focus and semantic relationships |
+| Category                 | Location/command                                               | Purpose                                                       |
+| ------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------- |
+| Unit                     | `src/lib/tests/`, `pnpm test`                                  | Pure data, breadcrumb and SEO behavior                        |
+| Architecture/boundary    | `scripts/*boundary*.test.mjs`, `pnpm test`                     | Import boundaries that protect shared client code             |
+| Production output        | `scripts/audit-production-output.mjs`, `pnpm audit:production` | Real prerendered HTML, Vite manifest and bundle budgets       |
+| Integration/static crawl | `scripts/audit-prelive.mjs`, `pnpm audit:prelive:crawl`        | Routes, links, SEO, IDs, ARIA references and generated assets |
+| Browser/E2E              | `tests/e2e/`, `pnpm test:browser`                              | Production preview navigation, hydration and lazy behavior    |
+| Accessibility            | Playwright tests with `axe-core`                               | Critical axe violations, focus and semantic relationships     |
 
 There are currently 8 Vitest tests and 6 browser scenarios executed in two projects (desktop Chromium and a 390px mobile viewport). Desktop tests cover lazy navbar search loading; the mobile suite covers the actual mobile search route and searchbox.
 
@@ -31,11 +31,11 @@ Build once, then run the output audit, crawl and browser suite against that same
 
 The budgets are based on the measured P0 output:
 
-| Budget | Current measurement | Enforced limit |
-| --- | ---: | ---: |
-| Root-layout dependency closure | 885,773 bytes | 1,000,000 bytes |
-| Any client route chunk | 1,328,616 bytes | 1,500,000 bytes |
-| Any prerendered HTML file | 282,693 bytes | 500,000 bytes |
+| Budget                         | Current measurement |  Enforced limit |
+| ------------------------------ | ------------------: | --------------: |
+| Root-layout dependency closure |       885,773 bytes | 1,000,000 bytes |
+| Any client route chunk         |     1,328,616 bytes | 1,500,000 bytes |
+| Any prerendered HTML file      |       282,693 bytes |   500,000 bytes |
 
 The route-chunk budget is separate from the initial shared budget. A route may be large because it owns content data, but it must remain below its own limit. The output audit also reports total HTML, total client JavaScript, gzip totals, top HTML pages and top chunks.
 
