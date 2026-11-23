@@ -1111,3 +1111,25 @@ indexes/spell lists, and all route families without a proven child-data
 contract. The next safe boundary is the generic wiki route, but its
 `CurrentPageContext.data` consumers must be migrated or supplied from its own
 `PageProps` before changing the fallback.
+
+## Publication for controlled performance testing
+
+The retained Phase 1–6M changes were published on:
+
+- Branch: `performance/runtime-metadata-migration`
+- Commit: `da24cdbd471516d695528991034a09bf06931970`
+- Remote: `origin/performance/runtime-metadata-migration`
+
+The branch is based on `main` and contains the intended migration, audit, test
+and documentation files. A Draft Pull Request could not be submitted from the
+available GitHub session because GitHub reported the browser as logged out. The
+comparison page is available at:
+
+https://github.com/dnd-portal/dnd-portal-wiki/compare/main...performance/runtime-metadata-migration?expand=1
+
+The GitHub Pages workflow was reviewed: pull requests run validation and build
+jobs, while the deploy job is excluded for `pull_request` events. Publishing
+this branch and opening a PR therefore does not deploy to production. No
+preview deployment infrastructure is configured; the build artifact or a
+separate isolated Pages preview would be required for browser performance
+comparisons.
