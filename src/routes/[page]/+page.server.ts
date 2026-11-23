@@ -4,9 +4,14 @@ import { equipmentItems } from '#lib/typescript/data/internals/equipment-items.j
 import { pugilist } from '#lib/typescript/data/internals/classes/pugilist/_index_.js';
 import { getFaqItems, type FaqItem } from '#lib/typescript/pages/faq.js';
 import { resolveCurrentPage } from '#lib/typescript/pages/currentPage.js';
+import type { SeoMetadataInput } from '#lib/typescript/pages/seo.js';
 
 export function load({ url }: { url: URL }) {
     const path = resolveCurrentPage(url.pathname).path;
+    const schemaKind =
+        url.pathname === '/classes/' || url.pathname === '/species/'
+            ? ('collection' as const)
+            : undefined;
 
     return {
         canonicalPage: path ? (getData(path) as PageData) : null,
@@ -14,11 +19,13 @@ export function load({ url }: { url: URL }) {
         equipmentItems,
         npcItems: pugilist.npcItems,
         companionItems,
+        ...(schemaKind ? { seo: { schemaKind } } : {}),
     } satisfies {
         canonicalPage: PageData | null;
         faqItems: readonly FaqItem[];
         equipmentItems: typeof equipmentItems;
         npcItems: typeof pugilist.npcItems;
         companionItems: typeof companionItems;
+        seo?: { schemaKind: SeoMetadataInput['schemaKind'] };
     };
 }

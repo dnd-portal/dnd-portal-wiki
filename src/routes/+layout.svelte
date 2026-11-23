@@ -19,6 +19,7 @@
     import MobileNavigation from '#lib/svelte/components/page/MobileNavigation.svelte';
     import Analytics from '#lib/svelte/components/Analytics.svelte';
     import PopupHost from '#lib/svelte/components/PopupHost.svelte';
+    import StructuredData from '#lib/svelte/components/StructuredData.svelte';
 
     const appBase = '';
 
@@ -83,9 +84,7 @@
     <meta name="twitter:description" content={seo.description} />
     <meta name="twitter:image" content={seo.imageUrl} />
     <meta name="twitter:image:alt" content={seo.imageAlt} />
-    {#if seo.structuredDataJson}
-        {@html `<script type="application/ld+json">${seo.structuredDataJson}</script>`}
-    {/if}
+    <StructuredData graph={seo.structuredData} />
 </svelte:head>
 
 <div class="layout">
