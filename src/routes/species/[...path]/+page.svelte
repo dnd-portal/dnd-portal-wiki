@@ -15,8 +15,9 @@
     import PageContentSection from '#lib/svelte/components/page/PageContentSection.svelte';
     import EditionSelector from '#lib/svelte/components/page/EditionSelector.svelte';
     import type { JsonContentBlock, JsonContentSection } from './+page.js';
+    import type { RoutePageMetadata } from '#lib/typescript/pages/metadata.js';
 
-    let { data }: { data: PageData } = $props();
+    let { data }: { data: PageData & { routeMetadata: RoutePageMetadata } } = $props();
 
     const referencePattern =
         /\[\[([a-z][a-z0-9-]*):([a-z0-9]+(?:-[a-z0-9]+)*)(?:@([1-5](?:\.5)?e))?(?:\|([^\]]+))?\]\]/g;
@@ -102,11 +103,7 @@
 
 <div class="page-layout species-json-page">
     <article class="wiki-article page-layout__article">
-        <PageHeader
-            titleText={data.index.name}
-            subtitleText="Playable species"
-            descriptionText={data.editionData.summary}
-        >
+        <PageHeader metadata={data.routeMetadata.header}>
             {#snippet headerMeta()}
                 <EditionSelector current={data.edition} options={editionOptions} />
             {/snippet}

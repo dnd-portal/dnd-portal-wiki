@@ -1,4 +1,7 @@
 import type { PageServerLoad } from './$types';
+import { getBreadcrumbItems, getPageLabel } from '#lib/typescript/pages/currentPage.js';
+import { getData, type PageData, type PagePath } from '#lib/typescript/data/_index_.js';
+import type { RoutePageData } from '#lib/typescript/pages/metadata.js';
 
 const classLoaders = {
     artificer: () =>
@@ -153,11 +156,16 @@ export const load: PageServerLoad = async ({ params }) => {
                       await import('#lib/typescript/data/internals/classes/edition-content.js')
                   ).createCurrentBarbarianContent()
                 : classData.content;
+        const routePageData =
+            routeSlug === 'wizard'
+                ? createClassRoutePageData(classData.page as PageData)
+                : undefined;
         return {
             classData,
             pageContent,
             resolvedRoute: { baseClassSlug: routeSlug, edition: defaultEdition },
             canonicalClassRoute: true,
+            ...(routePageData ? { routePageData } : {}),
         };
     }
 
@@ -186,3 +194,42 @@ export const load: PageServerLoad = async ({ params }) => {
         editionData,
     };
 };
+
+function createClassRoutePageData(page: PageData): RoutePageData {
+    const path = 'internals.classes.wizard.page' as PagePath;
+    const identity = { path, href: page.href, canonicalHref: page.href };
+    const breadcrumbs = getBreadcrumbItems(path).map((item) => ({
+        identity: {
+            path: item.path ?? item.key,
+            href: item.path ? (getData(item.path) as PageData).href : item.key,
+            canonicalHref: item.path ? (getData(item.path) as PageData).href : item.key,
+        },
+        label: item.label,
+    }));
+    const title = getPageLabel(path);
+    const description = page.descriptions?.long ?? page.description;
+    const seoDescription =
+        page.descriptions?.medium ?? page.descriptions?.short ?? page.description;
+    return {
+        identity,
+        page,
+        breadcrumbs,
+        header: {
+            identity,
+            title,
+            subtitle: page.subTitle,
+            description,
+            images: page.images,
+            sections: page.header?.sections,
+            sourceMetadata: page.sourceMetadata,
+        },
+        seo: {
+            identity,
+            title: page.seoTitle ?? page.title,
+            description: seoDescription,
+            canonicalUrl: new URL(page.href, 'https://dnd-portal.com').href,
+            image: page.img,
+            breadcrumbs,
+        },
+    };
+}

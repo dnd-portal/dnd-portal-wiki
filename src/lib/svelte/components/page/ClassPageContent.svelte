@@ -21,10 +21,12 @@
     import type { FaqItem } from '#lib/typescript/pages/faq.js';
     import ContentAttribution from '#lib/svelte/components/ContentAttribution.svelte';
     import PsionReferenceLists from './PsionReferenceLists.svelte';
+    import type { PageHeaderMetadata } from '#lib/typescript/pages/metadata.js';
 
     let {
         content,
         header,
+        headerMetadata,
         headerMeta,
         faqItems: providedFaqItems,
     }: {
@@ -35,6 +37,7 @@
             description: string;
             descriptionContent?: InlineContentBlock;
         };
+        headerMetadata?: PageHeaderMetadata;
         headerMeta?: Snippet;
         faqItems?: readonly FaqItem[];
     } = $props();
@@ -216,6 +219,7 @@
 <div class="page-layout">
     <article class="wiki-article page-layout__article">
         <PageHeader
+            metadata={headerMetadata}
             titleText={header?.title}
             subtitleText={header?.subtitle}
             descriptionText={header?.description}

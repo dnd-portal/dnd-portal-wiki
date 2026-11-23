@@ -1,5 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
+import type { RoutePageMetadata } from '#lib/typescript/pages/metadata.js';
 
 const ASSETS = 'https://assets.dnd-portal.com/data/content/species';
 const knownSpecies = new Set(['human', 'elf']);
@@ -125,12 +126,33 @@ export const load: PageLoad = async ({ params, fetch }) => {
         }),
     );
 
+    const href = `/species/${species}/${explicitEdition ? `${edition}/` : ''}`;
+    const identity = { path: href, href, canonicalHref: href };
+    const routeMetadata: RoutePageMetadata = {
+        identity,
+        header: {
+            identity,
+            title: index.name,
+            subtitle: 'Playable species',
+            description: editionData.summary,
+        },
+        seo: {
+            identity,
+            title: `${index.name} Species — D&D ${edition}`,
+            description: editionData.summary,
+            canonicalUrl: new URL(href, 'https://dnd-portal.com').href,
+            breadcrumbs: [],
+        },
+        breadcrumbs: [],
+    };
+
     return {
         species,
         edition,
         index,
         editionData,
         faqs,
+        routeMetadata,
         seo: {
             title: `${index.name} Species — D&D ${edition}`,
             description: editionData.summary,

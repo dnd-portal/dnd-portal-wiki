@@ -6,7 +6,11 @@
     import Faq from '#lib/svelte/components/page/Faq.svelte';
     import ContentAttribution from '#lib/svelte/components/ContentAttribution.svelte';
     import type { SpellDetailViewModel } from '#lib/typescript/pages/spellDetail.js';
-    let { model }: { model: SpellDetailViewModel } = $props();
+    import type { RoutePageMetadata } from '#lib/typescript/pages/metadata.js';
+    let {
+        model,
+        routeMetadata,
+    }: { model: SpellDetailViewModel; routeMetadata?: RoutePageMetadata } = $props();
     const artwork = $derived(model.artwork ?? '/icons/white/game/spell.svg');
     let isMobile = $state(false);
     let expanded = $state(new Set(['description']));
@@ -38,7 +42,7 @@
                     <p class="spell-detail__eyebrow spell-detail__eyebrow--mobile">
                         {model.level} · {model.edition}
                     </p>
-                    <h1>{model.name}</h1>
+                    <h1>{routeMetadata?.header.title ?? model.name}</h1>
                     <div class="spell-detail__classification" aria-label="Spell classification">
                         <span class="spell-detail__classification-pill">{model.level}</span><span
                             class="spell-detail__classification-pill"

@@ -20,6 +20,7 @@
     import SpellDetailPage from '#lib/svelte/components/page/SpellDetailPage.svelte';
     import type { SpellDetailViewModel } from '#lib/typescript/pages/spellDetail.js';
     import type { SpellDetailAttribution } from '#lib/typescript/pages/spellDetail.js';
+    import type { RoutePageMetadata } from '#lib/typescript/pages/metadata.js';
 
     const slug = $derived(appPage.params.page ?? '');
     const level = $derived(spellLevels.find((item) => item.slug === slug));
@@ -27,6 +28,9 @@
     const isSpellcastingOverview = $derived(slug === 'spellcasting');
     const currentPage = getCurrentPageContext();
     let faqItems = $derived(getFaqItems(currentPage.path));
+    let routeMetadata = $derived(
+        (appPage.data as { routeMetadata?: RoutePageMetadata }).routeMetadata,
+    );
 
     const metadataLayout = (value: string, fallback: 'compact' | 'wide' | 'full' = 'compact') => {
         if (fallback === 'full') return fallback;
@@ -91,7 +95,7 @@
 			...(spell.higherLevel.length ? [{ id: 'higher-levels', title: 'At Higher Levels', paragraphs: spell.higherLevel }] : [])
 		]
 	}}
-    <SpellDetailPage {model} />
+    <SpellDetailPage {model} {routeMetadata} />
 {:else}
     <NotFound />
 {/if}

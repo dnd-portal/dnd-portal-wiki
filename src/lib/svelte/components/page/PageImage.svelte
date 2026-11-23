@@ -10,22 +10,36 @@
         setImageGenderPreference,
     } from '#lib/typescript/pages/preferences.js';
     import type { ImageGender, ResponsiveImageData } from '#lib/typescript/data/_index_.js';
+    import type { PageData } from '#lib/typescript/data/_index_.js';
 
-    let { presentation = 'default' }: { presentation?: 'default' | 'class-header' } = $props();
+    let {
+        presentation = 'default',
+        images,
+        routePath,
+    }: {
+        presentation?: 'default' | 'class-header';
+        images?: PageData['images'];
+        routePath?: string;
+    } = $props();
     const currentPage = getCurrentPageContext();
     let selectedGender = $state<ImageGender | null>(null);
     let imageDialog = $state<HTMLDialogElement>();
     let expandButton = $state<HTMLButtonElement>();
 
-    let imageSet = $derived(currentPage.data?.images?.header ?? currentPage.data?.images?.card);
+    let imageSet = $derived(
+        images?.header ??
+            images?.card ??
+            currentPage.data?.images?.header ??
+            currentPage.data?.images?.card,
+    );
     let displayGender = $derived(selectedGender ?? 'female');
     let image = $derived<ResponsiveImageData | undefined>(
         imageSet?.[displayGender] ?? imageSet?.female ?? imageSet?.male,
     );
 
     onMount(() => {
-        if (currentPage.path) {
-            selectedGender = resolveSessionImageGender(currentPage.path);
+        if (routePath ?? currentPage.path) {
+            selectedGender = resolveSessionImageGender(routePath ?? currentPage.path!);
         }
     });
 
