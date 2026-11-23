@@ -5,11 +5,11 @@ import doesAcidSplashDamageScale from './does-acid-splash-damage-scale-with-cast
 import doesAcidSplashDealSplashDamage from './does-acid-splash-deal-splash-damage-if-it-misses-in-3e';
 
 export const acidSplash3eFaq = [
-	doesAcidSplashUseTouchAc,
-	doesAcidSplashAllowSavingThrow,
-	doesSpellResistanceApply,
-	doesAcidSplashDamageScale,
-	doesAcidSplashDealSplashDamage
+    doesAcidSplashUseTouchAc,
+    doesAcidSplashAllowSavingThrow,
+    doesSpellResistanceApply,
+    doesAcidSplashDamageScale,
+    doesAcidSplashDealSplashDamage,
 ] as const;
 
 export default acidSplash3eFaq;

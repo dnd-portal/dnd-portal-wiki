@@ -4,4 +4,9 @@ import { question as q3 } from './what-ability-scores-are-best-for-a-monster-hun
 import { question as q4 } from './what-are-the-main-monster-hunter-class-features';
 import { question as q5 } from './what-subclasses-can-a-monster-hunter-choose';
 
-export const monsterHunterFaq = { slug: 'monster-hunter', title: 'Monster Hunter', sourcePage: '/classes/monster-hunter/', questions: [q1, q2, q3, q4, q5] } as const;
+export const monsterHunterFaq = {
+    slug: 'monster-hunter',
+    title: 'Monster Hunter',
+    sourcePage: '/classes/monster-hunter/',
+    questions: [q1, q2, q3, q4, q5],
+} as const;

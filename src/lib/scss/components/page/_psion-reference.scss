@@ -1,0 +1,124 @@
+.psion-reference-section {
+    margin-top: 2rem;
+}
+.psion-discipline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+.psion-discipline-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    color: #d9dfda;
+    background: #111512;
+    border: 1px solid #223027;
+    border-radius: 0.4rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+}
+.psion-discipline-card:hover,
+.psion-discipline-card:focus-visible {
+    color: #d9dfda;
+    background: #1b211c;
+    border-color: #5f8f4f;
+}
+.psion-discipline-card__chevron {
+    color: #738276;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+.psion-spell-list__intro {
+    display: grid;
+    gap: 0.75rem;
+}
+.psion-spell-list__intro p,
+.psion-spell-list__footnote {
+    margin: 0;
+}
+.psion-spell-list__legend,
+.psion-spell-list__footnote {
+    color: #738276;
+    font-size: 0.88rem;
+}
+.psion-spell-list__badge {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    color: #7bff53;
+    background: #111512;
+    border: 1px solid #5f8f4f;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+.psion-spell-groups {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+.psion-spell-group {
+    padding: 1rem;
+    background: #111512;
+    border: 1px solid #223027;
+    border-radius: 0.4rem;
+}
+.psion-spell-group h3 {
+    margin: 0 0 0.75rem;
+    padding-bottom: 0.75rem;
+    color: #f3f6f3;
+    font-size: 1rem;
+    border-bottom: 1px solid #223027;
+}
+.psion-spell-group ul {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.psion-spell-group li {
+    display: flex;
+    align-items: center;
+    padding: 0.35rem 0.5rem;
+}
+.psion-spell-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 0.75rem;
+    color: #f3f6f3;
+    text-decoration: none;
+}
+.psion-spell-link:hover,
+.psion-spell-link:focus-visible {
+    color: #7bff53;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+}
+.psion-spell-list__note-marker {
+    margin-left: 0.2rem;
+    color: inherit;
+    text-decoration: none;
+}
+@media (max-width: 1000px) {
+    .psion-spell-groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media (max-width: 480px) {
+    .psion-spell-groups {
+        grid-template-columns: 1fr;
+    }
+}

@@ -5,8 +5,5 @@
 import { spellLevels } from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 
 export function entries() {
-	return spellLevels
-		.filter((level) => level.level > 0)
-		.map((level) => ({ level: level.slug }));
+    return spellLevels.filter((level) => level.level > 0).map((level) => ({ level: level.slug }));
 }
-

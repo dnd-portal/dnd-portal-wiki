@@ -7,15 +7,15 @@ const website = core.internals.website;
 const current = core.internals.monsters;
 
 export const monsters = {
-	page: createInternalPage({
-		href: current.baseUrl,
+    page: createInternalPage({
+        href: current.baseUrl,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${website.name.short} - ${current.name.normal}`,
-		subTitle: 'Creatures and enemies',
-		description: `Browse monsters, creatures, enemies, statistics,
-			abilities, lore, and encounter information.`
-	}),
-	rotwoodSovereign: rotwoodSovereignPage
+        title: `${website.name.short} - ${current.name.normal}`,
+        subTitle: 'Creatures and enemies',
+        description: `Browse monsters, creatures, enemies, statistics,
+			abilities, lore, and encounter information.`,
+    }),
+    rotwoodSovereign: rotwoodSovereignPage,
 } as const;

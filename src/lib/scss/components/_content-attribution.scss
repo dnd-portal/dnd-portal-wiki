@@ -1,0 +1,44 @@
+@use '../core/colors' as colors;
+@use '../core/sizes' as sizes;
+
+.content-attribution {
+    margin-top: sizes.get(spacing, xl);
+    padding-top: sizes.get(spacing, md);
+    color: colors.get-dark(text, tertiary);
+    border-top: 1px solid colors.get-dark(border, subtle);
+    font-size: 0.82rem;
+    line-height: 1.45;
+
+    &__fields {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        gap: sizes.get(spacing, xs) sizes.get(spacing, md);
+        margin: 0;
+    }
+
+    dt {
+        font-weight: 700;
+    }
+    dd {
+        margin: 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+    }
+    a:hover,
+    a:focus-visible {
+        color: colors.get-dark(text, links, hover);
+    }
+
+    &__version {
+        white-space: nowrap;
+    }
+    &__links,
+    &__modifications {
+        margin: sizes.get(spacing, sm) 0 0;
+    }
+}

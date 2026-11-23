@@ -3,69 +3,78 @@
 	Use: Spell level, spellcasting overview, and spell detail pages.
 -->
 <script lang="ts">
-	import { page as appPage } from '$app/state';
-	import {
-		getSpellBySlug,
-		spellLevels,
-		type SpellLevel
-	} from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
+    import { page as appPage } from '$app/state';
+    import {
+        getSpellBySlug,
+        spellLevels,
+        type SpellLevel,
+    } from '#lib/typescript/data/internals/rules/spellcasting/spells/spell-data.js';
 
-	import NotFound from '#lib/svelte/components/page/NotFound.svelte';
-	import Faq from '#lib/svelte/components/page/Faq.svelte';
-	import PageCard from '#lib/svelte/components/PageCard.svelte';
-	import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
-	import SpellBrowser from '#lib/svelte/components/page/SpellBrowser.svelte';
-	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
-	import { getFaqItems } from '#lib/typescript/pages/faq.js';
-	import SpellDetailPage from '#lib/svelte/components/page/SpellDetailPage.svelte';
-	import type { SpellDetailViewModel } from '#lib/typescript/pages/spellDetail.js';
+    import NotFound from '#lib/svelte/components/page/NotFound.svelte';
+    import Faq from '#lib/svelte/components/page/Faq.svelte';
+    import PageCard from '#lib/svelte/components/PageCard.svelte';
+    import PageHeader from '#lib/svelte/components/page/PageHeader.svelte';
+    import SpellBrowser from '#lib/svelte/components/page/SpellBrowser.svelte';
+    import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+    import { getFaqItems } from '#lib/typescript/pages/faq.js';
+    import SpellDetailPage from '#lib/svelte/components/page/SpellDetailPage.svelte';
+    import type { SpellDetailViewModel } from '#lib/typescript/pages/spellDetail.js';
+    import type { SpellDetailAttribution } from '#lib/typescript/pages/spellDetail.js';
 
-	const slug = $derived(appPage.params.page ?? '');
-	const level = $derived(spellLevels.find((item) => item.slug === slug));
-	const spell = $derived(getSpellBySlug(slug));
-	const isSpellcastingOverview = $derived(slug === 'spellcasting');
-	const currentPage = getCurrentPageContext();
-	let faqItems = $derived(getFaqItems(currentPage.path));
+    const slug = $derived(appPage.params.page ?? '');
+    const level = $derived(spellLevels.find((item) => item.slug === slug));
+    const spell = $derived(getSpellBySlug(slug));
+    const isSpellcastingOverview = $derived(slug === 'spellcasting');
+    const currentPage = getCurrentPageContext();
+    let faqItems = $derived(getFaqItems(currentPage.path));
 
-	const metadataLayout = (value: string, fallback: 'compact' | 'wide' | 'full' = 'compact') => {
-		if (fallback === 'full') return fallback;
-		return value.length > 34 ? 'wide' : fallback;
-	};
+    const metadataLayout = (value: string, fallback: 'compact' | 'wide' | 'full' = 'compact') => {
+        if (fallback === 'full') return fallback;
+        return value.length > 34 ? 'wide' : fallback;
+    };
 </script>
 
 {#if level}
-	<div class="page-layout">
-		<article class="wiki-article page-layout__article">
-			<PageHeader />
-			<SpellBrowser initialLevel={level.level as SpellLevel} showLevelFilter={false} />
-			{#if faqItems.length}<Faq items={faqItems} />{/if}
-		</article>
-	</div>
+    <div class="page-layout">
+        <article class="wiki-article page-layout__article">
+            <PageHeader />
+            <SpellBrowser initialLevel={level.level as SpellLevel} showLevelFilter={false} />
+            {#if faqItems.length}<Faq items={faqItems} />{/if}
+        </article>
+    </div>
 {:else if isSpellcastingOverview}
-	<div class="page-layout">
-		<article class="wiki-article page-layout__article">
-			<PageHeader />
+    <div class="page-layout">
+        <article class="wiki-article page-layout__article">
+            <PageHeader />
 
-			<section class="wiki-article__section" aria-labelledby="spellcasting-rules-title">
-				<h2 id="spellcasting-rules-title">Spellcasting Rules</h2>
+            <section class="wiki-article__section" aria-labelledby="spellcasting-rules-title">
+                <h2 id="spellcasting-rules-title">Spellcasting Rules</h2>
 
-				<div class="wiki-article__cards">
-					<PageCard page="internals.rules.spellcasting.page" density="compact" />
-					<PageCard page="internals.rules.spellcasting.concentration" density="compact" />
-					<PageCard page="internals.rules.spellcasting.cantrips" density="compact" />
-				</div>
-			</section>
-			{#if faqItems.length}<Faq items={faqItems} />{/if}
-		</article>
-	</div>
+                <div class="wiki-article__cards">
+                    <PageCard page="internals.rules.spellcasting.page" density="compact" />
+                    <PageCard page="internals.rules.spellcasting.concentration" density="compact" />
+                    <PageCard page="internals.rules.spellcasting.cantrips" density="compact" />
+                </div>
+            </section>
+            {#if faqItems.length}<Faq items={faqItems} />{/if}
+        </article>
+    </div>
 {:else if spell && slug !== 'acid-splash'}
-	{@const model: SpellDetailViewModel = {
+    {@const model: SpellDetailViewModel = {
 		slug,
 		name: spell.name,
 		level: spell.levelLabel,
 		school: spell.school,
 		source: spell.sourceBook,
-		edition: '5e',
+		edition: spell.sourceBook === 'Psion 1.5.3' ? '5e (2014)' : '5e',
+		attribution: spell.sourceBook === 'Psion 1.5.3' ? ({
+			creator: 'KibblesTasty',
+			creatorUrl: 'https://www.kthomebrew.com/',
+			source: 'Psion',
+			sourceVersion: '1.5.3',
+			sourceUrl: 'https://www.kthomebrew.com/psion',
+			permissionsUrl: 'https://www.kthomebrew.com/permissions'
+		} satisfies SpellDetailAttribution) : undefined,
 		summary: spell.description[0],
 		metadata: [
 			{ id: 'level', label: 'Level', value: spell.levelLabel, layout: 'compact' },
@@ -82,7 +91,7 @@
 			...(spell.higherLevel.length ? [{ id: 'higher-levels', title: 'At Higher Levels', paragraphs: spell.higherLevel }] : [])
 		]
 	}}
-	<SpellDetailPage {model} />
+    <SpellDetailPage {model} />
 {:else}
-	<NotFound />
+    <NotFound />
 {/if}

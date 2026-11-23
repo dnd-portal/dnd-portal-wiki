@@ -5,11 +5,11 @@ import acidSplashReflex from './why-does-acid-splash-attack-reflex-instead-of-to
 import canUseRangedBasicAttack from './can-acid-splash-be-used-as-a-ranged-basic-attack-in-4e';
 
 export const acidSplash4eFaq = [
-	didAcidSplashExist,
-	isPortalConversionOfficial,
-	acidSplashVsAcidOrb,
-	acidSplashReflex,
-	canUseRangedBasicAttack
+    didAcidSplashExist,
+    isPortalConversionOfficial,
+    acidSplashVsAcidOrb,
+    acidSplashReflex,
+    canUseRangedBasicAttack,
 ] as const;
 
 export default acidSplash4eFaq;

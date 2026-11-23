@@ -15,7 +15,7 @@ Campaign rules, reference pages, class content, spells, and project information 
 [View Changelog](https://dnd-portal.com/changelog/)
 
 ![Svelte](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)
-![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00?logo=svelte&logoColor=white)
+![SvelteKit](https://img.shields.io/badge/SvelteKit-3-FF3E00?logo=svelte&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
 ![SCSS](https://img.shields.io/badge/Styles-SCSS-CC6699?logo=sass&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222222?logo=github)
@@ -76,8 +76,20 @@ More detail is available in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Requirements
 
-- Node.js compatible with the project runtime configuration
+- Node.js `25.9.0`
 - pnpm `11.10.0`
+
+The current framework and build-tool versions are declared in `package.json` and
+locked in `pnpm-lock.yaml`:
+
+| Package                       | Version                          |
+| ----------------------------- | -------------------------------- |
+| SvelteKit                     | `3.1.1`                          |
+| Svelte                        | `5.57.3`                         |
+| `@sveltejs/adapter-static`    | `4.0.1`                          |
+| Vite                          | `8.3.5`                          |
+| TypeScript (standard tooling) | `6.0.3`                          |
+| TypeScript (native checker)   | `7.0.2` via `@typescript/native` |
 
 The package manager is declared in `package.json`:
 
@@ -90,9 +102,35 @@ The repository also contains Volta and pnpm runtime settings. Do not replace pnp
 ## Local Development
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 ```
+
+`pnpm install` is sufficient when intentionally updating dependencies. Use the
+frozen form for reproducible local and CI installs.
+
+### TypeScript checks
+
+`pnpm check` uses TypeScript 6 because the current Svelte tooling still needs
+its compiler API. TypeScript 7 is also installed under `@typescript/native`:
+
+```bash
+pnpm check
+pnpm check:tsgo
+pnpm check:tsgo:watch
+```
+
+The latter two commands use TypeScript 7 through `svelte-check --tsgo`. This is
+a temporary compatibility arrangement; the goal is to move fully to TypeScript 7. A new Svelte version or changed peer dependency alone is not proof that
+`svelte-check` and the relevant SvelteKit integration no longer need TypeScript 6. We are waiting for official support. See the [svelte-check README](https://github.com/sveltejs/language-tools/blob/master/packages/svelte-check/README.md),
+[issue #3063](https://github.com/sveltejs/language-tools/issues/3063), and
+[PR #3111](https://github.com/sveltejs/language-tools/pull/3111). PR #3111 is
+focused on editor/content-mapper support and does not prove a complete
+`svelte-check` migration; no release date is assumed.
+
+When stable releases support the required APIs without TypeScript 6, remove
+the TS6 dependency and compatibility scripts, regenerate the lockfile, and
+reverify editor support, watch mode, type checks, tests, build, and crawl.
 
 The local dev server normally runs at:
 
@@ -106,11 +144,21 @@ Run these before opening or merging changes:
 
 ```bash
 pnpm check
+pnpm test
 pnpm build
 pnpm audit:prelive:crawl
 ```
 
-Use `pnpm audit:prelive` for the data and route checks without crawling the built output.
+`pnpm check` runs Svelte and TypeScript diagnostics. `pnpm test` runs the unit
+tests. `pnpm audit:prelive` checks source data, route shapes, assets, and
+placeholder markers without inspecting generated HTML; `pnpm audit:prelive:crawl`
+expects a fresh build and additionally checks the generated static pages, links,
+SEO metadata, redirects, and accessibility invariants.
+
+The Vite configuration is [vite.config.js](vite.config.js). It is the single
+Vite configuration and contains the SvelteKit 3 plugin, `adapter-static` with
+the `404.html` fallback, Svelte runes compiler settings, CSS browser targets,
+and the `chunkSizeWarningLimit` of `1000`. There is no `vite.config.ts`.
 
 ## Deployment
 

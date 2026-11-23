@@ -13,4 +13,19 @@ import { page as trickery } from './trickery/_index_';
 import { page as twilight } from './twilight/_index_';
 import { page as war } from './war/_index_';
 
-export const subclasses = { arcana, death, forge, grave, knowledge, life, light, nature, order, peace, tempest, trickery, twilight, war } as const;
+export const subclasses = {
+    arcana,
+    death,
+    forge,
+    grave,
+    knowledge,
+    life,
+    light,
+    nature,
+    order,
+    peace,
+    tempest,
+    trickery,
+    twilight,
+    war,
+} as const;

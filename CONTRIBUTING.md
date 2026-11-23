@@ -13,9 +13,19 @@ Thanks for helping improve D&D Portal Wiki. Keep contributions focused, verifiab
 ## Local Setup
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 ```
+
+The repository uses Node.js `25.9.0` and pnpm `11.10.0`. Dependency changes
+must update `package.json` and `pnpm-lock.yaml` together; do not use npm or
+yarn.
+
+The repository temporarily uses both compiler generations. `pnpm check` uses
+TypeScript 6 for the Svelte compiler API, while `pnpm check:tsgo` and
+`pnpm check:tsgo:watch` use TypeScript 7. The goal is a full TypeScript 7
+migration after official `svelte-check` and SvelteKit integration support is
+available; editor-focused content-mapper work alone is not sufficient evidence.
 
 ## Required Checks
 
@@ -23,11 +33,30 @@ Run these before submitting a pull request:
 
 ```bash
 pnpm check
+pnpm check:tsgo
+pnpm test
 pnpm build
 pnpm audit:prelive:crawl
 ```
 
+Run `pnpm build` before `pnpm audit:prelive:crawl`; the crawl audits the
+generated `build/` output. Report existing failures separately from regressions
+introduced by a change.
+
 If a check cannot be run, state that clearly in the pull request.
+
+## Formatting
+
+Prettier is the repository formatter. Use four spaces, single quotes where the
+language supports them, semicolons, and the checked-in Prettier configuration.
+Run `pnpm format` to format supported tracked files and `pnpm format:check` to
+validate formatting without writing files. VS Code is configured for
+format-on-save.
+
+Batch, PowerShell, and shell scripts are not automatically reformatted because
+there is no maintained formatter in the repository that can safely preserve
+their command semantics. Review those files manually; `pnpm format:check`
+explicitly excludes them.
 
 ## Content Rules
 

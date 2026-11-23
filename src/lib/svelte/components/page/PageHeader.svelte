@@ -3,127 +3,126 @@
 	Use: Renders the current page header from centralized metadata.
 -->
 <script lang="ts">
-	import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
-	import { getPageLabel } from '#lib/typescript/pages/currentPage.js';
-	import type {
-		InlineContent as InlineContentData,
-		InlineContentBlock
-	} from '#lib/typescript/data/_index_.js';
-	import type { Snippet } from 'svelte';
+    import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
+    import { getPageLabel } from '#lib/typescript/pages/currentPage.js';
+    import type {
+        InlineContent as InlineContentData,
+        InlineContentBlock,
+    } from '#lib/typescript/data/_index_.js';
+    import type { Snippet } from 'svelte';
 
-	import InlineContent from './InlineContent.svelte';
-	import PageImage from './PageImage.svelte';
+    import InlineContent from './InlineContent.svelte';
+    import PageImage from './PageImage.svelte';
 
-	const currentPage = getCurrentPageContext();
+    const currentPage = getCurrentPageContext();
 
-	function isParagraphs(
-		content: InlineContentBlock
-	): content is readonly InlineContentData[] {
-		return Array.isArray(content[0]);
-	}
+    function isParagraphs(content: InlineContentBlock): content is readonly InlineContentData[] {
+        return Array.isArray(content[0]);
+    }
 
-	function getDescriptionParagraphs(
-		content: InlineContentBlock | string | undefined,
-		fallback: string
-	): readonly InlineContentData[] {
-		if (!content || typeof content === 'string') {
-			return [
-				[
-					{
-						type: 'text',
-						text: content || fallback
-					}
-				]
-			];
-		}
+    function getDescriptionParagraphs(
+        content: InlineContentBlock | string | undefined,
+        fallback: string,
+    ): readonly InlineContentData[] {
+        if (!content || typeof content === 'string') {
+            return [
+                [
+                    {
+                        type: 'text',
+                        text: content || fallback,
+                    },
+                ],
+            ];
+        }
 
-		return isParagraphs(content) ? content : [content];
-	}
+        return isParagraphs(content) ? content : [content];
+    }
 
-	let {
-		description = 'long',
-		showHeaderSections = true,
-		descriptionText,
-		descriptionContent,
-		titleText,
-		subtitleText,
-		headerMeta,
-		children
-	}: {
-		description?: 'short' | 'long';
-		showHeaderSections?: boolean;
-		descriptionText?: string;
-		descriptionContent?: InlineContentBlock;
-		titleText?: string;
-		subtitleText?: string;
-		headerMeta?: Snippet;
-		children?: Snippet;
-	} = $props();
-	let descriptionParagraphs = $derived(
-		descriptionText || descriptionContent
-			? getDescriptionParagraphs(descriptionContent ?? [{ type: 'text', text: descriptionText ?? '' }], '')
-			: description === 'short'
-			? getDescriptionParagraphs(
-					currentPage.data?.descriptions?.short,
-					currentPage.data?.description ?? ''
-				  )
-			: getDescriptionParagraphs(
-					currentPage.data?.descriptions?.long,
-					currentPage.data?.description ?? ''
-				  )
-	);
-	let imageSet = $derived(
-		currentPage.data?.images?.header ?? currentPage.data?.images?.card
-	);
-	let hasHeaderImage = $derived(Boolean(imageSet?.female ?? imageSet?.male));
+    let {
+        description = 'long',
+        showHeaderSections = true,
+        descriptionText,
+        descriptionContent,
+        titleText,
+        subtitleText,
+        headerMeta,
+        children,
+    }: {
+        description?: 'short' | 'long';
+        showHeaderSections?: boolean;
+        descriptionText?: string;
+        descriptionContent?: InlineContentBlock;
+        titleText?: string;
+        subtitleText?: string;
+        headerMeta?: Snippet;
+        children?: Snippet;
+    } = $props();
+    let descriptionParagraphs = $derived(
+        descriptionText || descriptionContent
+            ? getDescriptionParagraphs(
+                  descriptionContent ?? [{ type: 'text', text: descriptionText ?? '' }],
+                  '',
+              )
+            : description === 'short'
+              ? getDescriptionParagraphs(
+                    currentPage.data?.descriptions?.short,
+                    currentPage.data?.description ?? '',
+                )
+              : getDescriptionParagraphs(
+                    currentPage.data?.descriptions?.long,
+                    currentPage.data?.description ?? '',
+                ),
+    );
+    let imageSet = $derived(currentPage.data?.images?.header ?? currentPage.data?.images?.card);
+    let hasHeaderImage = $derived(Boolean(imageSet?.female ?? imageSet?.male));
 </script>
 
-	{#if (titleText && subtitleText) || (currentPage.path && currentPage.data)}
-	<section
-		class="page-header"
-		id="class-overview"
-		class:page-header--without-image={!hasHeaderImage}
-	>
-		<div class="page-header__content">
-			<p class="page-header__subtitle">
-				{subtitleText ?? currentPage.data?.subTitle}
-			</p>
+{#if (titleText && subtitleText) || (currentPage.path && currentPage.data)}
+    <section
+        class="page-header"
+        id="class-overview"
+        class:page-header--without-image={!hasHeaderImage}
+    >
+        <div class="page-header__content">
+            <p class="page-header__subtitle">
+                {subtitleText ?? currentPage.data?.subTitle}
+            </p>
 
-			<h1>{titleText ?? (currentPage.path ? getPageLabel(currentPage.path) : '')}</h1>
+            <h1>{titleText ?? (currentPage.path ? getPageLabel(currentPage.path) : '')}</h1>
 
-			{@render headerMeta?.()}
+            {@render headerMeta?.()}
 
-			<div class="page-header__description">
-				{#each descriptionParagraphs as paragraph}
-					<p>
-						<InlineContent content={paragraph} />
-					</p>
-				{/each}
-			</div>
+            <div class="page-header__description">
+                {#each descriptionParagraphs as paragraph}
+                    <p>
+                        <InlineContent content={paragraph} />
+                    </p>
+                {/each}
+            </div>
 
-			{#if showHeaderSections && currentPage.data?.header?.sections?.length}
-				<div class="page-header__sections">
-					{#each currentPage.data?.header?.sections ?? [] as section}
-						<section
-							class="page-header__section"
-							id={section.id}
-							aria-labelledby={`${section.id}-title`}
-						>
-							<h2 id={`${section.id}-title`}>{section.title}</h2>
+            {#if showHeaderSections && currentPage.data?.header?.sections?.length}
+                <div class="page-header__sections">
+                    {#each currentPage.data?.header?.sections ?? [] as section}
+                        <section
+                            class="page-header__section"
+                            id={section.id}
+                            aria-labelledby={`${section.id}-title`}
+                        >
+                            <h2 id={`${section.id}-title`}>{section.title}</h2>
 
-							{#each getDescriptionParagraphs(section.content, '') as paragraph}
-								<p>
-									<InlineContent content={paragraph} />
-								</p>
-							{/each}
-						</section>
-					{/each}
-				</div>
-			{/if}
+                            {#each getDescriptionParagraphs(section.content, '') as paragraph}
+                                <p>
+                                    <InlineContent content={paragraph} />
+                                </p>
+                            {/each}
+                        </section>
+                    {/each}
+                </div>
+            {/if}
 
-			{@render children?.()}
-		</div>
+            {@render children?.()}
+        </div>
 
-		<PageImage presentation={description === 'short' ? 'class-header' : 'default'} />
-	</section>
+        <PageImage presentation={description === 'short' ? 'class-header' : 'default'} />
+    </section>
 {/if}

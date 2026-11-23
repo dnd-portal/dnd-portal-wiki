@@ -3,5 +3,9 @@ import { progression } from './progression';
 import { features } from './features';
 import { subclasses } from './subclasses/_index_';
 
-export const ranger = { page, subclasses, content: { ...pageContent, progression, sections: features } } as const;
+export const ranger = {
+    page,
+    subclasses,
+    content: { ...pageContent, progression, sections: features },
+} as const;
 export default ranger;

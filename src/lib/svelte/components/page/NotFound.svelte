@@ -3,73 +3,76 @@
 	Use: Shared not-found state for router errors and data-driven catch-all routes.
 -->
 <script lang="ts">
-	const base: string = '';
-	import { page } from '$app/state';
-	import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
-	import { suggestWiki } from '#lib/typescript/pages/search.js';
+    import { onMount } from 'svelte';
+    const base: string = '';
+    import { page } from '$app/state';
+    import { getCanonicalInternalHref } from '#lib/typescript/pages/currentPage.js';
+    import type { NavbarSearchResult } from '#lib/typescript/pages/navbar-search.js';
 
-	let { analyticsPathname }: { analyticsPathname?: string } = $props();
+    let { analyticsPathname }: { analyticsPathname?: string } = $props();
+    let suggestions = $state<readonly NavbarSearchResult[]>([]);
 
-	function getSearchQuery(pathname: string): string {
-		return pathname
-			.split('/')
-			.filter(Boolean)
-			.at(-1)
-			?.replace(/-/g, ' ')
-			.trim() ?? '';
-	}
+    function getSearchQuery(pathname: string): string {
+        return pathname.split('/').filter(Boolean).at(-1)?.replace(/-/g, ' ').trim() ?? '';
+    }
 
-	function getInternalHref(href: string): string {
-		return getCanonicalInternalHref(href, base);
-	}
+    function getInternalHref(href: string): string {
+        return getCanonicalInternalHref(href, base);
+    }
 
-	let query = $derived(getSearchQuery(page.url.pathname));
-	let searchHref = $derived(getInternalHref(`/search/?q=${encodeURIComponent(query)}`));
-	let suggestions = $derived(query ? suggestWiki(query) : []);
-	let analyticsTitle = $derived(
-		analyticsPathname ? `404: ${analyticsPathname} - D&D Portal Wiki` : 'Page Not Found - D&D Portal Wiki'
-	);
+    let query = $derived(getSearchQuery(page.url.pathname));
+    let searchHref = $derived(getInternalHref(`/search/?q=${encodeURIComponent(query)}`));
+
+    onMount(async () => {
+        if (!query || query.length < 2) return;
+
+        const { searchNavbar } = await import('#lib/typescript/pages/navbar-search.js');
+        suggestions = await searchNavbar(query);
+    });
+    let analyticsTitle = $derived(
+        analyticsPathname
+            ? `404: ${analyticsPathname} - D&D Portal Wiki`
+            : 'Page Not Found - D&D Portal Wiki',
+    );
 </script>
 
 <svelte:head>
-	<title>{analyticsTitle}</title>
-	<meta name="robots" content="noindex, follow" />
+    <title>{analyticsTitle}</title>
+    <meta name="robots" content="noindex, follow" />
 </svelte:head>
 
 <section class="not-found" aria-labelledby="not-found-title">
-	<p class="not-found__eyebrow">Page Not Found</p>
+    <p class="not-found__eyebrow">Page Not Found</p>
 
-	<h1 id="not-found-title" class="not-found__code" aria-label="404">
-		<span>4</span>
-		<span class="not-found__zero" aria-hidden="true">
-			<img src="/branding/dnd-portal-icon.svg" alt="" />
-		</span>
-		<span>4</span>
-	</h1>
+    <h1 id="not-found-title" class="not-found__code" aria-label="404">
+        <span>4</span>
+        <span class="not-found__zero" aria-hidden="true">
+            <img src="/branding/dnd-portal-icon.svg" alt="" />
+        </span>
+        <span>4</span>
+    </h1>
 
-	<p class="not-found__message">
-		We are sorry, but this page doesn't exist.
-	</p>
+    <p class="not-found__message">We are sorry, but this page doesn't exist.</p>
 
-	{#if suggestions.length}
-		<section class="not-found__suggestions" aria-labelledby="not-found-suggestions-title">
-			<h2 id="not-found-suggestions-title">Did you mean</h2>
+    {#if suggestions.length}
+        <section class="not-found__suggestions" aria-labelledby="not-found-suggestions-title">
+            <h2 id="not-found-suggestions-title">Did you mean</h2>
 
-			<ul>
-				{#each suggestions as suggestion}
-					<li>
-						<a href={getInternalHref(suggestion.href)}>
-							<span>{suggestion.title}</span>
-							<small>{suggestion.subtitle}</small>
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</section>
-	{/if}
+            <ul>
+                {#each suggestions as suggestion}
+                    <li>
+                        <a href={getInternalHref(suggestion.href)}>
+                            <span>{suggestion.title}</span>
+                            <small>{suggestion.subtitle}</small>
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+        </section>
+    {/if}
 
-	<div class="not-found__actions">
-		<a href={searchHref}>Continue searching</a>
-		<a href={getInternalHref('/')}>Go to homepage</a>
-	</div>
+    <div class="not-found__actions">
+        <a href={searchHref}>Continue searching</a>
+        <a href={getInternalHref('/')}>Go to homepage</a>
+    </div>
 </section>

@@ -13,33 +13,33 @@ import { skills } from './skills';
 import { spellcasting } from './spellcasting/_index_';
 
 export const rules = {
-	name: {
-		normal: 'Rules',
-		singular: 'Rule',
-		slug: 'rules'
-	},
+    name: {
+        normal: 'Rules',
+        singular: 'Rule',
+        slug: 'rules',
+    },
 
-	logos: {
-		simple: {
-			href: '/icons/white/game/source-book.svg',
-			alt: `A stylized sourcebook icon featuring the Dungeons & Dragons
-				ampersand emblem on the cover.`
-		}
-	},
+    logos: {
+        simple: {
+            href: '/icons/white/game/source-book.svg',
+            alt: `A stylized sourcebook icon featuring the Dungeons & Dragons
+				ampersand emblem on the cover.`,
+        },
+    },
 
-	baseUrl: '/rules',
+    baseUrl: '/rules',
 
-	abbreviations,
-	movement,
-	actions,
-	abilityScores,
-	characterCreation,
-	combat,
-	conditions,
-	d20Tests,
-	damageTypes,
-	rests,
-	skills,
-	spellcasting,
-	equipment
+    abbreviations,
+    movement,
+    actions,
+    abilityScores,
+    characterCreation,
+    combat,
+    conditions,
+    d20Tests,
+    damageTypes,
+    rests,
+    skills,
+    spellcasting,
+    equipment,
 } as const;

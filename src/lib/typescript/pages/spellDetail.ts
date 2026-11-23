@@ -1,5 +1,52 @@
 import type { InlineContentNode } from '#lib/typescript/data/_index_.js';
-export type SpellDetailField = { readonly id: string; readonly label: string; readonly value: string; readonly icon?: string; readonly layout?: 'compact' | 'wide' | 'full' };
-export type SpellDetailSection = { readonly id: string; readonly title: string; readonly paragraphs?: readonly string[]; readonly content?: readonly (readonly InlineContentNode[])[]; readonly icon?: string };
-export type SpellDetailFaqItem = { readonly question: string; readonly answer: string; readonly reference: string; readonly referenceLabel: string; readonly faqPath?: string; readonly faqLabel?: string };
-export type SpellDetailViewModel = { readonly slug: string; readonly name: string; readonly level?: string; readonly school?: string; readonly source?: string; readonly edition?: string; readonly editionId?: string; readonly editionOptions?: readonly { id: string; label: string; href: string }[]; readonly summary?: string; readonly summaryContent?: readonly InlineContentNode[]; readonly artwork?: string; readonly metadata: readonly SpellDetailField[]; readonly sections: readonly SpellDetailSection[]; readonly faq?: readonly SpellDetailFaqItem[] };
+export type SpellDetailField = {
+    readonly id: string;
+    readonly label: string;
+    readonly value: string;
+    readonly icon?: string;
+    readonly layout?: 'compact' | 'wide' | 'full';
+};
+export type SpellDetailSection = {
+    readonly id: string;
+    readonly title: string;
+    readonly paragraphs?: readonly string[];
+    readonly content?: readonly (readonly InlineContentNode[])[];
+    readonly icon?: string;
+};
+export type SpellDetailFaqItem = {
+    readonly question: string;
+    readonly answer: string;
+    readonly reference: string;
+    readonly referenceLabel: string;
+    readonly faqPath?: string;
+    readonly faqLabel?: string;
+};
+export type SpellDetailAttribution = {
+    readonly creator: string;
+    readonly creatorUrl?: string;
+    readonly publisher?: string;
+    readonly publisherUrl?: string;
+    readonly source: string;
+    readonly sourceVersion?: string;
+    readonly sourceUrl?: string;
+    readonly permissionsUrl?: string;
+    readonly license?: string;
+    readonly modifications?: string;
+};
+export type SpellDetailViewModel = {
+    readonly slug: string;
+    readonly name: string;
+    readonly level?: string;
+    readonly school?: string;
+    readonly source?: string;
+    readonly edition?: string;
+    readonly editionId?: string;
+    readonly editionOptions?: readonly { id: string; label: string; href: string }[];
+    readonly summary?: string;
+    readonly summaryContent?: readonly InlineContentNode[];
+    readonly artwork?: string;
+    readonly metadata: readonly SpellDetailField[];
+    readonly sections: readonly SpellDetailSection[];
+    readonly faq?: readonly SpellDetailFaqItem[];
+    readonly attribution?: SpellDetailAttribution;
+};

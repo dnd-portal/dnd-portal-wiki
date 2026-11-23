@@ -5,14 +5,14 @@ const parent = core.internals.rules.abilityScores;
 const current = parent.charisma;
 
 export const charisma = {
-	href: `${parent.baseUrl}/${current.name.slug}`,
-	external: false,
+    href: `${parent.baseUrl}/${current.name.slug}`,
+    external: false,
 
-	img: current.logos.simple,
+    img: current.logos.simple,
 
-	title: `D&D Portal - ${current.name.normal}`,
-	subTitle: 'Presence, confidence, and influence',
-	description: `${current.name.normal} measures force of personality,
+    title: `D&D Portal - ${current.name.normal}`,
+    subTitle: 'Presence, confidence, and influence',
+    description: `${current.name.normal} measures force of personality,
 		confidence, eloquence, and the ability to influence others.`,
-	content: createAbilityScoreContent(current)
+    content: createAbilityScoreContent(current),
 } as const;

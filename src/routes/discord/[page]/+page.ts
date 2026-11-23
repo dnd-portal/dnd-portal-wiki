@@ -4,9 +4,5 @@
 */
 
 export function entries() {
-	return [
-		{ page: 'announcements' },
-		{ page: 'wiki-updates' },
-		{ page: 'portal-links' }
-	];
+    return [{ page: 'announcements' }, { page: 'wiki-updates' }, { page: 'portal-links' }];
 }

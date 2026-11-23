@@ -8,4 +8,14 @@ import { totemWarriorFaq } from './totem-warrior/faq/_index_';
 import { wildMagicFaq } from './wild-magic/faq/_index_';
 import { zealotFaq } from './zealot/faq/_index_';
 
-export const barbarianSubclassFaqGroups = [ancestralGuardianFaq, battleragerFaq, beastFaq, berserkerFaq, giantFaq, stormHeraldFaq, totemWarriorFaq, wildMagicFaq, zealotFaq] as const;
+export const barbarianSubclassFaqGroups = [
+    ancestralGuardianFaq,
+    battleragerFaq,
+    beastFaq,
+    berserkerFaq,
+    giantFaq,
+    stormHeraldFaq,
+    totemWarriorFaq,
+    wildMagicFaq,
+    zealotFaq,
+] as const;

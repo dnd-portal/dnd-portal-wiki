@@ -17,29 +17,29 @@ import { spellcasting } from './spellcasting/_index_';
 const current = core.internals.rules;
 
 export const rules = {
-	page: {
-		href: current.baseUrl,
-		external: false,
+    page: {
+        href: current.baseUrl,
+        external: false,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `D&D Portal - ${current.name.normal}`,
-		subTitle: 'Gameplay rules',
-		description: `Browse general rules, combat mechanics, character
-			rules, campaign rulings, and other gameplay information.`
-	},
+        title: `D&D Portal - ${current.name.normal}`,
+        subTitle: 'Gameplay rules',
+        description: `Browse general rules, combat mechanics, character
+			rules, campaign rulings, and other gameplay information.`,
+    },
 
-	abbreviations,
-	movement,
-	actions,
-	abilityScores,
-	characterCreation,
-	combat,
-	conditions,
-	d20Tests,
-	damageTypes,
-	rests,
-	skills,
-	spellcasting,
-	equipment
+    abbreviations,
+    movement,
+    actions,
+    abilityScores,
+    characterCreation,
+    combat,
+    conditions,
+    d20Tests,
+    damageTypes,
+    rests,
+    skills,
+    spellcasting,
+    equipment,
 } as const;

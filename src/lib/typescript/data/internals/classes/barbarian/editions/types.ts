@@ -1,5 +1,1 @@
-export type {
-  ClassEditionData,
-  ClassEditionFeature,
-  ClassEditionRow,
-} from "../../edition-types";
+export type { ClassEditionData, ClassEditionFeature, ClassEditionRow } from '../../edition-types';

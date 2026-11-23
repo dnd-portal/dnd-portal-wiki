@@ -19,18 +19,18 @@ $sizes: (
         image-card-max-width: 320px,
         trait-table-max-width: 1120px,
         equipment-grid-max-width: 980px,
-        equipment-three-column-min-width: 820px
+        equipment-three-column-min-width: 820px,
     ),
 
     popup: (
         full-width: 320px,
         description-width: 260px,
-        viewport-gutter: 24px
+        viewport-gutter: 24px,
     ),
 
     dialog: (
         image-max-width: 980px,
-        viewport-gutter: 32px
+        viewport-gutter: 32px,
     ),
 
     spacing: (
@@ -42,41 +42,41 @@ $sizes: (
         xxl: 32px,
         section-gap: 36px,
         eyebrow-title-gap: 3px,
-        title-description-gap: 18px
+        title-description-gap: 18px,
     ),
 
     radius: (
         sm: 5px,
         md: 6px,
         lg: 8px,
-        pill: 999px
+        pill: 999px,
     ),
 
     border: (
-        thin: 1px
+        thin: 1px,
     ),
 
     control: (
         sm: 28px,
         md: 34px,
-        lg: 44px
+        lg: 44px,
     ),
 
     icon: (
         sm: 16px,
         pagecard: 145px,
-        pagecard-mobile: 105px
+        pagecard-mobile: 105px,
     ),
 
     navbar: (
-        height: 64px
+        height: 64px,
     ),
 
     sidebar: (
         width: 280px,
         toggle-width: 32px,
         depth-step: 18px,
-        mobile-breakpoint: 800px
+        mobile-breakpoint: 800px,
     ),
 
     breakpoint: (
@@ -86,27 +86,27 @@ $sizes: (
         sidebar: 800px,
         toc: 1700px,
         page-header: 900px,
-        progression: 900px
+        progression: 900px,
     ),
 
     typography: (
         eyebrow-line-height: 1,
         title-line-height: 0.95,
-        body-line-height: 1.65
+        body-line-height: 1.65,
     ),
 
     transition: (
         fast: 150ms,
         base: 160ms,
-        sidebar: 180ms
+        sidebar: 180ms,
     ),
 
     scrollbar: (
         width: 12px,
         thin-width: 10px,
         radius: 999px,
-        border: 3px
-    )
+        border: 3px,
+    ),
 );
 
 @function get($keys...) {

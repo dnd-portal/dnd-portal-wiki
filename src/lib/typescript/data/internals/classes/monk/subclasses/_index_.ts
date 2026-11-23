@@ -9,4 +9,15 @@ import { page as openHand } from './open-hand/_index_';
 import { page as shadow } from './shadow/_index_';
 import { page as sunSoul } from './sun-soul/_index_';
 
-export const subclasses = { astralSelf, ascendantDragon, drunkenMaster, fourElements, kensei, longDeath, mercy, openHand, shadow, sunSoul } as const;
+export const subclasses = {
+    astralSelf,
+    ascendantDragon,
+    drunkenMaster,
+    fourElements,
+    kensei,
+    longDeath,
+    mercy,
+    openHand,
+    shadow,
+    sunSoul,
+} as const;

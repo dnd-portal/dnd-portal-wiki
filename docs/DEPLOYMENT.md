@@ -8,6 +8,11 @@ https://dnd-portal.com/
 
 GitHub Pages hosts static files. It does not run a Node.js server for this project.
 
+The build currently uses SvelteKit `3.1.1`, Svelte `5.57.3`, Vite `8.3.5`,
+`@sveltejs/adapter-static` `4.0.1`, Node.js `25.9.0`, and pnpm `11.10.0`.
+These are separate from the website's content or release version; this project
+does not assign a new website release number for a framework upgrade.
+
 ## Required Static Configuration
 
 The project intentionally uses static output:
@@ -51,11 +56,17 @@ It:
 2. Sets up pnpm.
 3. Sets up Node.js.
 4. Installs dependencies with `pnpm install --frozen-lockfile`.
-5. Runs `pnpm check`.
-6. Builds the static site with `pnpm build`.
-7. Confirms `build/index.html` exists.
-8. Uploads the `build/` directory as a GitHub Pages artifact.
-9. Deploys that artifact with `actions/deploy-pages`.
+5. Runs the TypeScript 6/Svelte check with `pnpm check`.
+6. Runs the TypeScript 7 native check with `pnpm check:tsgo`.
+7. Builds the static site with `pnpm build`.
+8. Confirms `build/index.html` exists.
+9. Uploads the `build/` directory as a GitHub Pages artifact.
+10. Deploys that artifact with `actions/deploy-pages`.
+
+The workflow uses the same Node.js and pnpm versions as `package.json` and
+installs with `pnpm install --frozen-lockfile`. The build configuration lives in
+`vite.config.js`; there is no second TypeScript Vite configuration to keep in
+sync.
 
 Use `actions/upload-pages-artifact`, not plain `actions/upload-artifact`, because the latter only stores a workflow artifact and does not publish the site.
 
@@ -65,6 +76,7 @@ Run:
 
 ```bash
 pnpm check
+pnpm check:tsgo
 pnpm test
 pnpm build
 pnpm audit:prelive:crawl
@@ -73,6 +85,10 @@ pnpm audit:prelive:crawl
 The crawl check expects a fresh `build/` directory from `pnpm build`.
 Runtime metadata generation is integrated into the normal `dev`, `check`,
 `test`, and `build` scripts. No separate manual generation step is required.
+
+For static redirect routes, verify the generated files with
+`pnpm audit:prelive:crawl`. In particular, legacy Acid Splash routes must point
+directly to an existing final spell page without a redirect chain or loop.
 
 ## Do Not Change Without Approval
 

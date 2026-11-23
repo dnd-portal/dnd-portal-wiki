@@ -8,26 +8,26 @@ import { meleeAttack } from './melee-attack';
 import { meleeWeaponAttack } from './melee-weapon-attack';
 
 export const combat = {
-	name: {
-		normal: 'Combat',
-		slug: 'combat'
-	},
+    name: {
+        normal: 'Combat',
+        slug: 'combat',
+    },
 
-	logos: {
-		simple: {
-			href: '/icons/white/game/combat.svg',
-			alt: 'A stylized crossed-weapons icon representing combat rules.'
-		}
-	},
+    logos: {
+        simple: {
+            href: '/icons/white/game/combat.svg',
+            alt: 'A stylized crossed-weapons icon representing combat rules.',
+        },
+    },
 
-	baseUrl: '/rules/combat',
+    baseUrl: '/rules/combat',
 
-	armorClass,
-	attackRoll,
-	criticalHit,
-	damageRoll,
-	hitPoints,
-	initiativeRoll,
-	meleeAttack,
-	meleeWeaponAttack
+    armorClass,
+    attackRoll,
+    criticalHit,
+    damageRoll,
+    hitPoints,
+    initiativeRoll,
+    meleeAttack,
+    meleeWeaponAttack,
 } as const;

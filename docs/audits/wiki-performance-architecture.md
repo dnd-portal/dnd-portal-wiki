@@ -19,19 +19,19 @@ Buildcommando’s:
 
 Buildobservaties:
 
-| Metriek | Waarde |
-| --- | ---: |
-| HTML-bestanden | 1.500 |
-| HTML totaal | 165.641.936 bytes (157,9 MiB) |
-| Gemiddelde HTML | circa 110.500 bytes |
-| Volledige popup-markers | 80.691 |
-| Description-popup-markers | 48.124 |
-| Linkcontainer-markers | 341.269 |
-| Client JavaScript in `build` | 4.982.538 bytes |
-| Client CSS in `build` | 175.373 bytes |
-| WebP in `build` | 9.167.480 bytes |
-| PNG in `build` | 3.452.185 bytes |
-| SVG in `build` | 985.415 bytes |
+| Metriek                      |                        Waarde |
+| ---------------------------- | ----------------------------: |
+| HTML-bestanden               |                         1.500 |
+| HTML totaal                  | 165.641.936 bytes (157,9 MiB) |
+| Gemiddelde HTML              |           circa 110.500 bytes |
+| Volledige popup-markers      |                        80.691 |
+| Description-popup-markers    |                        48.124 |
+| Linkcontainer-markers        |                       341.269 |
+| Client JavaScript in `build` |               4.982.538 bytes |
+| Client CSS in `build`        |                 175.373 bytes |
+| WebP in `build`              |               9.167.480 bytes |
+| PNG in `build`               |               3.452.185 bytes |
+| SVG in `build`               |                 985.415 bytes |
 
 De HTML-telling is gebaseerd op alle `index.html`-bestanden plus de statische HTML-uitvoer in `build`; de routeanalyse gebruikt 1.499 route-`index.html`-bestanden. Het kleine verschil is de root-/speciale outputstructuur.
 
@@ -43,42 +43,42 @@ De productiebuild meldt bovendien drie grote clientchunks: ongeveer 3.777 kB min
 
 De oorzaak-kolom is gebaseerd op de getelde markers in de gegenereerde HTML. `full` is een volledige hoverpopup; `desc` is een description-popup; `links` is een `link-container`.
 
-| # | Route | Bytes | KiB | full | desc | links | img |
-|---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | `/classes/pugilist/` | 420.007 | 410,2 | 169 | 39 | 585 | 285 |
-| 2 | `/classes/shinobi/` | 389.355 | 380,2 | 139 | 39 | 495 | 288 |
-| 3 | `/classes/barbarian/` | 388.077 | 379,0 | 162 | 48 | 582 | 281 |
-| 4 | `/classes/cleric/` | 334.378 | 326,5 | 115 | 49 | 443 | 199 |
-| 5 | `/classes/ranger/` | 331.396 | 323,6 | 133 | 39 | 477 | 247 |
-| 6 | `/classes/monk/` | 330.585 | 322,8 | 122 | 39 | 444 | 246 |
-| 7 | `/classes/cleric-5e/` | 329.697 | 322,0 | 113 | 49 | 437 | 195 |
-| 8 | `/classes/ranger-5e/` | 326.776 | 319,1 | 131 | 39 | 471 | 243 |
-| 9 | `/classes/monk-5e/` | 325.973 | 318,3 | 120 | 39 | 438 | 242 |
-| 10 | `/classes/paladin/` | 310.366 | 303,1 | 124 | 39 | 450 | 223 |
-| 11 | `/classes/fighter/` | 307.934 | 300,7 | 118 | 49 | 452 | 204 |
-| 12 | `/classes/paladin-5e/` | 305.724 | 298,6 | 122 | 39 | 444 | 219 |
-| 13 | `/classes/fighter-5e/` | 303.204 | 296,1 | 116 | 49 | 446 | 204 |
-| 14 | `/classes/wizard/` | 302.696 | 295,6 | 115 | 39 | 423 | 188 |
-| 15 | `/classes/rogue-5e/` | 301.097 | 294,0 | 119 | 39 | 435 | 226 |
-| 16 | `/classes/bard/` | 300.598 | 293,6 | 113 | 47 | 433 | 193 |
-| 17 | `/classes/warlock/` | 298.446 | 291,5 | 113 | 39 | 417 | 194 |
-| 18 | `/classes/wizard-5e/` | 297.965 | 291,0 | 113 | 39 | 417 | 184 |
-| 19 | `/classes/bard-5e/` | 295.969 | 289,0 | 111 | 47 | 427 | 189 |
-| 20 | `/classes/warlock-5e/` | 293.747 | 286,9 | 111 | 39 | 411 | 190 |
+|   # | Route                  |   Bytes |   KiB | full | desc | links | img |
+| --: | ---------------------- | ------: | ----: | ---: | ---: | ----: | --: |
+|   1 | `/classes/pugilist/`   | 420.007 | 410,2 |  169 |   39 |   585 | 285 |
+|   2 | `/classes/shinobi/`    | 389.355 | 380,2 |  139 |   39 |   495 | 288 |
+|   3 | `/classes/barbarian/`  | 388.077 | 379,0 |  162 |   48 |   582 | 281 |
+|   4 | `/classes/cleric/`     | 334.378 | 326,5 |  115 |   49 |   443 | 199 |
+|   5 | `/classes/ranger/`     | 331.396 | 323,6 |  133 |   39 |   477 | 247 |
+|   6 | `/classes/monk/`       | 330.585 | 322,8 |  122 |   39 |   444 | 246 |
+|   7 | `/classes/cleric-5e/`  | 329.697 | 322,0 |  113 |   49 |   437 | 195 |
+|   8 | `/classes/ranger-5e/`  | 326.776 | 319,1 |  131 |   39 |   471 | 243 |
+|   9 | `/classes/monk-5e/`    | 325.973 | 318,3 |  120 |   39 |   438 | 242 |
+|  10 | `/classes/paladin/`    | 310.366 | 303,1 |  124 |   39 |   450 | 223 |
+|  11 | `/classes/fighter/`    | 307.934 | 300,7 |  118 |   49 |   452 | 204 |
+|  12 | `/classes/paladin-5e/` | 305.724 | 298,6 |  122 |   39 |   444 | 219 |
+|  13 | `/classes/fighter-5e/` | 303.204 | 296,1 |  116 |   49 |   446 | 204 |
+|  14 | `/classes/wizard/`     | 302.696 | 295,6 |  115 |   39 |   423 | 188 |
+|  15 | `/classes/rogue-5e/`   | 301.097 | 294,0 |  119 |   39 |   435 | 226 |
+|  16 | `/classes/bard/`       | 300.598 | 293,6 |  113 |   47 |   433 | 193 |
+|  17 | `/classes/warlock/`    | 298.446 | 291,5 |  113 |   39 |   417 | 194 |
+|  18 | `/classes/wizard-5e/`  | 297.965 | 291,0 |  113 |   39 |   417 | 184 |
+|  19 | `/classes/bard-5e/`    | 295.969 | 289,0 |  111 |   47 |   427 | 189 |
+|  20 | `/classes/warlock-5e/` | 293.747 | 286,9 |  111 |   39 |   411 | 190 |
 
 De hoofdoorzaak van alle twintig regels is hetzelfde patroon: class-content met veel interne links, waarbij per link full-popup-HTML wordt SSR-gerenderd; de tweede versterkende factor is het aantal inline `<img>`-elementen. De exacte omvang per pagina wordt hierboven met `full`, `links` en `img` onderbouwd.
 
 ### Vergelijking per paginatype
 
-| Routegroep | Aantal | Gemiddeld | Maximaal | Totaal |
-| --- |---:|---:|---:|---:|
-| spells | 644 | 100.398 | 142.008 | 64.656.387 |
-| faq | 403 | 102.779 | 147.282 | 41.419.939 |
-| classes | 207 | 158.608 | 420.007 | 32.831.917 |
-| rules | 127 | 120.677 | 145.227 | 15.326.032 |
-| equipment | 52 | 102.579 | 141.747 | 5.334.108 |
-| homebrew | 15 | 108.257 | 128.313 | 1.623.861 |
-| overige routegroepen | 51 | circa 100 kB | 148.893 | circa 5 MB |
+| Routegroep           | Aantal |    Gemiddeld | Maximaal |     Totaal |
+| -------------------- | -----: | -----------: | -------: | ---------: |
+| spells               |    644 |      100.398 |  142.008 | 64.656.387 |
+| faq                  |    403 |      102.779 |  147.282 | 41.419.939 |
+| classes              |    207 |      158.608 |  420.007 | 32.831.917 |
+| rules                |    127 |      120.677 |  145.227 | 15.326.032 |
+| equipment            |     52 |      102.579 |  141.747 |  5.334.108 |
+| homebrew             |     15 |      108.257 |  128.313 |  1.623.861 |
+| overige routegroepen |     51 | circa 100 kB |  148.893 | circa 5 MB |
 
 Classes zijn dus duidelijk de uitschieters. Spells en FAQ’s veroorzaken samen de meeste totale HTML door hun aantallen, niet door uitzonderlijk grote individuele pagina’s.
 
@@ -111,14 +111,14 @@ De buildoutput ondersteunt dat risico: de client heeft een chunk van circa 3,78 
 
 ### Huidige versus voorgestelde datastructuur
 
-| Onderdeel | Huidig | Voorgesteld, compatibel met static hosting |
-| --- | --- | --- |
-| Canonieke content | Geneste TypeScript-objectboom | Behouden als authoring-/SSR-bron |
-| Route metadata | In contentboom plus generated runtime registry | Eén compacte route registry met id, href, title, label, icon en minimale SEO-velden |
-| Popupinhoud | SSR per `Link`-instantie | Alleen trigger-HTML SSR; één client-side popup host of description-only trigger; full details op interactie |
-| Search | Volledige index met `fieldText` én `searchText` in client import | Prebuild compacte zoekrecords: id, route, titel, categorie, tags en eventueel samengevatte zoekvelden; lange bodytekst apart laden of server-/buildtijdig per shard verwerken |
-| Relaties/navigation | children maps plus contentpaden; dubbele Homebrew-context bewust | Expliciete route-id en context-id behouden; relaties verwijzen naar ids, niet naar gekopieerde objecten |
-| Externe links | In dezelfde linkvorm met `external`-vlag | Behouden; alleen popup-/clientpayload minimaliseren |
+| Onderdeel           | Huidig                                                           | Voorgesteld, compatibel met static hosting                                                                                                                                    |
+| ------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Canonieke content   | Geneste TypeScript-objectboom                                    | Behouden als authoring-/SSR-bron                                                                                                                                              |
+| Route metadata      | In contentboom plus generated runtime registry                   | Eén compacte route registry met id, href, title, label, icon en minimale SEO-velden                                                                                           |
+| Popupinhoud         | SSR per `Link`-instantie                                         | Alleen trigger-HTML SSR; één client-side popup host of description-only trigger; full details op interactie                                                                   |
+| Search              | Volledige index met `fieldText` én `searchText` in client import | Prebuild compacte zoekrecords: id, route, titel, categorie, tags en eventueel samengevatte zoekvelden; lange bodytekst apart laden of server-/buildtijdig per shard verwerken |
+| Relaties/navigation | children maps plus contentpaden; dubbele Homebrew-context bewust | Expliciete route-id en context-id behouden; relaties verwijzen naar ids, niet naar gekopieerde objecten                                                                       |
+| Externe links       | In dezelfde linkvorm met `external`-vlag                         | Behouden; alleen popup-/clientpayload minimaliseren                                                                                                                           |
 
 Dit is een voorstel voor een migratierichting, geen bewijs dat elk veld veilig verwijderd kan worden. SEO, toegankelijkheid en Homebrew-duale routes moeten per stap opnieuw worden geverifieerd.
 
@@ -130,16 +130,16 @@ Meetbaar: de clientbuild meldt een chunk van circa 3,78 MB minified / 791 kB gzi
 
 ## Netwerkassets, afbeeldingen en JavaScript versus rendering
 
-| Probleem | Status | Bewijs |
-| --- | --- | --- |
-| Te veel SSR-HTML door full popups | Gemeten | 80.691 full-popup markers; top class pages 111–169 per pagina |
-| Grote class-pagina’s door content/links/afbeeldingen | Gemeten | 420.007 bytes en 285 `<img>` op Pugilist; vergelijkbare class-uitschieters |
-| Herhaalde sidebar/layout | Gemeten als structurele herhaling, byteaandeel nog niet geïsoleerd | dezelfde `+layout.svelte`-structuur op alle pagina’s |
-| Grote client-JS | Gemeten | chunk circa 3,78 MB minified / 791 kB gzip; Vite-waarschuwing |
-| Zoekindex in initiële JS | Waarschijnlijk, implementatiegedreven | synchrone import van volledige `searchIndex`; exacte routecoverage nog te tracen |
-| Afbeeldingstransfer/encoding | Niet volledig gemeten | build bevat 9,17 MB WebP, 3,45 MB PNG, 0,99 MB SVG; geen Lighthouse/networktrace |
-| CSS/SCSS | Gemeten als artifact, oorzaak niet dominant bewezen | 175 kB CSS totaal, layout-CSS circa 167 kB |
-| Externe analytics/third-party netwerk | Niet vastgesteld | vereist browsertrace en response-timing |
+| Probleem                                             | Status                                                             | Bewijs                                                                           |
+| ---------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| Te veel SSR-HTML door full popups                    | Gemeten                                                            | 80.691 full-popup markers; top class pages 111–169 per pagina                    |
+| Grote class-pagina’s door content/links/afbeeldingen | Gemeten                                                            | 420.007 bytes en 285 `<img>` op Pugilist; vergelijkbare class-uitschieters       |
+| Herhaalde sidebar/layout                             | Gemeten als structurele herhaling, byteaandeel nog niet geïsoleerd | dezelfde `+layout.svelte`-structuur op alle pagina’s                             |
+| Grote client-JS                                      | Gemeten                                                            | chunk circa 3,78 MB minified / 791 kB gzip; Vite-waarschuwing                    |
+| Zoekindex in initiële JS                             | Waarschijnlijk, implementatiegedreven                              | synchrone import van volledige `searchIndex`; exacte routecoverage nog te tracen |
+| Afbeeldingstransfer/encoding                         | Niet volledig gemeten                                              | build bevat 9,17 MB WebP, 3,45 MB PNG, 0,99 MB SVG; geen Lighthouse/networktrace |
+| CSS/SCSS                                             | Gemeten als artifact, oorzaak niet dominant bewezen                | 175 kB CSS totaal, layout-CSS circa 167 kB                                       |
+| Externe analytics/third-party netwerk                | Niet vastgesteld                                                   | vereist browsertrace en response-timing                                          |
 
 De renderingproblemen zijn dus primair HTML-volume en verborgen interactieve DOM. Netwerkproblemen zijn daarnaast plausibel door afbeeldingen en grote JavaScriptchunks, maar kunnen niet eerlijk tot een PageSpeed-score worden herleid zonder runtime-profiel.
 
@@ -167,16 +167,16 @@ Ontbrekend of niet aangetoond:
 
 Impact is kwalitatief totdat een herbuild en browsertrace na iedere wijziging is uitgevoerd.
 
-| Prioriteit | Optimalisatie | Risico | Verwachte impact |
-| --- | --- | --- | --- |
-| P0 | Full hoverpopup niet meer per link SSR’en; gebruik een gedeelde interactieve popup of laad details pas bij focus/hover | Middel: keyboard, focus, positioning en SEO moeten behouden blijven | Zeer hoog op class-HTML; vermindert DOM, HTML-transfer en SSR-werk |
-| P0 | Voeg build-audit toe die HTML per route, full/description popups en top-N chunks rapporteert | Laag | Geen runtimewinst op zichzelf; voorkomt regressies en maakt claims reproduceerbaar |
-| P1 | Maak linkcomponentdefaults expliciet per context; gebruik `none`/description waar volledige preview niet nodig is | Middel | Hoog; snel toepasbaar op sidebar, tabellen en lijsten |
-| P1 | Split zoekmetadata: compacte clientindex voor titel/route/tags; lange content niet standaard naar client | Middel/hoog | Hoog voor search-route en client parse/geheugen; exacte winst eerst meten |
-| P1 | Beperk afbeeldingen in lange class-pagina’s tot noodzakelijke zichtbare/semantische beelden en controleer lazy loading/formaten | Middel: layout/SEO/alt-tekst | Middel tot hoog op beeldrijke class-pages en netwerktransfer |
-| P2 | Verklein runtime registry en voorkom parallelle representaties waar niet nodig | Middel | Middel op client/server JS; lager direct HTML-effect |
-| P2 | Browsertrace met mobiel/desktop, cold cache en throttling toevoegen aan audit/CI | Laag | Meetwinst; maakt asset-, JS- en renderingoorzaken kwantitatief |
-| P2 | CSS/componenten per route verder code-splitten | Middel | Waarschijnlijk middel; CSS is kleiner dan HTML/JS, dus eerst meten |
+| Prioriteit | Optimalisatie                                                                                                                   | Risico                                                              | Verwachte impact                                                                   |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| P0         | Full hoverpopup niet meer per link SSR’en; gebruik een gedeelde interactieve popup of laad details pas bij focus/hover          | Middel: keyboard, focus, positioning en SEO moeten behouden blijven | Zeer hoog op class-HTML; vermindert DOM, HTML-transfer en SSR-werk                 |
+| P0         | Voeg build-audit toe die HTML per route, full/description popups en top-N chunks rapporteert                                    | Laag                                                                | Geen runtimewinst op zichzelf; voorkomt regressies en maakt claims reproduceerbaar |
+| P1         | Maak linkcomponentdefaults expliciet per context; gebruik `none`/description waar volledige preview niet nodig is               | Middel                                                              | Hoog; snel toepasbaar op sidebar, tabellen en lijsten                              |
+| P1         | Split zoekmetadata: compacte clientindex voor titel/route/tags; lange content niet standaard naar client                        | Middel/hoog                                                         | Hoog voor search-route en client parse/geheugen; exacte winst eerst meten          |
+| P1         | Beperk afbeeldingen in lange class-pagina’s tot noodzakelijke zichtbare/semantische beelden en controleer lazy loading/formaten | Middel: layout/SEO/alt-tekst                                        | Middel tot hoog op beeldrijke class-pages en netwerktransfer                       |
+| P2         | Verklein runtime registry en voorkom parallelle representaties waar niet nodig                                                  | Middel                                                              | Middel op client/server JS; lager direct HTML-effect                               |
+| P2         | Browsertrace met mobiel/desktop, cold cache en throttling toevoegen aan audit/CI                                                | Laag                                                                | Meetwinst; maakt asset-, JS- en renderingoorzaken kwantitatief                     |
+| P2         | CSS/componenten per route verder code-splitten                                                                                  | Middel                                                              | Waarschijnlijk middel; CSS is kleiner dan HTML/JS, dus eerst meten                 |
 
 Er worden bewust geen nieuwe harde performance-budgetten voorgesteld. Eerst moeten de huidige baseline en variantie per paginatype in CI worden vastgelegd; daarna kunnen budgets worden afgeleid uit bestaande waarden en gewenste regressiemarges.
 
@@ -195,4 +195,3 @@ Er worden bewust geen nieuwe harde performance-budgetten voorgesteld. Eerst moet
 ## Conclusie
 
 De eerste optimalisatiedoelstelling moet renderingarchitectuur zijn: de full-popup-DOM is aantoonbaar de grootste bron van onnodige HTML op de zwaarste pagina’s. Daarna volgen de client-side zoekindex en beeldrijke content. De huidige tests bewaken vooral typecorrectheid, een kleine set datacontracten en een succesvolle build; ze bewaken nog niet de performance-eigenschappen die bij 2.000+ statische pagina’s belangrijk zijn.
-

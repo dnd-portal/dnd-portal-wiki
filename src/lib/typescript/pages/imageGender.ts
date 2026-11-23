@@ -4,7 +4,7 @@
 */
 
 export {
-	getPreferredImageGender,
-	imageGenderPreferenceStorageKey,
-	resolveSessionImageGender
+    getPreferredImageGender,
+    imageGenderPreferenceStorageKey,
+    resolveSessionImageGender,
 } from './preferences';

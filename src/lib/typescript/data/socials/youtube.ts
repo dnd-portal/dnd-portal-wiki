@@ -18,5 +18,5 @@ export const youtube = {
         Connect with me on social media and feel free to reach out for collaborations or discussions 
         about tech and education.
         
-        Let's create something amazing!`
-}
+        Let's create something amazing!`,
+};

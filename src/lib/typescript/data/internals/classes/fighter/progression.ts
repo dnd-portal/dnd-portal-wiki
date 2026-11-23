@@ -6,290 +6,289 @@
 import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type { ProgressionData } from '#lib/typescript/pages/content-types.js';
 
-
 export const progression: ProgressionData<string> = {
-    "title": "Fighter progression",
-    "heading": "Fighter Progression",
-    "columns": [
+    title: 'Fighter progression',
+    heading: 'Fighter Progression',
+    columns: [
         {
-            "key": "level",
-            "label": "Level",
-            "format": "ordinal"
+            key: 'level',
+            label: 'Level',
+            format: 'ordinal',
         },
         {
-            "key": "proficiencyBonus",
-            "label": "Prof.",
-            "path": "internals.rules.abbreviations.pb",
-            "format": "signed"
+            key: 'proficiencyBonus',
+            label: 'Prof.',
+            path: 'internals.rules.abbreviations.pb',
+            format: 'signed',
         },
         {
-            "key": "features",
-            "label": "Features"
-        }
+            key: 'features',
+            label: 'Features',
+        },
     ],
-    "rows": [
+    rows: [
         {
-            "level": 1,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 1,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Fighting Style",
-                    "sectionId": "fighting-style"
+                    label: 'Fighting Style',
+                    sectionId: 'fighting-style',
                 },
                 {
-                    "label": "Second Wind",
-                    "sectionId": "second-wind"
-                }
+                    label: 'Second Wind',
+                    sectionId: 'second-wind',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 2,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 2,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Action Surge (1)",
-                    "sectionId": "action-surge-1"
-                }
+                    label: 'Action Surge (1)',
+                    sectionId: 'action-surge-1',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 3,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 3,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Martial Archetype",
-                    "sectionId": "martial-archetype"
-                }
+                    label: 'Martial Archetype',
+                    sectionId: 'martial-archetype',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 4,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 4,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 5,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 5,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Extra Attack (2 attacks)",
-                    "sectionId": "extra-attack-2-attacks"
-                }
+                    label: 'Extra Attack (2 attacks)',
+                    sectionId: 'extra-attack-2-attacks',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 6,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 6,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 7,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 7,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Archetype feature",
-                    "sectionId": "archetype-feature"
-                }
+                    label: 'Archetype feature',
+                    sectionId: 'archetype-feature',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 8,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 8,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 9,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 9,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Indomitable (1)",
-                    "sectionId": "indomitable-1"
-                }
+                    label: 'Indomitable (1)',
+                    sectionId: 'indomitable-1',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 10,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 10,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Archetype feature",
-                    "sectionId": "archetype-feature"
-                }
+                    label: 'Archetype feature',
+                    sectionId: 'archetype-feature',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 11,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 11,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Extra Attack (3 attacks)",
-                    "sectionId": "extra-attack-3-attacks"
-                }
+                    label: 'Extra Attack (3 attacks)',
+                    sectionId: 'extra-attack-3-attacks',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 12,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 12,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 13,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 13,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "Indomitable (2)",
-                    "sectionId": "indomitable-2"
-                }
+                    label: 'Indomitable (2)',
+                    sectionId: 'indomitable-2',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 14,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 14,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 15,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 15,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "Archetype feature",
-                    "sectionId": "archetype-feature"
-                }
+                    label: 'Archetype feature',
+                    sectionId: 'archetype-feature',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 16,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 16,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 17,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 17,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Action Surge (2)",
-                    "sectionId": "action-surge-2"
+                    label: 'Action Surge (2)',
+                    sectionId: 'action-surge-2',
                 },
                 {
-                    "label": "Indomitable (3)",
-                    "sectionId": "indomitable-3"
-                }
+                    label: 'Indomitable (3)',
+                    sectionId: 'indomitable-3',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 18,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 18,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Archetype feature",
-                    "sectionId": "archetype-feature"
-                }
+                    label: 'Archetype feature',
+                    sectionId: 'archetype-feature',
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 19,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 19,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Martial Versatility",
-                    "sectionId": "martial-versatility",
-                    "optional": true
-                }
+                    label: 'Martial Versatility',
+                    sectionId: 'martial-versatility',
+                    optional: true,
+                },
             ],
-            "values": {}
+            values: {},
         },
         {
-            "level": 20,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 20,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Extra Attack (4 attacks)",
-                    "sectionId": "extra-attack-4-attacks"
-                }
+                    label: 'Extra Attack (4 attacks)',
+                    sectionId: 'extra-attack-4-attacks',
+                },
             ],
-            "values": {}
-        }
-    ]
+            values: {},
+        },
+    ],
 };

@@ -3,5 +3,9 @@ import { progression } from './progression';
 import { features } from './features';
 import { subclasses } from './subclasses/_index_';
 
-export const warlock = { page, subclasses, content: { ...pageContent, progression, sections: features } } as const;
+export const warlock = {
+    page,
+    subclasses,
+    content: { ...pageContent, progression, sections: features },
+} as const;
 export default warlock;

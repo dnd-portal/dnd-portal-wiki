@@ -8,4 +8,14 @@ import { page as soulknife } from './soulknife/_index_';
 import { page as swashbuckler } from './swashbuckler/_index_';
 import { page as thief } from './thief/_index_';
 
-export const subclasses = { arcaneTrickster, assassin, inquisitive, mastermind, phantom, scout, soulknife, swashbuckler, thief } as const;
+export const subclasses = {
+    arcaneTrickster,
+    assassin,
+    inquisitive,
+    mastermind,
+    phantom,
+    scout,
+    soulknife,
+    swashbuckler,
+    thief,
+} as const;

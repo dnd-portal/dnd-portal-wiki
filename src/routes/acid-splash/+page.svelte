@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { redirect } from '@sveltejs/kit';
+    import { redirect } from '@sveltejs/kit';
 
-	throw redirect(308, '/spells/acid-splash/');
+    throw redirect(308, '/spells/acid-splash/');
 </script>

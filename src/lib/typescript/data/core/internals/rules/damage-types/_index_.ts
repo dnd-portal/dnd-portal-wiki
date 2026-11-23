@@ -13,32 +13,32 @@ import { slashing } from './slashing';
 import { thunder } from './thunder';
 
 export const damageTypes = {
-	name: {
-		normal: 'Damage Types',
-		singular: 'Damage Type',
-		slug: 'damage-types'
-	},
+    name: {
+        normal: 'Damage Types',
+        singular: 'Damage Type',
+        slug: 'damage-types',
+    },
 
-	logos: {
-		simple: {
-			href: '/icons/white/damage/slashing.svg',
-			alt: 'A stylized damage icon representing damage types.'
-		}
-	},
+    logos: {
+        simple: {
+            href: '/icons/white/damage/slashing.svg',
+            alt: 'A stylized damage icon representing damage types.',
+        },
+    },
 
-	baseUrl: '/rules/damage-types',
+    baseUrl: '/rules/damage-types',
 
-	acid,
-	bludgeoning,
-	cold,
-	fire,
-	force,
-	lightning,
-	necrotic,
-	piercing,
-	poison,
-	psychic,
-	radiant,
-	slashing,
-	thunder
+    acid,
+    bludgeoning,
+    cold,
+    fire,
+    force,
+    lightning,
+    necrotic,
+    piercing,
+    poison,
+    psychic,
+    radiant,
+    slashing,
+    thunder,
 } as const;

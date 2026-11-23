@@ -12,7 +12,7 @@ $colors: (
             secondary: #111512,
             tiertiary: #1b211c,
             quaternary: #737d75,
-            hover: #1b211c
+            hover: #1b211c,
         ),
 
         text: (
@@ -25,13 +25,13 @@ $colors: (
             links: (
                 base: #f3f6f3,
                 hover: #7bff53,
-            )
+            ),
         ),
 
         theme: (
             primary: #7bff53,
             secondary: #a0e88a,
-            tertiary: #728329
+            tertiary: #728329,
         ),
 
         border: (
@@ -40,7 +40,7 @@ $colors: (
             strong: #3b5c43,
             interactive: #5f8f4f,
             focus: #7bff53,
-            footer: #2b312d
+            footer: #2b312d,
         ),
 
         overlay: (
@@ -52,12 +52,12 @@ $colors: (
             backdrop: rgb(0 0 0 / 72%),
             shadow: rgb(0 0 0 / 35%),
             selected-glow: rgb(123 255 83 / 14%),
-            selected-text: rgb(123 255 83 / 28%)
+            selected-text: rgb(123 255 83 / 28%),
         ),
 
         badge: (
             optional-border: #5f8f4f,
-            optional-text: #7bff53
+            optional-text: #7bff53,
         ),
 
         scrollbar: (
@@ -65,9 +65,9 @@ $colors: (
             thumb: #2d4233,
             thumb-hover: #3b5c43,
             thumb-active: #5f8f4f,
-            border: #0b0d0c
-        )
-    )
+            border: #0b0d0c,
+        ),
+    ),
 );
 
 @function get-dark($keys...) {

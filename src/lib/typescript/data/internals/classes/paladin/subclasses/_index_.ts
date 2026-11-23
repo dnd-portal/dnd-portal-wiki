@@ -8,4 +8,14 @@ import { page as vengeance } from './vengeance/_index_';
 import { page as watchers } from './watchers/_index_';
 import { page as oathbreaker } from './oathbreaker/_index_';
 
-export const subclasses = { ancients, conquest, crown, devotion, glory, redemption, vengeance, watchers, oathbreaker } as const;
+export const subclasses = {
+    ancients,
+    conquest,
+    crown,
+    devotion,
+    glory,
+    redemption,
+    vengeance,
+    watchers,
+    oathbreaker,
+} as const;

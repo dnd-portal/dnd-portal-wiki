@@ -4,26 +4,26 @@ const current = core.externals.dndbeyond;
 
 export const dndbeyond = {
     homepage: {
-		href: current.baseUrl,
-		external: true,
+        href: current.baseUrl,
+        external: true,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: current.name.normal,
-		subTitle: 'Official digital toolset',
-		description: `Visit ${current.name.normal} for official digital rules,
-			character tools, sourcebooks, adventures, and resources.`
+        title: current.name.normal,
+        subTitle: 'Official digital toolset',
+        description: `Visit ${current.name.normal} for official digital rules,
+			character tools, sourcebooks, adventures, and resources.`,
     },
-	
-	srd: {
-		href: `${current.baseUrl}/srd`,
-		external: true,
 
-		img: current.logos.simple,
+    srd: {
+        href: `${current.baseUrl}/srd`,
+        external: true,
 
-		title: `${current.name.normal} - System Reference Document`,
-		subTitle: 'Official reference rules',
-		description: `Read the System Reference Document containing rules
-			and material available under its associated licence.`
-	}
-}
+        img: current.logos.simple,
+
+        title: `${current.name.normal} - System Reference Document`,
+        subTitle: 'Official reference rules',
+        description: `Read the System Reference Document containing rules
+			and material available under its associated licence.`,
+    },
+};

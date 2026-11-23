@@ -1,14 +1,13 @@
 import * as core from '#lib/typescript/data/core/_index_.js';
 import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type {
-	CoreTraitsData,
-	InlineContent,
-	PageContentBlock,
-	PageContentSection,
-	ProgressionData
+    CoreTraitsData,
+    InlineContent,
+    PageContentBlock,
+    PageContentSection,
+    ProgressionData,
 } from '#lib/typescript/pages/content-types.js';
 import type { CampaignNote } from '#lib/typescript/data/functions/Types/PageData.js';
-
 
 export const website = core.internals.website;
 
@@ -32,8 +31,8 @@ export const barbarianImages = {
         sources: {
             s: `${imageBaseUrl}/card-female-s.webp`,
             m: `${imageBaseUrl}/card-female-m.webp`,
-            l: `${imageBaseUrl}/card-female-l.webp`
-        }
+            l: `${imageBaseUrl}/card-female-l.webp`,
+        },
     },
     male: {
         alt: `A male Barbarian standing as a powerful primal
@@ -44,265 +43,265 @@ export const barbarianImages = {
         sources: {
             s: `${imageBaseUrl}/card-male-s.webp`,
             m: `${imageBaseUrl}/card-male-m.webp`,
-            l: `${imageBaseUrl}/card-male-l.webp`
-        }
-    }
+            l: `${imageBaseUrl}/card-male-l.webp`,
+        },
+    },
 } as const;
 
 export const abilityScoreLinks = {
     strength: {
         type: 'link',
-        path: 'internals.rules.abilityScores.strength'
+        path: 'internals.rules.abilityScores.strength',
     },
     dexterity: {
         type: 'link',
-        path: 'internals.rules.abilityScores.dexterity'
+        path: 'internals.rules.abilityScores.dexterity',
     },
     constitution: {
         type: 'link',
-        path: 'internals.rules.abilityScores.constitution'
+        path: 'internals.rules.abilityScores.constitution',
     },
     wisdom: {
         type: 'link',
-        path: 'internals.rules.abilityScores.wisdom'
+        path: 'internals.rules.abilityScores.wisdom',
     },
     charisma: {
         type: 'link',
-        path: 'internals.rules.abilityScores.charisma'
-    }
+        path: 'internals.rules.abilityScores.charisma',
+    },
 } as const;
 
 export const damageTypeLinks = {
     acid: {
         type: 'link',
-        path: 'internals.rules.damageTypes.acid'
+        path: 'internals.rules.damageTypes.acid',
     },
     bludgeoning: {
         type: 'link',
-        path: 'internals.rules.damageTypes.bludgeoning'
+        path: 'internals.rules.damageTypes.bludgeoning',
     },
     cold: {
         type: 'link',
-        path: 'internals.rules.damageTypes.cold'
+        path: 'internals.rules.damageTypes.cold',
     },
     fire: {
         type: 'link',
-        path: 'internals.rules.damageTypes.fire'
+        path: 'internals.rules.damageTypes.fire',
     },
     force: {
         type: 'link',
-        path: 'internals.rules.damageTypes.force'
+        path: 'internals.rules.damageTypes.force',
     },
     lightning: {
         type: 'link',
-        path: 'internals.rules.damageTypes.lightning'
+        path: 'internals.rules.damageTypes.lightning',
     },
     necrotic: {
         type: 'link',
-        path: 'internals.rules.damageTypes.necrotic'
+        path: 'internals.rules.damageTypes.necrotic',
     },
     piercing: {
         type: 'link',
-        path: 'internals.rules.damageTypes.piercing'
+        path: 'internals.rules.damageTypes.piercing',
     },
     psychic: {
         type: 'link',
-        path: 'internals.rules.damageTypes.psychic'
+        path: 'internals.rules.damageTypes.psychic',
     },
     radiant: {
         type: 'link',
-        path: 'internals.rules.damageTypes.radiant'
+        path: 'internals.rules.damageTypes.radiant',
     },
     slashing: {
         type: 'link',
-        path: 'internals.rules.damageTypes.slashing'
+        path: 'internals.rules.damageTypes.slashing',
     },
     thunder: {
         type: 'link',
-        path: 'internals.rules.damageTypes.thunder'
-    }
+        path: 'internals.rules.damageTypes.thunder',
+    },
 } as const;
 
 export const conditionLinks = {
     blinded: {
         type: 'link',
-        path: 'internals.rules.conditions.blinded'
+        path: 'internals.rules.conditions.blinded',
     },
     charmed: {
         type: 'link',
-        path: 'internals.rules.conditions.charmed'
+        path: 'internals.rules.conditions.charmed',
     },
     deafened: {
         type: 'link',
-        path: 'internals.rules.conditions.deafened'
+        path: 'internals.rules.conditions.deafened',
     },
     exhaustion: {
         type: 'link',
-        path: 'internals.rules.conditions.exhaustion'
+        path: 'internals.rules.conditions.exhaustion',
     },
     frightened: {
         type: 'link',
-        path: 'internals.rules.conditions.frightened'
+        path: 'internals.rules.conditions.frightened',
     },
     incapacitated: {
         type: 'link',
-        path: 'internals.rules.conditions.incapacitated'
+        path: 'internals.rules.conditions.incapacitated',
     },
     prone: {
         type: 'link',
-        path: 'internals.rules.conditions.prone'
+        path: 'internals.rules.conditions.prone',
     },
     unconscious: {
         type: 'link',
-        path: 'internals.rules.conditions.unconscious'
-    }
+        path: 'internals.rules.conditions.unconscious',
+    },
 } as const;
 
 export const actionLinks = {
     attackAction: {
         type: 'link',
-        path: 'internals.rules.actions.attackAction'
+        path: 'internals.rules.actions.attackAction',
     },
     bonusAction: {
         type: 'link',
-        path: 'internals.rules.actions.bonusAction'
+        path: 'internals.rules.actions.bonusAction',
     },
     dash: {
         type: 'link',
-        path: 'internals.rules.actions.dash'
+        path: 'internals.rules.actions.dash',
     },
     reaction: {
         type: 'link',
-        path: 'internals.rules.actions.reaction'
-    }
+        path: 'internals.rules.actions.reaction',
+    },
 } as const;
 
 export const movementLinks = {
     climbing: {
         type: 'link',
-        path: 'internals.rules.movement.climbing'
+        path: 'internals.rules.movement.climbing',
     },
     flying: {
         type: 'link',
-        path: 'internals.rules.movement.flying'
+        path: 'internals.rules.movement.flying',
     },
     jumping: {
         type: 'link',
-        path: 'internals.rules.movement.jumping'
+        path: 'internals.rules.movement.jumping',
     },
     speed: {
         type: 'link',
-        path: 'internals.rules.movement.speed'
+        path: 'internals.rules.movement.speed',
     },
     swimming: {
         type: 'link',
-        path: 'internals.rules.movement.swimming'
-    }
+        path: 'internals.rules.movement.swimming',
+    },
 } as const;
 
 export const equipmentLinks = {
     heavyArmor: {
         type: 'link',
         path: 'internals.rules.equipment.heavyArmor',
-        label: 'heavy armor'
+        label: 'heavy armor',
     },
     shield: {
         type: 'link',
         path: 'internals.rules.equipment.shields',
-        label: 'shield'
-    }
+        label: 'shield',
+    },
 } as const;
 
 export const combatLinks = {
     armorClass: {
         type: 'link',
         path: 'internals.rules.combat.armorClass',
-        label: 'armor class'
+        label: 'armor class',
     },
     attackRolls: {
         type: 'link',
         path: 'internals.rules.combat.attackRoll',
-        label: 'attack rolls'
+        label: 'attack rolls',
     },
     criticalHit: {
         type: 'link',
         path: 'internals.rules.combat.criticalHit',
-        label: 'critical hit'
+        label: 'critical hit',
     },
     damageRoll: {
         type: 'link',
         path: 'internals.rules.combat.damageRoll',
-        label: 'damage roll'
+        label: 'damage roll',
     },
     hitPoints: {
         type: 'link',
         path: 'internals.rules.combat.hitPoints',
-        label: 'hit points'
+        label: 'hit points',
     },
     initiativeRolls: {
         type: 'link',
         path: 'internals.rules.combat.initiativeRoll',
-        label: 'initiative rolls'
+        label: 'initiative rolls',
     },
     meleeAttack: {
         type: 'link',
         path: 'internals.rules.combat.meleeAttack',
-        label: 'melee attack'
+        label: 'melee attack',
     },
     meleeWeaponAttack: {
         type: 'link',
         path: 'internals.rules.combat.meleeWeaponAttack',
-        label: 'melee weapon attack'
-    }
+        label: 'melee weapon attack',
+    },
 } as const;
 
 export const restLinks = {
     longRest: {
         type: 'link',
         path: 'internals.rules.rests.longRest',
-        label: 'long rest'
+        label: 'long rest',
     },
     shortRest: {
         type: 'link',
         path: 'internals.rules.rests.shortRest',
-        label: 'short rest'
-    }
+        label: 'short rest',
+    },
 } as const;
 
 export const spellcastingLinks = {
     concentration: {
         type: 'link',
         path: 'internals.rules.spellcasting.concentration',
-        label: 'concentrate'
+        label: 'concentrate',
     },
     spells: {
         type: 'link',
         path: 'internals.rules.spellcasting.spells',
-        label: 'spells'
-    }
+        label: 'spells',
+    },
 } as const;
 
 export const d20TestLinks = {
     abilityChecks: {
         type: 'link',
         path: 'internals.rules.d20Tests.abilityCheck',
-        label: 'checks'
+        label: 'checks',
     },
     difficultyClass: {
         type: 'link',
         path: 'internals.rules.d20Tests.difficultyClass',
-        label: 'DC'
+        label: 'DC',
     },
     savingThrow: {
         type: 'link',
         path: 'internals.rules.d20Tests.savingThrow',
-        label: 'saving throw'
+        label: 'saving throw',
     },
     savingThrows: {
         type: 'link',
         path: 'internals.rules.d20Tests.savingThrow',
-        label: 'saving throws'
-    }
+        label: 'saving throws',
+    },
 } as const;
 
 export const multiclassingRequirement = [
@@ -310,115 +309,115 @@ export const multiclassingRequirement = [
     {
         type: 'link',
         path: 'internals.rules.abilityScores.strength',
-        label: 'Strength'
+        label: 'Strength',
     },
     {
         type: 'text',
-        text: ' score of 13 or higher in order to multiclass in or out of this class.'
-    }
+        text: ' score of 13 or higher in order to multiclass in or out of this class.',
+    },
 ] as const;
 
 export const sections = {
     multiclassing: {
         id: 'multiclassing',
-        title: 'Multiclassing'
+        title: 'Multiclassing',
     },
     progression: {
         id: 'progression',
-        title: 'The Barbarian'
+        title: 'The Barbarian',
     },
     classFeatures: {
         id: 'class-features',
-        title: 'Class Features'
+        title: 'Class Features',
     },
     coreTraits: {
         id: 'core-traits',
-        title: 'Core Traits'
+        title: 'Core Traits',
     },
     hitPoints: {
         id: 'hit-points',
-        title: 'Hit Points'
+        title: 'Hit Points',
     },
     proficiencies: {
         id: 'proficiencies',
-        title: 'Proficiencies'
+        title: 'Proficiencies',
     },
     startingEquipment: {
         id: 'starting-equipment',
-        title: 'Starting Equipment'
+        title: 'Starting Equipment',
     },
     rage: {
         id: 'rage',
-        title: 'Rage'
+        title: 'Rage',
     },
     unarmoredDefense: {
         id: 'unarmored-defense',
-        title: 'Unarmored Defense'
+        title: 'Unarmored Defense',
     },
     weaponMastery: {
         id: 'weapon-mastery',
-        title: 'Weapon Mastery'
+        title: 'Weapon Mastery',
     },
     dangerSense: {
         id: 'danger-sense',
-        title: 'Danger Sense'
+        title: 'Danger Sense',
     },
     recklessAttack: {
         id: 'reckless-attack',
-        title: 'Reckless Attack'
+        title: 'Reckless Attack',
     },
     primalPath: {
         id: 'primal-path',
-        title: 'Primal Path'
+        title: 'Primal Path',
     },
     primalKnowledge: {
         id: 'primal-knowledge',
-        title: 'Primal Knowledge'
+        title: 'Primal Knowledge',
     },
     abilityScoreImprovement: {
         id: 'ability-score-improvement',
-        title: 'Ability Score Improvement'
+        title: 'Ability Score Improvement',
     },
     extraAttack: {
         id: 'extra-attack',
-        title: 'Extra Attack'
+        title: 'Extra Attack',
     },
     fastMovement: {
         id: 'fast-movement',
-        title: 'Fast Movement'
+        title: 'Fast Movement',
     },
     feralInstinct: {
         id: 'feral-instinct',
-        title: 'Feral Instinct'
+        title: 'Feral Instinct',
     },
     instinctivePounce: {
         id: 'instinctive-pounce',
-        title: 'Instinctive Pounce'
+        title: 'Instinctive Pounce',
     },
     brutalStrike: {
         id: 'brutal-strike',
-        title: 'Brutal Strike'
+        title: 'Brutal Strike',
     },
     relentlessRage: {
         id: 'relentless-rage',
-        title: 'Relentless Rage'
+        title: 'Relentless Rage',
     },
     persistentRage: {
         id: 'persistent-rage',
-        title: 'Persistent Rage'
+        title: 'Persistent Rage',
     },
     indomitableMight: {
         id: 'indomitable-might',
-        title: 'Indomitable Might'
+        title: 'Indomitable Might',
     },
     primalChampion: {
         id: 'primal-champion',
-        title: 'Primal Champion'
+        title: 'Primal Champion',
     },
     primalPaths: {
         id: 'primal-paths',
-        title: 'Primal Paths'
-    }
+        title: 'Primal Paths',
+    },
 } as const;
 
 export const coreTraits = {
@@ -429,13 +428,13 @@ export const coreTraits = {
                 {
                     type: 'link',
                     path: 'internals.rules.abilityScores.strength',
-                    label: 'Strength'
-                }
-            ]
+                    label: 'Strength',
+                },
+            ],
         },
         {
             label: 'Hit Dice',
-            value: [{ type: 'text', text: '1d12 per barbarian level' }]
+            value: [{ type: 'text', text: '1d12 per barbarian level' }],
         },
         {
             label: 'Saving Throws',
@@ -443,62 +442,62 @@ export const coreTraits = {
                 {
                     type: 'link',
                     path: 'internals.rules.abilityScores.strength',
-                    label: 'Strength'
+                    label: 'Strength',
                 },
                 { type: 'text', text: ' and ' },
                 {
                     type: 'link',
                     path: 'internals.rules.abilityScores.constitution',
-                    label: 'Constitution'
-                }
-            ]
+                    label: 'Constitution',
+                },
+            ],
         },
         {
             label: 'Skills',
             layout: {
-                width: 'wide'
+                width: 'wide',
             },
             value: [
                 {
                     type: 'text',
-                    text: 'Choose two: '
+                    text: 'Choose two: ',
                 },
                 {
                     type: 'link',
                     path: 'internals.rules.skills.animalHandling',
-                    label: 'Animal Handling'
+                    label: 'Animal Handling',
                 },
                 { type: 'text', text: ', ' },
                 {
                     type: 'link',
                     path: 'internals.rules.skills.athletics',
-                    label: 'Athletics'
+                    label: 'Athletics',
                 },
                 { type: 'text', text: ', ' },
                 {
                     type: 'link',
                     path: 'internals.rules.skills.intimidation',
-                    label: 'Intimidation'
+                    label: 'Intimidation',
                 },
                 { type: 'text', text: ', ' },
                 {
                     type: 'link',
                     path: 'internals.rules.skills.nature',
-                    label: 'Nature'
+                    label: 'Nature',
                 },
                 { type: 'text', text: ', ' },
                 {
                     type: 'link',
                     path: 'internals.rules.skills.perception',
-                    label: 'Perception'
+                    label: 'Perception',
                 },
                 { type: 'text', text: ', ' },
                 {
                     type: 'link',
                     path: 'internals.rules.skills.survival',
-                    label: 'Survival'
-                }
-            ]
+                    label: 'Survival',
+                },
+            ],
         },
         {
             label: 'Weapons',
@@ -506,15 +505,15 @@ export const coreTraits = {
                 {
                     type: 'link',
                     path: 'internals.rules.equipment.simpleWeapons',
-                    label: 'Simple weapons'
+                    label: 'Simple weapons',
                 },
                 { type: 'text', text: ' and ' },
                 {
                     type: 'link',
                     path: 'internals.rules.equipment.martialWeapons',
-                    label: 'martial weapons'
-                }
-            ]
+                    label: 'martial weapons',
+                },
+            ],
         },
         {
             label: 'Armor',
@@ -522,22 +521,22 @@ export const coreTraits = {
                 {
                     type: 'link',
                     path: 'internals.rules.equipment.lightArmor',
-                    label: 'Light armor'
+                    label: 'Light armor',
                 },
                 { type: 'text', text: ', ' },
                 {
                     type: 'link',
                     path: 'internals.rules.equipment.mediumArmor',
-                    label: 'medium armor'
+                    label: 'medium armor',
                 },
                 { type: 'text', text: ', and ' },
                 {
                     type: 'link',
                     path: 'internals.rules.equipment.shields',
-                    label: 'shields'
-                }
-            ]
-        }
+                    label: 'shields',
+                },
+            ],
+        },
     ],
     startingEquipment: [
         {
@@ -548,17 +547,17 @@ export const coreTraits = {
                     {
                         type: 'link',
                         path: 'internals.equipment.greataxe',
-                        label: 'A greataxe'
-                    }
+                        label: 'A greataxe',
+                    },
                 ],
                 [
                     {
                         type: 'link',
                         path: 'internals.rules.equipment.martialWeapons',
-                        label: 'Any martial melee weapon'
-                    }
-                ]
-            ]
+                        label: 'Any martial melee weapon',
+                    },
+                ],
+            ],
         },
         {
             label: 'Optie 2',
@@ -568,17 +567,17 @@ export const coreTraits = {
                     {
                         type: 'link',
                         path: 'internals.equipment.handaxes',
-                        label: 'Two handaxes'
-                    }
+                        label: 'Two handaxes',
+                    },
                 ],
                 [
                     {
                         type: 'link',
                         path: 'internals.rules.equipment.simpleWeapons',
-                        label: 'Any simple weapon'
-                    }
-                ]
-            ]
+                        label: 'Any simple weapon',
+                    },
+                ],
+            ],
         },
         {
             label: 'Also included',
@@ -587,27 +586,27 @@ export const coreTraits = {
                     {
                         type: 'link',
                         path: 'internals.equipment.explorersPack',
-                        label: `An explorer's pack`
-                    }
+                        label: `An explorer's pack`,
+                    },
                 ],
                 [
                     {
                         type: 'link',
                         path: 'internals.equipment.javelins',
-                        label: 'Four javelins'
-                    }
-                ]
-            ]
-        }
-    ]
+                        label: 'Four javelins',
+                    },
+                ],
+            ],
+        },
+    ],
 } as const satisfies CoreTraitsData;
 
 export const startingEquipmentIntro = [
     {
         type: 'text',
         text: `You start with the following equipment, in addition to the
-			equipment granted by your background.`
-    }
+			equipment granted by your background.`,
+    },
 ] as const;
 
 export function getCoreTrait(label: (typeof coreTraits.traits)[number]['label']) {
@@ -625,23 +624,23 @@ export const hitPointRows = [
         value: [
             { type: 'text', text: '12 + your ' },
             abilityScoreLinks.constitution,
-            { type: 'text', text: ' modifier' }
-        ]
+            { type: 'text', text: ' modifier' },
+        ],
     },
     {
         label: 'Hit Points at Higher Levels',
         value: [
             {
                 type: 'text',
-                text: '1d12 (or 7) + your '
+                text: '1d12 (or 7) + your ',
             },
             abilityScoreLinks.constitution,
             {
                 type: 'text',
-                text: ' modifier per barbarian level after 1st'
-            }
-        ]
-    }
+                text: ' modifier per barbarian level after 1st',
+            },
+        ],
+    },
 ] as const;
 
 export const proficiencyRows = [
@@ -649,10 +648,10 @@ export const proficiencyRows = [
     getCoreTrait('Weapons'),
     {
         label: 'Tools',
-        value: [{ type: 'text', text: 'None' }]
+        value: [{ type: 'text', text: 'None' }],
     },
     getCoreTrait('Saving Throws'),
-    getCoreTrait('Skills')
+    getCoreTrait('Skills'),
 ] as const;
 
 export const primalPathCardGroups = [
@@ -662,49 +661,49 @@ export const primalPathCardGroups = [
             {
                 page: 'internals.classes.barbarian.subclasses.ancestralGuardian',
                 source: `Xanathar's Guide to Everything`,
-                featureLevels: [3, 6, 10, 14]
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.battlerager',
                 source: `Sword Coast Adventurer's Guide`,
-                featureLevels: [3, 6, 10, 14]
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.beast',
                 source: `Tasha's Cauldron of Everything`,
-                featureLevels: [3, 6, 10, 14]
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.berserker',
                 source: `Player's Handbook`,
-                featureLevels: [3, 6, 10, 14]
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.giant',
                 source: 'Bigby Presents: Glory of the Giants',
-                featureLevels: [3, 6, 10, 14]
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.stormHerald',
-                source: `Xanathar's Guide to Everything`
-                , featureLevels: [3, 6, 10, 14]
+                source: `Xanathar's Guide to Everything`,
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.totemWarrior',
-                source: `Player's Handbook`
-                , featureLevels: [3, 6, 10, 14]
+                source: `Player's Handbook`,
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.wildMagic',
-                source: `Tasha's Cauldron of Everything`
-                , featureLevels: [3, 6, 10, 14]
+                source: `Tasha's Cauldron of Everything`,
+                featureLevels: [3, 6, 10, 14],
             },
             {
                 page: 'internals.classes.barbarian.subclasses.zealot',
-                source: `Xanathar's Guide to Everything`
-                , featureLevels: [3, 6, 10, 14]
-            }
-        ]
+                source: `Xanathar's Guide to Everything`,
+                featureLevels: [3, 6, 10, 14],
+            },
+        ],
     },
     {
         title: 'Archived Unearthed Arcana',
@@ -713,22 +712,22 @@ export const primalPathCardGroups = [
                 title: 'Beast',
                 source: 'Unearthed Arcana 67: Subclasses, Part 1',
                 description: `An archived Unearthed Arcana Barbarian Primal Path
-					option from Unearthed Arcana 67: Subclasses, Part 1.`
+					option from Unearthed Arcana 67: Subclasses, Part 1.`,
             },
             {
                 title: 'Giant',
                 source: 'Unearthed Arcana 83: Giant Options',
                 description: `An archived Unearthed Arcana Barbarian Primal Path
-					option from Unearthed Arcana 83: Giant Options.`
+					option from Unearthed Arcana 83: Giant Options.`,
             },
             {
                 title: 'Wild Soul',
                 source: 'Unearthed Arcana 60: Barbarian and Monk',
                 description: `An archived Unearthed Arcana Barbarian Primal Path
-					option from Unearthed Arcana 60: Barbarian and Monk.`
-            }
-        ]
-    }
+					option from Unearthed Arcana 60: Barbarian and Monk.`,
+            },
+        ],
+    },
 ] as const;
 
 export type BarbarianSubclassKey = keyof typeof current.subclasses;
@@ -752,28 +751,28 @@ export function textParagraph(text: string): PageContentBlock {
         content: [
             {
                 type: 'text',
-                text
-            }
-        ]
+                text,
+            },
+        ],
     };
 }
 
 export function paragraph(content: InlineContent): PageContentBlock {
     return {
         type: 'paragraph',
-        content
+        content,
     };
 }
 
 export function featureSection(
     id: string,
     title: string,
-    blocks: readonly PageContentBlock[]
+    blocks: readonly PageContentBlock[],
 ): PageContentSection {
     return {
         id,
         title,
-        blocks
+        blocks,
     };
 }
 
@@ -783,7 +782,7 @@ export function createSubclassPage(
     shortDescription: string,
     longDescription: readonly InlineContent[],
     featureSections: readonly PageContentSection[],
-    images: BarbarianSubclassImages
+    images: BarbarianSubclassImages,
 ) {
     const subclass = current.subclasses[key];
     return createInternalPage({
@@ -791,7 +790,7 @@ export function createSubclassPage(
         img: current.logos.simple,
         images: {
             card: images,
-            header: images
+            header: images,
         },
         label: subclass.name.short,
         title: `${website.name.short} - ${subclass.name.normal}`,
@@ -800,7 +799,7 @@ export function createSubclassPage(
             short: shortDescription,
             medium: `Explore the ${subclass.name.normal}, a Barbarian Primal
 				Path from ${source}.`,
-            long: longDescription
+            long: longDescription,
         },
         header: {
             sections: [
@@ -810,29 +809,24 @@ export function createSubclassPage(
                     content: [
                         {
                             type: 'text',
-                            text: source
-                        }
-                    ]
-                }
-            ]
+                            text: source,
+                        },
+                    ],
+                },
+            ],
         },
         navigation: {
-            parent: 'internals.classes.barbarian.page'
+            parent: 'internals.classes.barbarian.page',
         },
-        tags: [
-            'barbarian',
-            'subclass',
-            'primal-path',
-            subclass.name.slug
-        ],
+        tags: ['barbarian', 'subclass', 'primal-path', subclass.name.slug],
         content: {
             source,
             featureSections,
             tableOfContents: featureSections.map(({ id, title }) => ({
                 id,
-                title
-            }))
-        }
+                title,
+            })),
+        },
     });
 }
 
@@ -841,7 +835,7 @@ export const page = createInternalPage({
     img: current.logos.simple,
     images: {
         card: barbarianImages,
-        header: barbarianImages
+        header: barbarianImages,
     },
     label: current.name.normal,
     title: `${website.name.short} - ${current.name.normal}`,
@@ -856,16 +850,16 @@ export const page = createInternalPage({
                 {
                     type: 'text',
                     text: `Barbarians channel primal forces through Rage, but
-							that power is more than ordinary anger.`
-                }
+							that power is more than ordinary anger.`,
+                },
             ],
             [
                 {
                     type: 'text',
                     text: `Different Barbarians understand Rage through
 							spirits, ancestors, pain, wild magic, nature, or the
-							deepest part of the self breaking through.`
-                }
+							deepest part of the self breaking through.`,
+                },
             ],
             [
                 {
@@ -874,34 +868,34 @@ export const page = createInternalPage({
 							reflexes, senses, and raw physical force. In an
 							adventuring party, Barbarians often become protectors
 							and leaders because they willingly enter danger first
-							and hold the line for everyone behind them.`
-                }
-            ]
-        ]
+							and hold the line for everyone behind them.`,
+                },
+            ],
+        ],
     },
     sourceMetadata: [
         {
             label: 'Source',
             value: `Player's Handbook (2024)`,
-            icon: '/icons/white/game/source-book.svg'
+            icon: '/icons/white/game/source-book.svg',
         },
         {
             label: 'Category',
             value: 'Core D&D',
-            icon: '/icons/white/game/character.svg'
-        }
+            icon: '/icons/white/game/character.svg',
+        },
     ],
     campaignNotes,
     header: {
         sections: [
             {
                 ...sections.multiclassing,
-                content: multiclassingRequirement
-            }
-        ]
+                content: multiclassingRequirement,
+            },
+        ],
     },
     navigation: {
-        parent: 'internals.classes.page'
+        parent: 'internals.classes.page',
     },
     tags: [
         'barbarian',
@@ -915,43 +909,41 @@ export const page = createInternalPage({
         'strength',
         'rage',
         'primal',
-        'frontline'
-    ]
+        'frontline',
+    ],
 });
-export const content = { sections,
-tableOfContents: [
-    sections.multiclassing,
-    sections.progression,
-    {
-        ...sections.coreTraits,
-        children: [
-            sections.hitPoints,
-            sections.proficiencies,
-            sections.startingEquipment
-        ]
-    },
-    {
-        ...sections.classFeatures,
-        children: [
-            sections.rage,
-            sections.unarmoredDefense,
-            sections.weaponMastery,
-            sections.dangerSense,
-            sections.recklessAttack,
-            sections.primalPath,
-            sections.primalKnowledge,
-            sections.abilityScoreImprovement,
-            sections.extraAttack,
-            sections.fastMovement,
-            sections.feralInstinct,
-            sections.instinctivePounce,
-            sections.brutalStrike,
-            sections.relentlessRage,
-            sections.persistentRage,
-            sections.indomitableMight,
-            sections.primalChampion
-        ]
-    }
-],
-coreTraits,
-startingEquipmentIntro } as const;
+export const content = {
+    sections,
+    tableOfContents: [
+        sections.multiclassing,
+        sections.progression,
+        {
+            ...sections.coreTraits,
+            children: [sections.hitPoints, sections.proficiencies, sections.startingEquipment],
+        },
+        {
+            ...sections.classFeatures,
+            children: [
+                sections.rage,
+                sections.unarmoredDefense,
+                sections.weaponMastery,
+                sections.dangerSense,
+                sections.recklessAttack,
+                sections.primalPath,
+                sections.primalKnowledge,
+                sections.abilityScoreImprovement,
+                sections.extraAttack,
+                sections.fastMovement,
+                sections.feralInstinct,
+                sections.instinctivePounce,
+                sections.brutalStrike,
+                sections.relentlessRage,
+                sections.persistentRage,
+                sections.indomitableMight,
+                sections.primalChampion,
+            ],
+        },
+    ],
+    coreTraits,
+    startingEquipmentIntro,
+} as const;

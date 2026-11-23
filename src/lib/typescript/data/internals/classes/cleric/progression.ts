@@ -6,345 +6,344 @@
 import { createInternalPage } from '#lib/typescript/data/internals/_helpers_.js';
 import type { ProgressionData } from '#lib/typescript/pages/content-types.js';
 
-
 export const progression: ProgressionData<string> = {
-    "title": "Cleric progression",
-    "heading": "Cleric Progression",
-    "columns": [
+    title: 'Cleric progression',
+    heading: 'Cleric Progression',
+    columns: [
         {
-            "key": "level",
-            "label": "Level",
-            "format": "ordinal"
+            key: 'level',
+            label: 'Level',
+            format: 'ordinal',
         },
         {
-            "key": "proficiencyBonus",
-            "label": "Prof.",
-            "path": "internals.rules.abbreviations.pb",
-            "format": "signed"
+            key: 'proficiencyBonus',
+            label: 'Prof.',
+            path: 'internals.rules.abbreviations.pb',
+            format: 'signed',
         },
         {
-            "key": "features",
-            "label": "Features"
+            key: 'features',
+            label: 'Features',
         },
         {
-            "key": "cantrips",
-            "label": "Cantrips"
-        }
+            key: 'cantrips',
+            label: 'Cantrips',
+        },
     ],
-    "rows": [
+    rows: [
         {
-            "level": 1,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 1,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Spellcasting",
-                    "sectionId": "spellcasting"
+                    label: 'Spellcasting',
+                    sectionId: 'spellcasting',
                 },
                 {
-                    "label": "Divine Domain",
-                    "sectionId": "divine-domain"
-                }
+                    label: 'Divine Domain',
+                    sectionId: 'divine-domain',
+                },
             ],
-            "values": {
-                "cantrips": 3
-            }
+            values: {
+                cantrips: 3,
+            },
         },
         {
-            "level": 2,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 2,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Channel Divinity (1)",
-                    "sectionId": "channel-divinity-1"
+                    label: 'Channel Divinity (1)',
+                    sectionId: 'channel-divinity-1',
                 },
                 {
-                    "label": "Domain feature",
-                    "sectionId": "domain-feature"
+                    label: 'Domain feature',
+                    sectionId: 'domain-feature',
                 },
                 {
-                    "label": "Harness Divine Power",
-                    "sectionId": "harness-divine-power",
-                    "optional": true
-                }
+                    label: 'Harness Divine Power',
+                    sectionId: 'harness-divine-power',
+                    optional: true,
+                },
             ],
-            "values": {
-                "cantrips": 3
-            }
+            values: {
+                cantrips: 3,
+            },
         },
         {
-            "level": 3,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 3,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "\u2014",
-                    "sectionId": ""
-                }
+                    label: '\u2014',
+                    sectionId: '',
+                },
             ],
-            "values": {
-                "cantrips": 3
-            }
+            values: {
+                cantrips: 3,
+            },
         },
         {
-            "level": 4,
-            "proficiencyBonus": 2,
-            "features": [
+            level: 4,
+            proficiencyBonus: 2,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Cantrip Versatility",
-                    "sectionId": "cantrip-versatility",
-                    "optional": true
-                }
+                    label: 'Cantrip Versatility',
+                    sectionId: 'cantrip-versatility',
+                    optional: true,
+                },
             ],
-            "values": {
-                "cantrips": 4
-            }
+            values: {
+                cantrips: 4,
+            },
         },
         {
-            "level": 5,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 5,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Destroy Undead (CR 1/2)",
-                    "sectionId": "destroy-undead-cr-1-2"
-                }
+                    label: 'Destroy Undead (CR 1/2)',
+                    sectionId: 'destroy-undead-cr-1-2',
+                },
             ],
-            "values": {
-                "cantrips": 4
-            }
+            values: {
+                cantrips: 4,
+            },
         },
         {
-            "level": 6,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 6,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Channel Divinity (2)",
-                    "sectionId": "channel-divinity-2"
+                    label: 'Channel Divinity (2)',
+                    sectionId: 'channel-divinity-2',
                 },
                 {
-                    "label": "Domain feature",
-                    "sectionId": "domain-feature"
-                }
+                    label: 'Domain feature',
+                    sectionId: 'domain-feature',
+                },
             ],
-            "values": {
-                "cantrips": 4
-            }
+            values: {
+                cantrips: 4,
+            },
         },
         {
-            "level": 7,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 7,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "\u2014",
-                    "sectionId": ""
-                }
+                    label: '\u2014',
+                    sectionId: '',
+                },
             ],
-            "values": {
-                "cantrips": 4
-            }
+            values: {
+                cantrips: 4,
+            },
         },
         {
-            "level": 8,
-            "proficiencyBonus": 3,
-            "features": [
+            level: 8,
+            proficiencyBonus: 3,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Destroy Undead (CR 1)",
-                    "sectionId": "destroy-undead-cr-1"
+                    label: 'Destroy Undead (CR 1)',
+                    sectionId: 'destroy-undead-cr-1',
                 },
                 {
-                    "label": "Domain feature",
-                    "sectionId": "domain-feature"
+                    label: 'Domain feature',
+                    sectionId: 'domain-feature',
                 },
                 {
-                    "label": "Cantrip Versatility",
-                    "sectionId": "cantrip-versatility",
-                    "optional": true
-                }
+                    label: 'Cantrip Versatility',
+                    sectionId: 'cantrip-versatility',
+                    optional: true,
+                },
             ],
-            "values": {
-                "cantrips": 4
-            }
+            values: {
+                cantrips: 4,
+            },
         },
         {
-            "level": 9,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 9,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "\u2014",
-                    "sectionId": ""
-                }
+                    label: '\u2014',
+                    sectionId: '',
+                },
             ],
-            "values": {
-                "cantrips": 4
-            }
+            values: {
+                cantrips: 4,
+            },
         },
         {
-            "level": 10,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 10,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Divine Intervention",
-                    "sectionId": "divine-intervention"
-                }
+                    label: 'Divine Intervention',
+                    sectionId: 'divine-intervention',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 11,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 11,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Destroy Undead (CR 2)",
-                    "sectionId": "destroy-undead-cr-2"
-                }
+                    label: 'Destroy Undead (CR 2)',
+                    sectionId: 'destroy-undead-cr-2',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 12,
-            "proficiencyBonus": 4,
-            "features": [
+            level: 12,
+            proficiencyBonus: 4,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Cantrip Versatility",
-                    "sectionId": "cantrip-versatility",
-                    "optional": true
-                }
+                    label: 'Cantrip Versatility',
+                    sectionId: 'cantrip-versatility',
+                    optional: true,
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 13,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 13,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "\u2014",
-                    "sectionId": ""
-                }
+                    label: '\u2014',
+                    sectionId: '',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 14,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 14,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "Destroy Undead (CR 3)",
-                    "sectionId": "destroy-undead-cr-3"
-                }
+                    label: 'Destroy Undead (CR 3)',
+                    sectionId: 'destroy-undead-cr-3',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 15,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 15,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "\u2014",
-                    "sectionId": ""
-                }
+                    label: '\u2014',
+                    sectionId: '',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 16,
-            "proficiencyBonus": 5,
-            "features": [
+            level: 16,
+            proficiencyBonus: 5,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Cantrip Versatility",
-                    "sectionId": "cantrip-versatility",
-                    "optional": true
-                }
+                    label: 'Cantrip Versatility',
+                    sectionId: 'cantrip-versatility',
+                    optional: true,
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 17,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 17,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Destroy Undead (CR 4)",
-                    "sectionId": "destroy-undead-cr-4"
+                    label: 'Destroy Undead (CR 4)',
+                    sectionId: 'destroy-undead-cr-4',
                 },
                 {
-                    "label": "Domain feature",
-                    "sectionId": "domain-feature"
-                }
+                    label: 'Domain feature',
+                    sectionId: 'domain-feature',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 18,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 18,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Channel Divinity (3)",
-                    "sectionId": "channel-divinity-3"
-                }
+                    label: 'Channel Divinity (3)',
+                    sectionId: 'channel-divinity-3',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 19,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 19,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Ability Score Improvement",
-                    "sectionId": "ability-score-improvement"
+                    label: 'Ability Score Improvement',
+                    sectionId: 'ability-score-improvement',
                 },
                 {
-                    "label": "Cantrip Versatility",
-                    "sectionId": "cantrip-versatility",
-                    "optional": true
-                }
+                    label: 'Cantrip Versatility',
+                    sectionId: 'cantrip-versatility',
+                    optional: true,
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
+            values: {
+                cantrips: 5,
+            },
         },
         {
-            "level": 20,
-            "proficiencyBonus": 6,
-            "features": [
+            level: 20,
+            proficiencyBonus: 6,
+            features: [
                 {
-                    "label": "Divine Intervention improvement",
-                    "sectionId": "divine-intervention-improvement"
-                }
+                    label: 'Divine Intervention improvement',
+                    sectionId: 'divine-intervention-improvement',
+                },
             ],
-            "values": {
-                "cantrips": 5
-            }
-        }
-    ]
+            values: {
+                cantrips: 5,
+            },
+        },
+    ],
 };

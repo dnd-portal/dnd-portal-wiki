@@ -5,14 +5,14 @@ const parent = core.internals.rules.abilityScores;
 const current = parent.dexterity;
 
 export const dexterity = {
-	href: `${parent.baseUrl}/${current.name.slug}`,
-	external: false,
+    href: `${parent.baseUrl}/${current.name.slug}`,
+    external: false,
 
-	img: current.logos.simple,
+    img: current.logos.simple,
 
-	title: `D&D Portal - ${current.name.normal}`,
-	subTitle: 'Agility, reflexes, and coordination',
-	description: `${current.name.normal} measures agility, reflexes, balance,
+    title: `D&D Portal - ${current.name.normal}`,
+    subTitle: 'Agility, reflexes, and coordination',
+    description: `${current.name.normal} measures agility, reflexes, balance,
 		and precise physical coordination.`,
-	content: createAbilityScoreContent(current)
+    content: createAbilityScoreContent(current),
 } as const;

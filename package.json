@@ -1,55 +1,60 @@
 {
-	"name": "wiki",
-	"private": true,
-	"version": "0.0.1",
-	"type": "module",
-	"packageManager": "pnpm@11.10.0",
-	"volta": {
-		"node": "25.9.0",
-		"pnpm": "11.10.0"
-	},
-	"devEngines": {
-		"runtime": {
-			"name": "node",
-			"version": "25.9.0",
-			"onFail": "download"
-		}
-	},
-	"scripts": {
-		"generate:runtime": "node scripts/generate-runtime-metadata.mjs",
-		"dev": "pnpm generate:runtime && vite dev",
-		"build": "pnpm generate:runtime && vite build",
-		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
-		"audit:prelive": "node scripts/audit-prelive.mjs",
-		"audit:prelive:crawl": "node scripts/audit-prelive.mjs --crawl-built",
-		"audit:production": "node scripts/audit-production-output.mjs",
-		"check": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:tsgo": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"check:tsgo:watch": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo --watch",
-		"test": "pnpm generate:runtime && vitest run",
-		"test:unit": "pnpm generate:runtime && vitest run",
-		"test:unit:watch": "vitest",
-		"test:browser": "playwright test",
-		"test:browser:install": "playwright install chromium"
-	},
-	"devDependencies": {
-		"@playwright/test": "^1.65.1",
-		"@sveltejs/adapter-static": "^4.0.1",
-		"@sveltejs/kit": "^3.1.1",
-		"@sveltejs/vite-plugin-svelte": "^7.3.1",
-		"@typescript/native": "npm:typescript@7.0.2",
-		"axe-core": "^4.14.1",
-		"sass-embedded": "^1.107.1",
-		"svelte": "^5.57.3",
-		"svelte-check": "^4.7.7",
-		"typescript": "~6.0.3",
-		"vite": "^8.3.5",
-		"vitest": "^5.0.5"
-	},
-	"imports": {
-		"#lib": "./src/lib/index.js",
-		"#lib/*": "./src/lib/*"
-	}
+    "name": "wiki",
+    "private": true,
+    "version": "0.0.1",
+    "type": "module",
+    "packageManager": "pnpm@11.10.0",
+    "volta": {
+        "node": "25.9.0",
+        "pnpm": "11.10.0"
+    },
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "version": "25.9.0",
+            "onFail": "download"
+        }
+    },
+    "scripts": {
+        "generate:runtime": "node scripts/generate-runtime-metadata.mjs",
+        "generate:search-index": "node scripts/generate-navbar-search-index.mjs",
+        "dev": "pnpm generate:runtime && pnpm generate:search-index && vite dev",
+        "build": "pnpm generate:runtime && pnpm generate:search-index && vite build",
+        "preview": "vite preview",
+        "format": "node scripts/format.mjs",
+        "format:check": "node scripts/format.mjs --check",
+        "prepare": "svelte-kit sync || echo ''",
+        "audit:prelive": "node scripts/audit-prelive.mjs",
+        "audit:prelive:crawl": "node scripts/audit-prelive.mjs --crawl-built",
+        "audit:production": "node scripts/audit-production-output.mjs",
+        "check": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+        "check:tsgo": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo",
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+        "check:tsgo:watch": "pnpm generate:runtime && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --tsgo --watch",
+        "test": "pnpm generate:runtime && vitest run",
+        "test:unit": "pnpm generate:runtime && vitest run",
+        "test:unit:watch": "vitest",
+        "test:browser": "playwright test",
+        "test:browser:install": "playwright install chromium"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.65.1",
+        "@sveltejs/adapter-static": "^4.0.1",
+        "@sveltejs/kit": "^3.1.1",
+        "@sveltejs/vite-plugin-svelte": "^7.3.1",
+        "@typescript/native": "npm:typescript@7.0.2",
+        "axe-core": "^4.14.1",
+        "prettier": "3.10.1",
+        "prettier-plugin-svelte": "4.2.0",
+        "sass-embedded": "^1.107.1",
+        "svelte": "^5.57.3",
+        "svelte-check": "^4.7.7",
+        "typescript": "~6.0.3",
+        "vite": "^8.3.5",
+        "vitest": "^5.0.5"
+    },
+    "imports": {
+        "#lib": "./src/lib/index.js",
+        "#lib/*": "./src/lib/*"
+    }
 }

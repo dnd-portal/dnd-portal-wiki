@@ -5,11 +5,11 @@ import doesEvasionWork from './does-evasion-work-against-acid-splash-in-5e';
 import doesDamageScale from './does-acid-splash-scale-with-caster-level-in-5e';
 
 export const acidSplash5eFaq = [
-	canTargetTwoCreatures,
-	canTargetObjects,
-	canUseTwinnedSpell,
-	doesEvasionWork,
-	doesDamageScale
+    canTargetTwoCreatures,
+    canTargetObjects,
+    canUseTwinnedSpell,
+    doesEvasionWork,
+    doesDamageScale,
 ] as const;
 
 export default acidSplash5eFaq;

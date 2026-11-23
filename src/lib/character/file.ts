@@ -26,15 +26,10 @@ export function serialize(character: Character): string {
     return JSON.stringify(character, null, 2);
 }
 
-export async function downloadCharacter(
-    character: Character
-): Promise<void> {
-    const blob = new Blob(
-        [serialize(character)],
-        {
-            type: 'application/json'
-        }
-    );
+export async function downloadCharacter(character: Character): Promise<void> {
+    const blob = new Blob([serialize(character)], {
+        type: 'application/json',
+    });
 
     const url = URL.createObjectURL(blob);
 
@@ -49,7 +44,7 @@ export async function downloadCharacter(
 
 export async function writeCharacter(
     character: Character,
-    handle: CharacterFileHandle
+    handle: CharacterFileHandle,
 ): Promise<void> {
     const writable = await handle.createWritable();
 

@@ -11,23 +11,23 @@ import { createGroupContent } from '../_content_';
 const current = core.internals.rules.abilityScores;
 
 export const abilityScores = {
-	page: {
-		href: current.baseUrl,
-		external: false,
+    page: {
+        href: current.baseUrl,
+        external: false,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `D&D Portal - ${current.name.normal}`,
-		subTitle: 'Core character attributes',
-		description: `Learn how the six ability scores describe a character's
+        title: `D&D Portal - ${current.name.normal}`,
+        subTitle: 'Core character attributes',
+        description: `Learn how the six ability scores describe a character's
 			physical and mental capabilities.`,
-		content: createGroupContent(current.name.normal, 'ability score')
-	},
+        content: createGroupContent(current.name.normal, 'ability score'),
+    },
 
-	strength,
-	dexterity,
-	constitution,
-	intelligence,
-	wisdom,
-	charisma
+    strength,
+    dexterity,
+    constitution,
+    intelligence,
+    wisdom,
+    charisma,
 } as const;

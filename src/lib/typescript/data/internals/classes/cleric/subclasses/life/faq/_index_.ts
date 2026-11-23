@@ -4,4 +4,9 @@ import { question as q3 } from './how-do-you-build-and-play-a-life-domain-cleric
 import { question as q4 } from './how-do-life-domain-spells-work';
 import { question as q5 } from './how-do-disciple-of-life-blessed-healer-and-supreme-healing-work-together';
 
-export const lifeDomainFaq = { slug: 'life-domain', title: 'Life Domain', sourcePage: '/classes/cleric/life-domain/', questions: [q1, q2, q3, q4, q5] } as const;
+export const lifeDomainFaq = {
+    slug: 'life-domain',
+    title: 'Life Domain',
+    sourcePage: '/classes/cleric/life-domain/',
+    questions: [q1, q2, q3, q4, q5],
+} as const;

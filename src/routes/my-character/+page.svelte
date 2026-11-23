@@ -2,11 +2,7 @@
     import { onMount } from 'svelte';
     import { beforeNavigate } from '$app/navigation';
 
-    import {
-        createDefaultCharacter,
-        abilityNames,
-        skillNames
-    } from '#lib/character/defaults.js';
+    import { createDefaultCharacter, abilityNames, skillNames } from '#lib/character/defaults.js';
 
     import {
         formatModifier,
@@ -14,7 +10,7 @@
         passivePerception,
         proficiencyBonus,
         savingThrowModifier,
-        skillModifier
+        skillModifier,
     } from '#lib/character/calculations.js';
 
     import {
@@ -23,15 +19,12 @@
         fileName,
         serialize,
         writeCharacter,
-        type CharacterFileHandle
+        type CharacterFileHandle,
     } from '#lib/character/file.js';
 
     import { parseCharacter } from '#lib/character/validation.js';
 
-    import type {
-        Character,
-        SessionNote
-    } from '#lib/character/types.js';
+    import type { Character, SessionNote } from '#lib/character/types.js';
 
     let character = $state<Character>(createDefaultCharacter());
     let loaded = $state(false);
@@ -42,19 +35,10 @@
     let activeTab = $state('overview');
     let savedSnapshot = '';
 
-    const tabs = [
-        'overview',
-        'combat',
-        'spells',
-        'inventory',
-        'features',
-        'notes'
-    ];
+    const tabs = ['overview', 'combat', 'spells', 'inventory', 'features', 'notes'];
 
     const label = (value: string) =>
-        value
-            .replace(/([A-Z])/g, ' $1')
-            .replace(/^./, c => c.toUpperCase());
+        value.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase());
 
     function markDirty() {
         if (character) {
@@ -79,13 +63,10 @@
             id: sessionId(),
             title: 'Session',
             date: `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
-            notes: ''
+            notes: '',
         };
 
-        character.notes.sessionNotes = [
-            note,
-            ...character.notes.sessionNotes
-        ];
+        character.notes.sessionNotes = [note, ...character.notes.sessionNotes];
 
         markDirty();
     }
@@ -108,10 +89,7 @@
             error = '';
             handle = null;
         } catch (e) {
-            error =
-                e instanceof Error
-                    ? e.message
-                    : 'Unable to read this character file.';
+            error = e instanceof Error ? e.message : 'Unable to read this character file.';
         }
     }
 
@@ -124,9 +102,7 @@
         try {
             const picker = (
                 window as unknown as {
-                    showOpenFilePicker: (
-                        options?: unknown
-                    ) => Promise<
+                    showOpenFilePicker: (options?: unknown) => Promise<
                         Array<{
                             getFile: () => Promise<File>;
                             createWritable: () => Promise<unknown>;
@@ -140,10 +116,10 @@
                     {
                         description: 'D&D Portal character',
                         accept: {
-                            'application/json': ['.json']
-                        }
-                    }
-                ]
+                            'application/json': ['.json'],
+                        },
+                    },
+                ],
             });
 
             handle = picked as unknown as CharacterFileHandle;
@@ -167,9 +143,7 @@
             } else if (canUseFilePicker()) {
                 const picker = (
                     window as unknown as {
-                        showSaveFilePicker: (
-                            options?: unknown
-                        ) => Promise<CharacterFileHandle>;
+                        showSaveFilePicker: (options?: unknown) => Promise<CharacterFileHandle>;
                     }
                 ).showSaveFilePicker;
 
@@ -179,10 +153,10 @@
                         {
                             description: 'D&D Portal character',
                             accept: {
-                                'application/json': ['.json']
-                            }
-                        }
-                    ]
+                                'application/json': ['.json'],
+                            },
+                        },
+                    ],
                 });
 
                 await writeCharacter(character, nextHandle);
@@ -200,13 +174,10 @@
     }
 
     beforeNavigate((navigation) => {
-        if (
-            dirty &&
-            !navigation.to?.url.pathname.startsWith('/my-character')
-        ) {
+        if (dirty && !navigation.to?.url.pathname.startsWith('/my-character')) {
             if (
                 !window.confirm(
-                    'You have unsaved changes. If you leave this page, those changes will be lost.'
+                    'You have unsaved changes. If you leave this page, those changes will be lost.',
                 )
             ) {
                 navigation.cancel();
@@ -225,11 +196,7 @@
         };
 
         const key = (event: KeyboardEvent) => {
-            if (
-                (event.ctrlKey || event.metaKey) &&
-                event.key.toLowerCase() === 's' &&
-                character
-            ) {
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's' && character) {
                 event.preventDefault();
                 void save(event.shiftKey);
             }
@@ -271,8 +238,8 @@
             <h1>My Character</h1>
 
             <p class="lead">
-                A portable character sheet that stays with you. Open a JSON
-                character file to start editing.
+                A portable character sheet that stays with you. Open a JSON character file to start
+                editing.
             </p>
 
             <p class="privacy-note">
@@ -280,19 +247,11 @@
             </p>
 
             <div class="loader-actions">
-                <button
-                    class="button button--primary"
-                    onclick={openWithPicker}
-                >
+                <button class="button button--primary" onclick={openWithPicker}>
                     Open character JSON
                 </button>
 
-                <button
-                    class="button"
-                    onclick={createNew}
-                >
-                    Create new character
-                </button>
+                <button class="button" onclick={createNew}> Create new character </button>
             </div>
 
             <input
@@ -315,9 +274,7 @@
                 </p>
             {/if}
 
-            <p class="muted">
-                Or drag and drop a .json file here.
-            </p>
+            <p class="muted">Or drag and drop a .json file here.</p>
         </div>
     </article>
 {:else}
@@ -338,26 +295,13 @@
             </div>
 
             <div class="character-actions">
-                <span
-                    class:status--dirty={dirty}
-                    class="status"
-                >
+                <span class:status--dirty={dirty} class="status">
                     {dirty ? '● Unsaved changes' : '✓ Saved'}
                 </span>
 
-                <button
-                    class="button button--primary"
-                    onclick={() => void save()}
-                >
-                    Save
-                </button>
+                <button class="button button--primary" onclick={() => void save()}> Save </button>
 
-                <button
-                    class="button"
-                    onclick={() => void save(true)}
-                >
-                    Save as
-                </button>
+                <button class="button" onclick={() => void save(true)}> Save as </button>
 
                 <button
                     class="button button--quiet"
@@ -371,15 +315,9 @@
             </div>
         </header>
 
-        <nav
-            class="character-tabs"
-            aria-label="Character sections"
-        >
+        <nav class="character-tabs" aria-label="Character sections">
             {#each tabs as tab}
-                <button
-                    class:active={activeTab === tab}
-                    onclick={() => activeTab = tab}
-                >
+                <button class:active={activeTab === tab} onclick={() => (activeTab = tab)}>
                     {label(tab)}
                 </button>
             {/each}
@@ -391,15 +329,7 @@
                     <h2>Identity</h2>
 
                     <div class="form-grid">
-                        {#each [
-                            ['name', 'Character name'],
-                            ['player', 'Player'],
-                            ['race', 'Race'],
-                            ['class', 'Class'],
-                            ['subclass', 'Subclass'],
-                            ['background', 'Background'],
-                            ['alignment', 'Alignment']
-                        ] as field}
+                        {#each [['name', 'Character name'], ['player', 'Player'], ['race', 'Race'], ['class', 'Class'], ['subclass', 'Subclass'], ['background', 'Background'], ['alignment', 'Alignment']] as field}
                             <label>
                                 {field[1]}
 
@@ -410,9 +340,7 @@
                                     oninput={(e) => {
                                         character!.character[
                                             field[0] as keyof typeof character.character
-                                        ] = (
-                                            e.currentTarget as HTMLInputElement
-                                        ).value as never;
+                                        ] = (e.currentTarget as HTMLInputElement).value as never;
 
                                         markDirty();
                                     }}
@@ -464,11 +392,7 @@
                                 />
 
                                 <strong>
-                                    {formatModifier(
-                                        modifier(
-                                            character.abilities[ability]
-                                        )
-                                    )}
+                                    {formatModifier(modifier(character.abilities[ability]))}
                                 </strong>
                             </label>
                         {/each}
@@ -478,11 +402,7 @@
                         <span>
                             Proficiency
                             <strong>
-                                {formatModifier(
-                                    proficiencyBonus(
-                                        character.character.level
-                                    )
-                                )}
+                                {formatModifier(proficiencyBonus(character.character.level))}
                             </strong>
                         </span>
 
@@ -496,11 +416,7 @@
                         <span>
                             Initiative
                             <strong>
-                                {formatModifier(
-                                    modifier(
-                                        character.abilities.dexterity
-                                    )
-                                )}
+                                {formatModifier(modifier(character.abilities.dexterity))}
                             </strong>
                         </span>
 
@@ -538,16 +454,10 @@
                                     class:expert={character.skills[skill.key].expertise}
                                     class="tag-button"
                                     onclick={() => {
-                                        character!.skills[
-                                            skill.key
-                                        ].expertise =
-                                            !character!.skills[
-                                                skill.key
-                                            ].expertise;
+                                        character!.skills[skill.key].expertise =
+                                            !character!.skills[skill.key].expertise;
 
-                                        character!.skills[
-                                            skill.key
-                                        ].proficient = true;
+                                        character!.skills[skill.key].proficient = true;
 
                                         markDirty();
                                     }}
@@ -560,20 +470,12 @@
                                     type="checkbox"
                                     checked={character.skills[skill.key].proficient}
                                     onchange={(e) => {
-                                        character!.skills[
-                                            skill.key
-                                        ].proficient = (
+                                        character!.skills[skill.key].proficient = (
                                             e.currentTarget as HTMLInputElement
                                         ).checked;
 
-                                        if (
-                                            !character!.skills[
-                                                skill.key
-                                            ].proficient
-                                        ) {
-                                            character!.skills[
-                                                skill.key
-                                            ].expertise = false;
+                                        if (!character!.skills[skill.key].proficient) {
+                                            character!.skills[skill.key].expertise = false;
                                         }
 
                                         markDirty();
@@ -581,12 +483,7 @@
                                 />
 
                                 <strong>
-                                    {formatModifier(
-                                        skillModifier(
-                                            character,
-                                            skill.key
-                                        )
-                                    )}
+                                    {formatModifier(skillModifier(character, skill.key))}
                                 </strong>
                             </div>
                         {/each}
@@ -607,12 +504,7 @@
                                 </span>
 
                                 <strong>
-                                    {formatModifier(
-                                        savingThrowModifier(
-                                            character,
-                                            ability
-                                        )
-                                    )}
+                                    {formatModifier(savingThrowModifier(character, ability))}
                                 </strong>
                             </div>
                         {/each}
@@ -679,10 +571,7 @@
                         <label>
                             Hit dice
 
-                            <input
-                                bind:value={character.combat.hitDice.type}
-                                oninput={markDirty}
-                            />
+                            <input bind:value={character.combat.hitDice.type} oninput={markDirty} />
                         </label>
 
                         <label>
@@ -709,9 +598,7 @@
                 <div class="panel">
                     <h2>Death saves</h2>
 
-                    <p class="muted">
-                        Successes
-                    </p>
+                    <p class="muted">Successes</p>
 
                     <div class="save-dots">
                         {#each [0, 1, 2] as dot}
@@ -719,8 +606,7 @@
                                 class:filled={dot < character.combat.deathSaves.successes}
                                 onclick={() => {
                                     character!.combat.deathSaves.successes =
-                                        dot + 1 ===
-                                        character!.combat.deathSaves.successes
+                                        dot + 1 === character!.combat.deathSaves.successes
                                             ? dot
                                             : dot + 1;
 
@@ -733,9 +619,7 @@
                         {/each}
                     </div>
 
-                    <p class="muted">
-                        Failures
-                    </p>
+                    <p class="muted">Failures</p>
 
                     <div class="save-dots save-dots--failure">
                         {#each [0, 1, 2] as dot}
@@ -743,8 +627,7 @@
                                 class:filled={dot < character.combat.deathSaves.failures}
                                 onclick={() => {
                                     character!.combat.deathSaves.failures =
-                                        dot + 1 ===
-                                        character!.combat.deathSaves.failures
+                                        dot + 1 === character!.combat.deathSaves.failures
                                             ? dot
                                             : dot + 1;
 
@@ -770,7 +653,7 @@
                                     bonus: '',
                                     damage: '',
                                     damageType: '',
-                                    notes: ''
+                                    notes: '',
                                 });
 
                                 markDirty();
@@ -833,13 +716,8 @@
                     <label>
                         Ability
 
-                        <select
-                            bind:value={character.spells.ability}
-                            onchange={markDirty}
-                        >
-                            <option value={null}>
-                                None
-                            </option>
+                        <select bind:value={character.spells.ability} onchange={markDirty}>
+                            <option value={null}> None </option>
 
                             {#each abilityNames as ability}
                                 <option value={ability}>
@@ -855,14 +733,8 @@
                                 Save DC
                                 <strong>
                                     {8 +
-                                        proficiencyBonus(
-                                            character.character.level
-                                        ) +
-                                        modifier(
-                                            character.abilities[
-                                                character.spells.ability
-                                            ]
-                                        )}
+                                        proficiencyBonus(character.character.level) +
+                                        modifier(character.abilities[character.spells.ability])}
                                 </strong>
                             </span>
 
@@ -870,14 +742,8 @@
                                 Attack bonus
                                 <strong>
                                     {formatModifier(
-                                        proficiencyBonus(
-                                            character.character.level
-                                        ) +
-                                            modifier(
-                                                character.abilities[
-                                                    character.spells.ability
-                                                ]
-                                            )
+                                        proficiencyBonus(character.character.level) +
+                                            modifier(character.abilities[character.spells.ability]),
                                     )}
                                 </strong>
                             </span>
@@ -929,9 +795,9 @@
 
                                 <input
                                     type="number"
-                                    bind:value={character.currency[
-                                        coin as keyof typeof character.currency
-                                    ]}
+                                    bind:value={
+                                        character.currency[coin as keyof typeof character.currency]
+                                    }
                                     oninput={markDirty}
                                 />
                             </label>
@@ -951,7 +817,7 @@
                                     name: '',
                                     quantity: 1,
                                     equipped: false,
-                                    notes: ''
+                                    notes: '',
                                 });
 
                                 markDirty();
@@ -1012,7 +878,7 @@
                             character!.features.push({
                                 name: '',
                                 description: '',
-                                source: ''
+                                source: '',
                             });
 
                             markDirty();
@@ -1042,8 +908,7 @@
                             aria-label="Feature description"
                             placeholder="Description"
                             bind:value={feature.description}
-                            oninput={markDirty}
-                        ></textarea>
+                            oninput={markDirty}></textarea>
 
                         <button
                             class="button button--quiet"
@@ -1061,31 +926,19 @@
 
         {#if activeTab === 'notes'}
             <section class="notes-grid">
-                {#each [
-                    'personalityTraits',
-                    'ideals',
-                    'bonds',
-                    'flaws',
-                    'backstory',
-                    'additionalNotes'
-                ] as note}
+                {#each ['personalityTraits', 'ideals', 'bonds', 'flaws', 'backstory', 'additionalNotes'] as note}
                     <label>
                         {label(note)}
 
                         <textarea
-                            value={character.notes[
-                                note as keyof typeof character.notes
-                            ] as string}
+                            value={character.notes[note as keyof typeof character.notes] as string}
                             oninput={(e) => {
-                                character!.notes[
-                                    note as keyof typeof character.notes
-                                ] = (
+                                character!.notes[note as keyof typeof character.notes] = (
                                     e.currentTarget as HTMLTextAreaElement
                                 ).value as never;
 
                                 markDirty();
-                            }}
-                        ></textarea>
+                            }}></textarea>
                     </label>
                 {/each}
 
@@ -1093,10 +946,7 @@
                     <h2>
                         Session Notes
 
-                        <button
-                            class="button button--small"
-                            onclick={addSessionNote}
-                        >
+                        <button class="button button--small" onclick={addSessionNote}>
                             Add session
                         </button>
                     </h2>
@@ -1120,10 +970,7 @@
                                 <button
                                     class="button button--quiet"
                                     onclick={() => {
-                                        character!.notes.sessionNotes.splice(
-                                            index,
-                                            1
-                                        );
+                                        character!.notes.sessionNotes.splice(index, 1);
 
                                         markDirty();
                                     }}
@@ -1136,15 +983,12 @@
                                 aria-label="Session notes"
                                 placeholder="Session notes..."
                                 bind:value={session.notes}
-                                oninput={markDirty}
-                            ></textarea>
+                                oninput={markDirty}></textarea>
                         </div>
                     {/each}
 
                     {#if character.notes.sessionNotes.length === 0}
-                        <p class="muted">
-                            Keep a separate note for each session.
-                        </p>
+                        <p class="muted">Keep a separate note for each session.</p>
                     {/if}
                 </div>
             </section>

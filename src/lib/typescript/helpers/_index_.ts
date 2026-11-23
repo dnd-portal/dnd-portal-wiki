@@ -3,4 +3,4 @@
     use:
 */
 
-export { date } from "./date/date";
+export { date } from './date/date';

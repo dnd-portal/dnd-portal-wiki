@@ -6,7 +6,7 @@ export const abilityNames: AbilityName[] = [
     'constitution',
     'intelligence',
     'wisdom',
-    'charisma'
+    'charisma',
 ];
 
 export const skillNames: {
@@ -31,11 +31,11 @@ export const skillNames: {
     ['religion', 'Religion', 'intelligence'],
     ['sleightOfHand', 'Sleight of Hand', 'dexterity'],
     ['stealth', 'Stealth', 'dexterity'],
-    ['survival', 'Survival', 'wisdom']
+    ['survival', 'Survival', 'wisdom'],
 ].map(([key, label, ability]) => ({
     key: key as SkillName,
     label,
-    ability: ability as AbilityName
+    ability: ability as AbilityName,
 }));
 
 export function createDefaultCharacter(): Character {
@@ -44,9 +44,9 @@ export function createDefaultCharacter(): Character {
             key,
             {
                 proficient: false,
-                expertise: false
-            }
-        ])
+                expertise: false,
+            },
+        ]),
     ) as Character['skills'];
 
     const slots = Object.fromEntries(
@@ -54,9 +54,9 @@ export function createDefaultCharacter(): Character {
             String(index + 1),
             {
                 max: 0,
-                used: 0
-            }
-        ])
+                used: 0,
+            },
+        ]),
     );
 
     return {
@@ -71,7 +71,7 @@ export function createDefaultCharacter(): Character {
             level: 1,
             background: '',
             alignment: '',
-            xp: 0
+            xp: 0,
         },
 
         abilities: {
@@ -80,7 +80,7 @@ export function createDefaultCharacter(): Character {
             constitution: 10,
             intelligence: 10,
             wisdom: 10,
-            charisma: 10
+            charisma: 10,
         },
 
         combat: {
@@ -93,14 +93,14 @@ export function createDefaultCharacter(): Character {
 
             deathSaves: {
                 successes: 0,
-                failures: 0
+                failures: 0,
             },
 
             hitDice: {
                 type: '',
                 total: 0,
-                used: 0
-            }
+                used: 0,
+            },
         },
 
         savingThrows: {
@@ -109,7 +109,7 @@ export function createDefaultCharacter(): Character {
             constitution: false,
             intelligence: false,
             wisdom: false,
-            charisma: false
+            charisma: false,
         },
 
         skills,
@@ -121,7 +121,7 @@ export function createDefaultCharacter(): Character {
             sp: 0,
             ep: 0,
             gp: 0,
-            pp: 0
+            pp: 0,
         },
 
         equipment: [],
@@ -132,13 +132,13 @@ export function createDefaultCharacter(): Character {
             languages: [],
             armor: [],
             weapons: [],
-            tools: []
+            tools: [],
         },
 
         spells: {
             ability: null,
             slots,
-            known: []
+            known: [],
         },
 
         notes: {
@@ -148,7 +148,7 @@ export function createDefaultCharacter(): Character {
             flaws: '',
             backstory: '',
             additionalNotes: '',
-            sessionNotes: []
-        }
+            sessionNotes: [],
+        },
     };
 }

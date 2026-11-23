@@ -5,11 +5,11 @@ import canDamageObjects from './can-acid-splash-damage-objects-in-5-5e';
 import canSculptSpellsProtect from './can-sculpt-spells-protect-creatures-from-acid-splash-in-5-5e';
 
 export const acidSplash55eFaq = [
-	howManyCreatures,
-	doesItHitAllies,
-	requiresSight,
-	canDamageObjects,
-	canSculptSpellsProtect
+    howManyCreatures,
+    doesItHitAllies,
+    requiresSight,
+    canDamageObjects,
+    canSculptSpellsProtect,
 ] as const;
 
 export default acidSplash55eFaq;

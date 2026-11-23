@@ -9,7 +9,10 @@ export const discord = {
         website remains the central source for campaign rules, character 
         options, homebrew  content and world information.`,
     tags: [
-        '🐉 D&D', '📗 Rules & Guides', '🧙‍♂️ Character Building',
-        '🌎 Campaign Planning', '🧩 Homebrew'
-    ]
-}
+        '🐉 D&D',
+        '📗 Rules & Guides',
+        '🧙‍♂️ Character Building',
+        '🌎 Campaign Planning',
+        '🧩 Homebrew',
+    ],
+};

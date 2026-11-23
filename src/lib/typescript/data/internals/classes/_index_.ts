@@ -29,6 +29,7 @@ import { vanguard } from './vanguard/_index_';
 import { warlock } from './warlock/_index_';
 import { warden } from './warden/_index_';
 import { wizard } from './wizard/_index_';
+import { psion } from './psion/_index_';
 import { getClassEditionData } from './edition-data';
 import { getClassEditionRoute } from './edition-route';
 import type { EditionId } from '../editions';
@@ -37,373 +38,450 @@ const website = core.internals.website;
 const current = core.internals.classes;
 
 export const classes = {
-	page: createInternalPage({
-		href: current.baseUrl,
+    page: createInternalPage({
+        href: current.baseUrl,
 
-		img: current.logos.simple,
+        img: current.logos.simple,
 
-		title: `${website.name.short} - ${current.name.normal}`,
-		subTitle: 'Character classes',
-		description: `Browse available classes, their core features,
+        title: `${website.name.short} - ${current.name.normal}`,
+        subTitle: 'Character classes',
+        description: `Browse available classes, their core features,
 			progression, abilities, subclasses, and character options.`,
 
-		tags: [
-			'classes',
-			'character creation',
-			'player options',
-			'progression',
-			'class features',
-			'subclasses',
-			'abilities'
-		]
-	}),
+        tags: [
+            'classes',
+            'character creation',
+            'player options',
+            'progression',
+            'class features',
+            'subclasses',
+            'abilities',
+        ],
+    }),
 
-	artificer,
-	barbarian,
-	bard,
-	cleric,
-	druid,
-	fighter,
-	monk,
-	paladin,
-	ranger,
-	rogue,
-	sorcerer,
-	warlock,
-	wizard,
-	bloodHunter,
-	captain,
-	champion,
-	gunslinger,
-	illrigger,
-	messenger,
-	monsterHunter,
-	mournbound,
-	pugilist,
-	scholar,
-	shinobi,
-	treasureHunter,
-	vampyr,
-	vanguard,
-	warden
+    artificer,
+    barbarian,
+    bard,
+    cleric,
+    druid,
+    fighter,
+    monk,
+    paladin,
+    ranger,
+    rogue,
+    sorcerer,
+    warlock,
+    wizard,
+    psion,
+    bloodHunter,
+    captain,
+    champion,
+    gunslinger,
+    illrigger,
+    messenger,
+    monsterHunter,
+    mournbound,
+    pugilist,
+    scholar,
+    shinobi,
+    treasureHunter,
+    vampyr,
+    vanguard,
+    warden,
 } as const;
 
 export const classList = [
-	{
-		name: 'Artificer',
-		slug: 'artificer',
-		path: 'internals.classes.artificer.page'
-	},
-	{
-		name: 'Barbarian',
-		slug: 'barbarian',
-		path: 'internals.classes.barbarian.page'
-	},
-	{
-		name: 'Bard',
-		slug: 'bard',
-		path: 'internals.classes.bard.page'
-	},
-	{
-		name: 'Cleric',
-		slug: 'cleric',
-		path: 'internals.classes.cleric.page'
-	},
-	{
-		name: 'Druid',
-		slug: 'druid',
-		path: 'internals.classes.druid.page'
-	},
-	{
-		name: 'Fighter',
-		slug: 'fighter',
-		path: 'internals.classes.fighter.page'
-	},
-	{
-		name: 'Monk',
-		slug: 'monk',
-		path: 'internals.classes.monk.page'
-	},
-	{
-		name: 'Paladin',
-		slug: 'paladin',
-		path: 'internals.classes.paladin.page'
-	},
-	{
-		name: 'Ranger',
-		slug: 'ranger',
-		path: 'internals.classes.ranger.page'
-	},
-	{
-		name: 'Rogue',
-		slug: 'rogue',
-		path: 'internals.classes.rogue.page'
-	},
-	{
-		name: 'Sorcerer',
-		slug: 'sorcerer',
-		path: 'internals.classes.sorcerer.page'
-	},
-	{
-		name: 'Warlock',
-		slug: 'warlock',
-		path: 'internals.classes.warlock.page'
-	},
-	{
-		name: 'Wizard',
-		slug: 'wizard',
-		path: 'internals.classes.wizard.page'
-	},
-	{
-		name: 'Blood Hunter',
-		slug: 'blood-hunter',
-		path: 'internals.classes.bloodHunter.page'
-	},
-	{
-		name: 'Captain',
-		slug: 'captain',
-		path: 'internals.classes.captain.page'
-	},
-	{
-		name: 'Champion',
-		slug: 'champion',
-		path: 'internals.classes.champion.page'
-	},
-	{
-		name: 'Gunslinger',
-		slug: 'gunslinger',
-		path: 'internals.classes.gunslinger.page'
-	},
-	{
-		name: 'Illrigger',
-		slug: 'illrigger',
-		path: 'internals.classes.illrigger.page'
-	},
-	{
-		name: 'Messenger',
-		slug: 'messenger',
-		path: 'internals.classes.messenger.page'
-	},
-	{
-		name: 'Monster Hunter',
-		slug: 'monster-hunter',
-		path: 'internals.classes.monsterHunter.page'
-	},
-	{
-		name: 'Mournbound',
-		slug: 'mournbound',
-		path: 'internals.classes.mournbound.page'
-	},
-	{
-		name: 'Pugilist',
-		slug: 'pugilist',
-		path: 'internals.classes.pugilist.page'
-	},
-	{
-		name: 'Scholar',
-		slug: 'scholar',
-		path: 'internals.classes.scholar.page'
-	},
-	{
-		name: 'Shinobi',
-		slug: 'shinobi',
-		path: 'internals.classes.shinobi.page'
-	},
-	{
-		name: 'Treasure Hunter',
-		slug: 'treasure-hunter',
-		path: 'internals.classes.treasureHunter.page'
-	},
-	{
-		name: 'Vampyr',
-		slug: 'vampyr',
-		path: 'internals.classes.vampyr.page'
-	},
-	{
-		name: 'Vanguard',
-		slug: 'vanguard',
-		path: 'internals.classes.vanguard.page'
-	},
-	{
-		name: 'Warden',
-		slug: 'warden',
-		path: 'internals.classes.warden.page'
-	}
+    {
+        name: 'Artificer',
+        slug: 'artificer',
+        path: 'internals.classes.artificer.page',
+    },
+    {
+        name: 'Barbarian',
+        slug: 'barbarian',
+        path: 'internals.classes.barbarian.page',
+    },
+    {
+        name: 'Bard',
+        slug: 'bard',
+        path: 'internals.classes.bard.page',
+    },
+    {
+        name: 'Cleric',
+        slug: 'cleric',
+        path: 'internals.classes.cleric.page',
+    },
+    {
+        name: 'Druid',
+        slug: 'druid',
+        path: 'internals.classes.druid.page',
+    },
+    {
+        name: 'Fighter',
+        slug: 'fighter',
+        path: 'internals.classes.fighter.page',
+    },
+    {
+        name: 'Monk',
+        slug: 'monk',
+        path: 'internals.classes.monk.page',
+    },
+    {
+        name: 'Paladin',
+        slug: 'paladin',
+        path: 'internals.classes.paladin.page',
+    },
+    {
+        name: 'Ranger',
+        slug: 'ranger',
+        path: 'internals.classes.ranger.page',
+    },
+    {
+        name: 'Rogue',
+        slug: 'rogue',
+        path: 'internals.classes.rogue.page',
+    },
+    {
+        name: 'Sorcerer',
+        slug: 'sorcerer',
+        path: 'internals.classes.sorcerer.page',
+    },
+    {
+        name: 'Warlock',
+        slug: 'warlock',
+        path: 'internals.classes.warlock.page',
+    },
+    {
+        name: 'Wizard',
+        slug: 'wizard',
+        path: 'internals.classes.wizard.page',
+    },
+    {
+        name: 'Psion',
+        slug: 'psion',
+        path: 'internals.classes.psion.page',
+    },
+    {
+        name: 'Blood Hunter',
+        slug: 'blood-hunter',
+        path: 'internals.classes.bloodHunter.page',
+    },
+    {
+        name: 'Captain',
+        slug: 'captain',
+        path: 'internals.classes.captain.page',
+    },
+    {
+        name: 'Champion',
+        slug: 'champion',
+        path: 'internals.classes.champion.page',
+    },
+    {
+        name: 'Gunslinger',
+        slug: 'gunslinger',
+        path: 'internals.classes.gunslinger.page',
+    },
+    {
+        name: 'Illrigger',
+        slug: 'illrigger',
+        path: 'internals.classes.illrigger.page',
+    },
+    {
+        name: 'Messenger',
+        slug: 'messenger',
+        path: 'internals.classes.messenger.page',
+    },
+    {
+        name: 'Monster Hunter',
+        slug: 'monster-hunter',
+        path: 'internals.classes.monsterHunter.page',
+    },
+    {
+        name: 'Mournbound',
+        slug: 'mournbound',
+        path: 'internals.classes.mournbound.page',
+    },
+    {
+        name: 'Pugilist',
+        slug: 'pugilist',
+        path: 'internals.classes.pugilist.page',
+    },
+    {
+        name: 'Scholar',
+        slug: 'scholar',
+        path: 'internals.classes.scholar.page',
+    },
+    {
+        name: 'Shinobi',
+        slug: 'shinobi',
+        path: 'internals.classes.shinobi.page',
+    },
+    {
+        name: 'Treasure Hunter',
+        slug: 'treasure-hunter',
+        path: 'internals.classes.treasureHunter.page',
+    },
+    {
+        name: 'Vampyr',
+        slug: 'vampyr',
+        path: 'internals.classes.vampyr.page',
+    },
+    {
+        name: 'Vanguard',
+        slug: 'vanguard',
+        path: 'internals.classes.vanguard.page',
+    },
+    {
+        name: 'Warden',
+        slug: 'warden',
+        path: 'internals.classes.warden.page',
+    },
 ] as const;
+
+const officialClassSlugs = new Set([
+    'artificer',
+    'barbarian',
+    'bard',
+    'cleric',
+    'druid',
+    'fighter',
+    'monk',
+    'paladin',
+    'ranger',
+    'rogue',
+    'sorcerer',
+    'warlock',
+    'wizard',
+]);
+
+export type ClassOverviewEntry = {
+    readonly name: string;
+    readonly slug: string;
+    readonly category: 'official' | 'homebrew';
+    readonly creator?: string;
+    readonly availableEditions: readonly EditionId[];
+    readonly pagePath: string;
+    readonly runtimePath: string;
+};
 
 const genericClassEntries = [
-	{
-		slug: 'artificer',
-		data: artificer
-	},
-	{
-		slug: 'bard',
-		data: bard
-	},
-	{
-		slug: 'barbarian',
-		data: barbarian
-	},
-	{
-		slug: 'cleric',
-		data: cleric
-	},
-	{
-		slug: 'druid',
-		data: druid
-	},
-	{
-		slug: 'fighter',
-		data: fighter
-	},
-	{
-		slug: 'monk',
-		data: monk
-	},
-	{
-		slug: 'paladin',
-		data: paladin
-	},
-	{
-		slug: 'ranger',
-		data: ranger
-	},
-	{
-		slug: 'rogue',
-		data: rogue
-	},
-	{
-		slug: 'sorcerer',
-		data: sorcerer
-	},
-	{
-		slug: 'warlock',
-		data: warlock
-	},
-	{
-		slug: 'wizard',
-		data: wizard
-	},
-	{
-		slug: 'blood-hunter',
-		data: bloodHunter
-	},
-	{
-		slug: 'captain',
-		data: captain
-	},
-	{
-		slug: 'champion',
-		data: champion
-	},
-	{
-		slug: 'gunslinger',
-		data: gunslinger
-	},
-	{
-		slug: 'illrigger',
-		data: illrigger
-	},
-	{
-		slug: 'messenger',
-		data: messenger
-	},
-	{
-		slug: 'monster-hunter',
-		data: monsterHunter
-	},
-	{
-		slug: 'mournbound',
-		data: mournbound
-	},
-	{
-		slug: 'pugilist',
-		data: pugilist
-	},
-	{
-		slug: 'scholar',
-		data: scholar
-	},
-	{
-		slug: 'shinobi',
-		data: shinobi
-	},
-	{
-		slug: 'treasure-hunter',
-		data: treasureHunter
-	},
-	{
-		slug: 'vampyr',
-		data: vampyr
-	},
-	{
-		slug: 'vanguard',
-		data: vanguard
-	},
-	{
-		slug: 'warden',
-		data: warden
-	}
+    {
+        slug: 'artificer',
+        data: artificer,
+    },
+    {
+        slug: 'bard',
+        data: bard,
+    },
+    {
+        slug: 'barbarian',
+        data: barbarian,
+    },
+    {
+        slug: 'cleric',
+        data: cleric,
+    },
+    {
+        slug: 'druid',
+        data: druid,
+    },
+    {
+        slug: 'fighter',
+        data: fighter,
+    },
+    {
+        slug: 'monk',
+        data: monk,
+    },
+    {
+        slug: 'paladin',
+        data: paladin,
+    },
+    {
+        slug: 'ranger',
+        data: ranger,
+    },
+    {
+        slug: 'rogue',
+        data: rogue,
+    },
+    {
+        slug: 'sorcerer',
+        data: sorcerer,
+    },
+    {
+        slug: 'warlock',
+        data: warlock,
+    },
+    {
+        slug: 'wizard',
+        data: wizard,
+    },
+    {
+        slug: 'psion',
+        data: psion,
+    },
+    {
+        slug: 'blood-hunter',
+        data: bloodHunter,
+    },
+    {
+        slug: 'captain',
+        data: captain,
+    },
+    {
+        slug: 'champion',
+        data: champion,
+    },
+    {
+        slug: 'gunslinger',
+        data: gunslinger,
+    },
+    {
+        slug: 'illrigger',
+        data: illrigger,
+    },
+    {
+        slug: 'messenger',
+        data: messenger,
+    },
+    {
+        slug: 'monster-hunter',
+        data: monsterHunter,
+    },
+    {
+        slug: 'mournbound',
+        data: mournbound,
+    },
+    {
+        slug: 'pugilist',
+        data: pugilist,
+    },
+    {
+        slug: 'scholar',
+        data: scholar,
+    },
+    {
+        slug: 'shinobi',
+        data: shinobi,
+    },
+    {
+        slug: 'treasure-hunter',
+        data: treasureHunter,
+    },
+    {
+        slug: 'vampyr',
+        data: vampyr,
+    },
+    {
+        slug: 'vanguard',
+        data: vanguard,
+    },
+    {
+        slug: 'warden',
+        data: warden,
+    },
 ] as const;
 
+export function getClassOverviewEntries(
+    edition: EditionId,
+    includeUnavailable = false,
+): readonly ClassOverviewEntry[] {
+    return genericClassEntries.flatMap(({ slug, data }) => {
+        const availableEditions =
+            'availableEditions' in data
+                ? (data.availableEditions as readonly EditionId[])
+                : data.page.tags?.includes('2014')
+                  ? ['5e' as EditionId]
+                  : ['5.5e' as EditionId];
+        if (!includeUnavailable && !availableEditions.includes(edition)) return [];
+
+        const category = officialClassSlugs.has(slug) ? 'official' : 'homebrew';
+        const targetEdition = availableEditions.includes(edition) ? edition : availableEditions[0];
+        const runtimePath = classList.find((item) => item.slug === slug)?.path;
+        if (!runtimePath) return [];
+        return [
+            {
+                name: data.page.label ?? slug,
+                slug,
+                category,
+                creator:
+                    'content' in data &&
+                    'attribution' in data.content &&
+                    data.content.attribution &&
+                    'creator' in data.content.attribution
+                        ? data.content.attribution.creator
+                        : undefined,
+                availableEditions,
+                pagePath: getClassEditionRoute(slug, targetEdition),
+                runtimePath,
+            },
+        ];
+    });
+}
+
 export function getClassBySlug(slug: string) {
-	return genericClassEntries.find((entry) => entry.slug === slug)?.data ?? null;
+    return genericClassEntries.find((entry) => entry.slug === slug)?.data ?? null;
 }
 
 export type ClassRouteResolution = {
-	baseClassSlug: string;
-	edition: EditionId;
+    baseClassSlug: string;
+    edition: EditionId;
 };
 
 export function resolveClassRoute(routeSlug: string): ClassRouteResolution | null {
-	const normalizedSlug = routeSlug.replace(/^\/+|\/+$/g, '');
-	const directEntry = genericClassEntries.find((entry) => entry.slug === normalizedSlug);
-	if (directEntry) {
-		return {
-			baseClassSlug: directEntry.slug,
-			edition: '5.5e'
-		};
-	}
+    const normalizedSlug = routeSlug.replace(/^\/+|\/+$/g, '');
+    const directEntry = genericClassEntries.find((entry) => entry.slug === normalizedSlug);
+    if (directEntry) {
+        return {
+            baseClassSlug: directEntry.slug,
+            edition: '5.5e',
+        };
+    }
 
-	for (const entry of genericClassEntries) {
-		const availableEditions =
-			'availableEditions' in entry.data ? entry.data.availableEditions : [];
-		const edition = availableEditions.find((candidate) => {
-			const route = getClassEditionRoute(entry.slug, candidate);
-			return route.replace(/^\/+|\/+$/g, '').split('/').at(-1) === normalizedSlug;
-		});
+    for (const entry of genericClassEntries) {
+        const availableEditions =
+            'availableEditions' in entry.data ? entry.data.availableEditions : [];
+        const edition = availableEditions.find((candidate) => {
+            const route = getClassEditionRoute(entry.slug, candidate);
+            return (
+                route
+                    .replace(/^\/+|\/+$/g, '')
+                    .split('/')
+                    .at(-1) === normalizedSlug
+            );
+        });
 
-		if (edition && getClassEditionData(entry.slug, edition)) {
-			return { baseClassSlug: entry.slug, edition };
-		}
-	}
+        if (edition && getClassEditionData(entry.slug, edition)) {
+            return { baseClassSlug: entry.slug, edition };
+        }
+    }
 
-	return null;
+    return null;
 }
 
 /** Resolve an edition-suffixed class route to its canonical class identity. */
 export function getBaseClassSlug(pathname: string): string | null {
-	const segments = pathname.split(/[?#]/, 1)[0].split('/').filter(Boolean);
-	const classRouteSlug = segments[0] === 'classes' ? segments[1] : segments.at(-1);
-	return classRouteSlug ? resolveClassRoute(classRouteSlug)?.baseClassSlug ?? null : null;
+    const segments = pathname.split(/[?#]/, 1)[0].split('/').filter(Boolean);
+    const classRouteSlug = segments[0] === 'classes' ? segments[1] : segments.at(-1);
+    return classRouteSlug ? (resolveClassRoute(classRouteSlug)?.baseClassSlug ?? null) : null;
 }
 
-export function getSubclassBySlug(
-	classSlug: string,
-	subclassSlug: string
-) {
-	const classData = getClassBySlug(classSlug);
+export function getSubclassBySlug(classSlug: string, subclassSlug: string) {
+    const classData = getClassBySlug(classSlug);
 
-	if (!classData || !('subclasses' in classData)) {
-		return null;
-	}
+    if (!classData || !('subclasses' in classData)) {
+        return null;
+    }
 
-	const subclasses = Object.values(classData.subclasses);
+    const subclasses = Object.values(classData.subclasses);
 
-	return subclasses.find((subclass) => {
-		const href = 'page' in subclass ? subclass.page.href : subclass.href;
-		const parts = href.replace(/\/+$/, '').split('/');
+    return (
+        subclasses.find((subclass) => {
+            const href = 'page' in subclass ? subclass.page.href : subclass.href;
+            const parts = href.replace(/\/+$/, '').split('/');
 
-		return parts[parts.length - 1] === subclassSlug;
-	}) ?? null;
+            return parts[parts.length - 1] === subclassSlug;
+        }) ?? null
+    );
 }
