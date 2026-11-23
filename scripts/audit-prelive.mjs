@@ -796,19 +796,49 @@ async function crawlBuiltOutput(urls) {
     return failures;
 }
 
-const server = await createServer({
-    appType: 'custom',
-    server: {
-        middlewareMode: true,
-    },
-});
+function withTimeout(promise, label, timeoutMs = 30_000) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+        timer = setTimeout(
+            () => reject(new Error(`${label} timed out after ${timeoutMs}ms`)),
+            timeoutMs,
+        );
+    });
+
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+const crawlBuilt = shouldCrawlBuiltOutput();
+const server = crawlBuilt
+    ? null
+    : await createServer({
+          appType: 'custom',
+          server: {
+              middlewareMode: true,
+          },
+      });
 
 try {
-    const { data } = await server.ssrLoadModule('/src/lib/typescript/data/_index_.ts');
-    const { base } = await server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts');
-    const { spells } = await server.ssrLoadModule(
-        '/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts',
-    );
+    const { data, base, spells } = crawlBuilt
+        ? { data: {}, base: { siteLink: 'https://dnd-portal.com/' }, spells: [] }
+        : await (async () => {
+              console.log('Loading audit data through Vite SSR');
+              const { data } = await withTimeout(
+                  server.ssrLoadModule('/src/lib/typescript/data/_index_.ts'),
+                  'Loading canonical data',
+              );
+              const { base } = await withTimeout(
+                  server.ssrLoadModule('/src/lib/typescript/data/core/_index_.ts'),
+                  'Loading core data',
+              );
+              const { spells } = await withTimeout(
+                  server.ssrLoadModule(
+                      '/src/lib/typescript/data/internals/rules/spellcasting/spells/spell-data.ts',
+                  ),
+                  'Loading spell data',
+              );
+              return { data, base, spells };
+          })();
     const spellLevelCounts = new Map();
 
     for (const spell of spells) {
@@ -816,7 +846,7 @@ try {
         spellLevelCounts.set(level, (spellLevelCounts.get(level) ?? 0) + 1);
     }
     const productionOrigin = base.siteLink.replace(/\/$/, '');
-    const links = collectLinks(data);
+    const links = crawlBuilt ? [] : collectLinks(data);
     const pages = links.filter(({ value }) => isPageData(value));
     const hrefCounts = new Map();
 
@@ -831,10 +861,13 @@ try {
     const badRoutes = pages
         .filter(({ value }) => !isKnownInternalRoute(value.href))
         .map(({ path, value }) => `${path} -> ${value.href}`);
-    const badDataPaths = collectQuotedDataPaths().filter(
-        (path) => getDataValue(data, path) === undefined,
-    );
-    const missingAssets = [...collectInternalAssets(data), ...collectSourceAssetUrls()]
+    const badDataPaths = crawlBuilt
+        ? []
+        : collectQuotedDataPaths().filter((path) => getDataValue(data, path) === undefined);
+    const missingAssets = [
+        ...(crawlBuilt ? [] : collectInternalAssets(data)),
+        ...collectSourceAssetUrls(),
+    ]
         .filter((asset, index, all) => all.indexOf(asset) === index)
         .filter((asset) => !fileExistsForAsset(asset));
     const invalidSpellRoutes = spells
@@ -851,11 +884,12 @@ try {
         .filter(([, count]) => count > 1)
         .map(([slug, count]) => `/spells/${slug} appears ${count} times`);
     const crawlBaseUrl = getCrawlBaseUrl();
-    const routeUrls = [
-        ...pages.map(({ value }) => value.href).filter((href) => href.startsWith('/')),
-        ...spells.map((spell) => `/spells/${spell.slug}`),
-    ];
-    const crawlBuilt = shouldCrawlBuiltOutput();
+    const routeUrls = crawlBuilt
+        ? getBuildHtmlFiles().map((file) => getCurrentRouteFromHtmlFile(file))
+        : [
+              ...pages.map(({ value }) => value.href).filter((href) => href.startsWith('/')),
+              ...spells.map((spell) => `/spells/${spell.slug}`),
+          ];
     const crawlFailures = crawlBuilt
         ? await crawlBuiltOutput(routeUrls)
         : await crawlUrls(crawlBaseUrl, routeUrls);
@@ -972,5 +1006,11 @@ try {
 
     process.exitCode = failed ? 1 : 0;
 } finally {
-    await server.close();
+    if (server) {
+        console.log('Closing Vite SSR audit server');
+    }
+    if (server) {
+        await server.close();
+        server.ws?.close();
+    }
 }

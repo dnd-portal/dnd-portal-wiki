@@ -24,6 +24,6 @@ export function load({ params }) {
     }
 
     return {
-        seo: createEquipmentSeoMetadata(item),
+        seo: { ...createEquipmentSeoMetadata(item), schemaKind: 'creativeWork' as const },
     };
 }

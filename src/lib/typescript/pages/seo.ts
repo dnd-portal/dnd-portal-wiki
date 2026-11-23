@@ -5,7 +5,8 @@
 import type { PageData, PagePath } from '#lib/typescript/data/_index_.js';
 import { getRuntimeData } from '#lib/typescript/data/runtime/index.js';
 import { siteMetadata } from '#lib/typescript/data/runtime/site-metadata.js';
-import { getBreadcrumbItems, getPageLabel } from './currentPage';
+import { getBreadcrumbItems, getDynamicSpellBreadcrumbItems, getPageLabel } from './currentPage';
+import { createSchemaGraph, type SchemaGraph, type SchemaPageKind } from './schema/index.js';
 
 export type SeoMetadataInput = {
     readonly title?: string;
@@ -17,6 +18,7 @@ export type SeoMetadataInput = {
         readonly height?: number;
     };
     readonly type?: 'article' | 'website';
+    readonly schemaKind?: SchemaPageKind;
 };
 
 export type SeoMetadata = {
@@ -34,7 +36,7 @@ export type SeoMetadata = {
     readonly icon512Href: string;
     readonly appleTouchIconHref: string;
     readonly manifestHref: string;
-    readonly structuredDataJson: string | null;
+    readonly structuredData: SchemaGraph | null;
     readonly type: 'article' | 'website';
     readonly twitterCard: 'summary' | 'summary_large_image';
 };
@@ -184,58 +186,39 @@ function getAbsoluteCanonicalUrl(href: string): string {
     return getAbsoluteSiteUrl(getCanonicalPath(href));
 }
 
-function createWebsiteStructuredData(description: string) {
-    return {
-        '@type': 'WebSite',
-        '@id': getAbsoluteSiteUrl('/#website'),
-        url: getAbsoluteSiteUrl('/'),
-        name: siteMetadata.shortName,
-        alternateName: siteName,
-        description,
+function inferSchemaKind(
+    canonicalPath: string,
+    explicitKind?: SchemaPageKind,
+): SchemaPageKind | undefined {
+    if (explicitKind) return explicitKind;
+    const explicitRouteKinds: Record<string, SchemaPageKind> = {
+        '/classes/': 'collection',
+        '/species/': 'collection',
     };
+    if (explicitRouteKinds[canonicalPath]) return explicitRouteKinds[canonicalPath];
+    if (canonicalPath === '/about/') return 'about';
+    if (canonicalPath.startsWith('/classes/')) return 'article';
+    if (canonicalPath.startsWith('/rules/')) return 'article';
+    if (canonicalPath.startsWith('/spells/')) return 'creativeWork';
+    if (canonicalPath.startsWith('/magic-items/')) return 'creativeWork';
+    return undefined;
 }
 
-function createBreadcrumbStructuredData(path: PagePath | null) {
-    const items = getBreadcrumbItems(path);
-
-    if (items.length < 2) {
-        return null;
+function getBreadcrumbs(path: PagePath | null, canonicalPath: string) {
+    let items = getBreadcrumbItems(path);
+    if (items.length < 2 && canonicalPath.startsWith('/spells/')) {
+        const slug = canonicalPath.split('/')[2];
+        items = slug ? getDynamicSpellBreadcrumbItems(slug) : [];
     }
 
-    return {
-        '@type': 'BreadcrumbList',
-        '@id': `${getAbsoluteCanonicalUrl(getRuntimeData(items[items.length - 1].path!).href)}#breadcrumb`,
-        itemListElement: items.map((item, index) => ({
-            '@type': 'ListItem',
-            position: index + 1,
+    return items
+        .filter((item) => item.path || item.key.startsWith('/'))
+        .map((item) => ({
             name: item.label,
-            item: getAbsoluteCanonicalUrl(getRuntimeData(item.path!).href),
-        })),
-    };
-}
-
-function createStructuredDataJson({
-    path,
-    description,
-    canonicalPath,
-}: {
-    readonly path: PagePath | null;
-    readonly description: string;
-    readonly canonicalPath: string;
-}): string | null {
-    const graph = [
-        ...(canonicalPath === '/' ? [createWebsiteStructuredData(description)] : []),
-        ...(canonicalPath !== '/' ? [createBreadcrumbStructuredData(path)].filter(Boolean) : []),
-    ];
-
-    if (graph.length === 0) {
-        return null;
-    }
-
-    return JSON.stringify({
-        '@context': 'https://schema.org',
-        '@graph': graph,
-    });
+            url: item.path
+                ? getAbsoluteCanonicalUrl(getRuntimeData(item.path).href)
+                : getAbsoluteCanonicalUrl(item.key),
+        }));
 }
 
 export function createSeoMetadata({
@@ -284,10 +267,13 @@ export function createSeoMetadata({
         icon512Href: icon512Image.href,
         appleTouchIconHref: appleTouchIcon.href,
         manifestHref: manifest.href,
-        structuredDataJson: createStructuredDataJson({
-            path,
+        structuredData: createSchemaGraph({
+            canonicalUrl: getAbsoluteSiteUrl(canonicalPath),
+            title: formatContextTitle({ title, pageData, path, canonicalPath }),
             description: normalizedDescription,
-            canonicalPath,
+            kind: inferSchemaKind(canonicalPath, routeSeo?.schemaKind),
+            imageUrl,
+            breadcrumbs: getBreadcrumbs(path, canonicalPath),
         }),
         type: routeSeo?.type ?? (canonicalPath === '/' ? 'website' : 'article'),
         twitterCard: imageUrl.endsWith('.svg') ? 'summary' : 'summary_large_image',

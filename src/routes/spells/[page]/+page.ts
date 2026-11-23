@@ -33,6 +33,6 @@ export function load({ params, url }) {
     }
 
     return {
-        seo: createSpellSeoMetadata(spell),
+        seo: { ...createSpellSeoMetadata(spell), schemaKind: 'creativeWork' as const },
     };
 }
