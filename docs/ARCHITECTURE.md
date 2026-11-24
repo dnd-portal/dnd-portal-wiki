@@ -237,7 +237,6 @@ There are no Markdown-derived FAQ groups in production.
   group/question registry.
 - The maintained static-site audit is `scripts/audit-prelive.mjs`; the
   project validation commands can be run from the repository root:
-  from the repository root:
 
 ```bash
 pnpm check
@@ -245,7 +244,6 @@ pnpm test
 pnpm build
 pnpm audit:prelive:crawl
 ```
-
 
 ## Routing
 
