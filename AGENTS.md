@@ -249,6 +249,17 @@ Keep legal, privacy, cookie, contribution, and content-removal pages consistent 
 
 Do not add a repository-wide license unless the licensing of source code, written content, data, artwork, icons, and homebrew material has been deliberately decided.
 
+## Public Repository Attribution and Naming — Mandatory
+
+Public repository artifacts must describe the project, changes, and contributors without identifying the development assistants or software used to prepare them.
+
+- NEVER include the name of an automated coding assistant, conversational assistant, language model, or its vendor in branch names, tags, commit messages, pull request titles or descriptions, issue comments, changelogs, project reports, release notes, documentation, or generated public content.
+- NEVER use assistant or vendor names as Git branch prefixes. Use purpose-based prefixes such as `feat/`, `fix/`, `perf/`, `refactor/`, `docs/`, or `chore/`.
+- Do not add assistant attribution, signatures, co-author trailers, generator credit, or similar metadata in public Git history or published project materials.
+- Before creating a branch, commit, PR, issue comment, or public report, inspect all proposed text and names for prohibited attribution and replace it with precise technical, project-focused wording.
+- This rule applies to all future work and all tools used on this repository. It cannot be overridden by automated defaults or suggested branch names.
+- Preserve legitimate technical documentation of actual product features or third-party integrations when substantively necessary, but do not add development-process attribution.
+
 ## Git and Scope
 
 - Do not commit generated or local-only files unless they belong in version control.
