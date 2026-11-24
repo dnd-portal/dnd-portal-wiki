@@ -146,7 +146,7 @@ const changelogReleases = [
                 category: 'changed',
                 title: 'Cleaned migration tooling and temporary repository output',
                 description:
-                    'Moved Codex-only migration scripts, notes, reports, previews, and historical run artifacts into the ignored codex workspace and removed root-level process clutter.',
+                    'Organized temporary migration scripts, notes, reports, previews, and historical run artifacts separately from maintained project files and removed root-level process clutter.',
             },
             {
                 category: 'changed',
