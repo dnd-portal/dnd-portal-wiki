@@ -158,7 +158,7 @@ const publicIssueItems: readonly PublicIssue[] = [
         reportedAt: '2026-09-08',
         updatedAt: '2026-09-08',
         resolution:
-            'Removed completed root-level process clutter and added an ignored codex workspace for Codex-only scripts, reports, previews, and temporary artifacts.',
+            'Removed completed root-level process clutter and organized temporary migration scripts, reports, previews, and generated artifacts outside canonical project files.',
         relatedPage: 'internals.project.changelog',
         relatedRelease: '0.9.2',
     },
@@ -173,7 +173,7 @@ const publicIssueItems: readonly PublicIssue[] = [
         reportedAt: '2026-09-08',
         updatedAt: '2026-09-08',
         resolution:
-            'Completed Codex migration artifacts now live under the ignored codex workspace, while maintained project validation remains in scripts and canonical architecture documentation remains in docs.',
+            'Completed migration artifacts are kept outside canonical project files, while maintained validation stays in scripts and architecture documentation stays in docs.',
         relatedPage: 'internals.project.changelog',
         relatedRelease: '0.9.2',
     },
