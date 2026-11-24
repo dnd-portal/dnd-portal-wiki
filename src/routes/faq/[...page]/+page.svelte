@@ -2,7 +2,7 @@
 <script lang="ts">
     import { page as appPage } from '$app/state';
     import type { LinkPath } from '#lib/typescript/data/_index_.js';
-    import { getFaqGroup, getFaqQuestion } from '#lib/typescript/data/internals/faq.js';
+    import type { FaqPageData } from '#lib/typescript/pages/faqPageData.js';
     import { getCurrentPageContext } from '#lib/svelte/context/currentPage.js';
     import type { RoutePageData } from '#lib/typescript/pages/metadata.js';
 
@@ -17,16 +17,14 @@
         (appPage.data as { routePageData?: RoutePageData | null }).routePageData,
     );
     let isMigratedRoute = $derived(appPage.params.page === 'acid-splash-5e');
-    let faqSegments = $derived((appPage.params.page ?? '').split('/').filter(Boolean));
-    const group = $derived(getFaqGroup(faqSegments[0] ?? ''));
-    const question = $derived(
-        faqSegments[1] ? getFaqQuestion(faqSegments[0] ?? '', faqSegments[1]) : null,
-    );
+    const routeFaq = $derived((appPage.data as { faqPageData?: FaqPageData }).faqPageData);
+    const group = $derived(routeFaq?.group);
+    const question = $derived(routeFaq?.question);
     const faqReference = $derived((group?.sourcePage ?? '') as LinkPath);
     const faqItems = $derived(
         group?.questions.map((item) => ({
             question: item.question,
-            answer: item.shortAnswer,
+            answer: item.shortAnswer ?? '',
             reference: faqReference,
             referenceLabel: group.title,
             faqPath: `internals.faq.${group.slug}.${item.slug}` as LinkPath,

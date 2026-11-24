@@ -67,6 +67,12 @@ test('FAQ route renders its route-owned header and metadata', async ({ page }) =
     expect(errors).toEqual([]);
 });
 
+test('FAQ articles render from route-owned data', async ({ page }) => {
+    await page.goto('/faq/barbarian/what-is-barbarian-in-dnd/');
+    await expect(page.getByRole('heading', { name: /What is a Barbarian in D&D/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Related Barbarian FAQ/i })).toBeVisible();
+});
+
 test('representative class, species and spell routes retain route metadata', async ({ page }) => {
     await page.goto('/classes/wizard/');
     await expect(page.getByRole('heading', { name: /Wizard/i }).first()).toBeVisible();

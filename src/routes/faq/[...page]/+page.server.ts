@@ -1,5 +1,11 @@
 import { getData, type PageData, type PagePath } from '#lib/typescript/data/_index_.js';
+import { error } from '@sveltejs/kit';
 import { getBreadcrumbItems, getPageLabel } from '#lib/typescript/pages/currentPage.js';
+import {
+    getFaqPageEntries,
+    resolveFaqPageData,
+    type FaqPageData,
+} from '#lib/typescript/pages/faqPageData.js';
 import type { SeoMetadataInput } from '#lib/typescript/pages/seo.js';
 import type {
     BreadcrumbMetadata,
@@ -9,6 +15,10 @@ import type {
 
 const migratedSlug = 'acid-splash-5e';
 const migratedPath = 'internals.faq.acidSplash5e.page' as PagePath;
+
+export function entries() {
+    return getFaqPageEntries();
+}
 
 function createRoutePageData(page: PageData): RoutePageData {
     const identity = {
@@ -54,14 +64,21 @@ function createRoutePageData(page: PageData): RoutePageData {
 }
 
 export function load({ params }: { params: { page?: string } }) {
+    const faqPageData = resolveFaqPageData(params.page ?? '');
+
+    if (!faqPageData) {
+        throw error(404, 'FAQ page not found');
+    }
+
     if (params.page !== migratedSlug) {
-        return { routePageData: null };
+        return { faqPageData } satisfies { faqPageData: FaqPageData };
     }
 
     const routePageData = createRoutePageData(getData(migratedPath) as PageData);
 
     return {
+        faqPageData,
         routePageData,
         seo: routePageData.seo satisfies SeoMetadataInput,
-    } satisfies { routePageData: RoutePageData; seo: SeoMetadataInput };
+    } satisfies { faqPageData: FaqPageData; routePageData: RoutePageData; seo: SeoMetadataInput };
 }
