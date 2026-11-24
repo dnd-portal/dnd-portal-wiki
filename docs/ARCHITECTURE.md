@@ -236,8 +236,7 @@ There are no Markdown-derived FAQ groups in production.
   generic FAQ routes above. Related questions are resolved from the central
   group/question registry.
 - The maintained static-site audit is `scripts/audit-prelive.mjs`; the
-  focused FAQ output audit is retained as Codex migration tooling at
-  `codex/scripts/audit-faq-static.mjs`. Run the project validation commands
+  project validation commands can be run from the repository root:
   from the repository root:
 
 ```bash
@@ -247,9 +246,6 @@ pnpm build
 pnpm audit:prelive:crawl
 ```
 
-The ignored `codex/` directory is for local migration scripts, reports,
-notes, and temporary artifacts only. It is not canonical project
-documentation or production runtime data.
 
 ## Routing
 
